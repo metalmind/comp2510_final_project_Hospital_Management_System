@@ -1,18 +1,16 @@
 # Project Report
 Owen Wou A00989377 \
-Alison Kim A0000000
+Alison Kim A01434656
 
-*A comprehensive report, 2-5 pages long, coering the following headings*
+*A comprehensive report, 2-5 pages long, covering the following headings.*
 
-## Project Objective and Scope
+## Project Objectives and Scope
 
-*Outline the goals and scope of the proect.*
-
-
+*Outline the goals and scope of the project.*
 
 ## Design and Implementation Details
 
-*Describe the design approach and implementation steps*
+*Describe the design approach and implementation steps*.
 
 ## Challenges and Solutions
 
@@ -20,7 +18,7 @@ Alison Kim A0000000
 
 ## Testing Procedures and Results
 
-*Explain the testing methods used and present the results*
+*Explain the testing methods used and present the results.*
 
 ## Conclusion
 
