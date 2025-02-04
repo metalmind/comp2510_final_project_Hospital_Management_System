@@ -46,14 +46,16 @@ int main(void)
 
 
 /**
- * Searches for a patientID in the array and retunrs it's index if found;
+ * Searches for a patientID in the array and returns it's index if found;
  * otherwise, it returns -1.
- * @author Ayesha Anzer
  *
  * @param arr Array of Patient Structs
  * @param size The number of patient records in the array as an int
- * @param id The ID we want to check for existance
+ * @param id The ID we want to check for existence
  * @return id index if found, otherwise -1
+ *
+ * @author Ayesha Anzer
+ * @author Owen Wou
  */
 int idExists(struct patient arr[], int size, int id)
 {
@@ -69,6 +71,8 @@ int idExists(struct patient arr[], int size, int id)
 
 /**
  * Adds a new patient to the patientRecord array.
+ * @author Ayesha Anzer
+ * @author Owen Wou
  */
 void addNewPatientRecord(void)
 {
