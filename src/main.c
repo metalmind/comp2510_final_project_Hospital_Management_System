@@ -8,6 +8,13 @@
 
 #define MAX_PATIENTS 50
 
+#define MIN_AGE_YEARS 0
+
+#define TERMINAL_CHAR 0
+#define ID_NOT_FOUND -1
+#define ID_MIN_VALUE 0
+#define ROOM_NUMBER_MIN 1
+
 struct patient
 {
     int patientID;
@@ -57,7 +64,7 @@ int idExists(struct patient arr[], int size, int id)
             return i;
         }
     }
-    return -1;
+    return ID_NOT_FOUND;
 }
 
 /**
@@ -72,24 +79,24 @@ void addNewPatientRecord(void)
     }
 
     int id;
-    char name[50];
+    char name[NAME_MAX_CHAR];
     int age;
-    char diagnosis[100];
+    char diagnosis[DIAGNOSIS_MAX_CHAR];
     int roomNumber;
 
     printf("Enter the ID of the patient (positive number): ");
     scanf("%d", &id);
     getchar();
 
-    if(id <= 0 || idExists(patientRecords, totalPatients, id) != -1)
+    if(id < ID_MIN_VALUE || idExists(patientRecords, totalPatients, id) != ID_NOT_FOUND)
     {
         printf("Invalid or duplicate patient ID!\n");
         return;
     }
 
     printf("Enter patient name: ");
-    fgets(name, 50, stdin);
-    name[strcspn(name, "\n")] = 0;
+    fgets(name, NAME_MAX_CHAR, stdin);
+    name[strcspn(name, "\n")] = TERMINAL_CHAR;
 
     do
     {
@@ -97,19 +104,19 @@ void addNewPatientRecord(void)
         scanf("%d", &age);
         getchar();
     }
-    while(age < 0);
+    while(age < MIN_AGE_YEARS);
 
 
     printf("Enter patient diagnosis: ");
-    fgets(diagnosis, 100, stdin);
-    name[strcspn(diagnosis, "\n")] = 0;
+    fgets(diagnosis, DIAGNOSIS_MAX_CHAR, stdin);
+    name[strcspn(diagnosis, "\n")] = TERMINAL_CHAR;
 
     do
     {
         printf("Enter patient room number: ");
         scanf("%d", &roomNumber);
     }
-    while(roomNumber < 0);
+    while(roomNumber < ROOM_NUMBER_MIN);
 
     patientRecords[totalPatients].patientID = id;
     strcpy(patientRecords[totalPatients].name, name);
