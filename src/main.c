@@ -4,7 +4,7 @@
 #include "menu.h"
 
 #define NAME_MAX_CHAR 50
-#define DIAGNOSIS_MAX_CHAR 75
+#define DIAGNOSIS_MAX_CHAR 100
 
 #define MAX_PATIENTS 50
 
@@ -96,7 +96,8 @@ void addNewPatientRecord(void)
         printf("Enter patient age: ");
         scanf("%d", &age);
         getchar();
-    }while(age < 0);
+    }
+    while(age < 0);
 
 
     printf("Enter patient diagnosis: ");
@@ -107,7 +108,8 @@ void addNewPatientRecord(void)
     {
         printf("Enter patient room number: ");
         scanf("%d", &roomNumber);
-    }while(roomNumber < 0);
+    }
+    while(roomNumber < 0);
 
     patientRecords[totalPatients].patientID = id;
     strcpy(patientRecords[totalPatients].name, name);
