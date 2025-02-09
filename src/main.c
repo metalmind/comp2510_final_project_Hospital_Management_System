@@ -9,6 +9,7 @@
 #define MAX_PATIENTS 50
 
 #define MIN_AGE_YEARS 0
+#define MAX_AGE_YEARS 150
 
 #define TERMINAL_CHAR 0
 #define ID_MIN_VALUE 0
@@ -36,6 +37,10 @@ struct patient
 
 void addNewPatientRecord(void);
 int idExists(struct patient arr[], int size, int id);
+int validateAge(int itemsRead, int age);
+int getInput(char *prompt, int *input);
+int validateInputType(int itemsRead);
+int validateNum(int num, int lowerBound, int upperBound);
 int getPatientID(void);
 int getPatientAge(void);
 int getPatientRoomNumber(void);
@@ -133,6 +138,85 @@ void addNewPatientRecord(void)
     printf("Patient added successfully!\n");
 }
 
+int getPatientAge()
+{
+    int age;
+    int valid;
+
+    age = INVALID_INPUT;
+    valid = 0;
+
+    do
+    {
+        int itemsRead;
+
+        itemsRead = getInput("Enter patient age: ", &age);
+
+        valid = validateAge(itemsRead, age);
+    }
+    while(!valid);
+
+    return age;
+}
+
+int validateAge(int itemsRead, int age)
+{
+    int valid = 0;
+
+    valid = validateInputType(itemsRead) &&
+            validateNum(age, MIN_AGE_YEARS, MAX_AGE_YEARS);
+
+    if(!valid)
+    {
+        printf("Invalid age! Please enter a positive integer.\n");
+    }
+
+    return valid;
+}
+
+int getInput(char *prompt,
+             int *input)
+{
+    int itemsRead;
+
+    printf("%s", prompt);
+    itemsRead = scanf("%d", input);
+    clearInputBuffer();
+
+    return itemsRead;
+}
+
+int validateInputType(const int itemsRead)
+{
+    int valid;
+
+    valid = 0;
+
+    if(itemsRead == READ_SUCCESS)
+    {
+        valid = 1;
+    }
+
+    return valid;
+}
+
+int validateNum(const int num,
+                const int lowerBound,
+                const int upperBound)
+{
+    int valid;
+
+    valid = 0;
+
+    if(num > lowerBound &&
+       num < upperBound)
+    {
+        valid = 1;
+    }
+
+    return valid;
+}
+
 /**
  * Prompts user for patient ID, with checks to ensure patient ID is valid
  * according to the following criteria:
@@ -175,35 +259,35 @@ int getPatientID()
  *
  * @return patient age
  */
-int getPatientAge()
-{
-    int age;
-
-    age = INVALID_INPUT;
-
-    do
-    {
-        printf("Enter patient age: ");
-
-        int input = scanf("%d", &age);
-
-        if(input != READ_SUCCESS ||
-            age < MIN_AGE_YEARS)
-        {
-            printf("Invalid age! Please enter a positive integer.\n");
-        }
-
-        clearInputBuffer();
-    }
-    while(age < MIN_AGE_YEARS);
-
-    return age;
-}
+// int getPatientAge()
+// {
+//     int age;
+//
+//     age = INVALID_INPUT;
+//
+//     do
+//     {
+//         printf("Enter patient age: ");
+//
+//         int input = scanf("%d", &age);
+//
+//         if(input != READ_SUCCESS ||
+//             age < MIN_AGE_YEARS)
+//         {
+//             printf("Invalid age! Please enter a positive integer.\n");
+//         }
+//
+//         clearInputBuffer();
+//     }
+//     while(age < MIN_AGE_YEARS);
+//
+//     return age;
+// }
 
 /**
- * Prompts user for patient room number, with checks to ensure room number is valid
+ * Prompts user for patient information, with checks to ensure the information is valid
  * according to the following criteria:
- * 1) Patient ID is a positive integer (greater than or equal to ROOM_NUMBER_MIN)
+ * 1)  is a positive integer (greater than or equal to ROOM_NUMBER_MIN)
  *
  * @return patient room number
  */
