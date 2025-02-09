@@ -269,7 +269,7 @@ void searchForPatientRecord()
                 printf("Invalid input! Try again.\n");
         }
 
-        if (index != INVALID_INPUT)
+        if(index != INVALID_INPUT)
         {
             printf("%-5s%-20s%-5s%-20s%-5s\n",
                    "ID",
@@ -279,7 +279,8 @@ void searchForPatientRecord()
                    "Room Number");
             printPatientRecord(index);
         }
-        else if (sel != RETURN_TO_MENU)
+        else if(sel == SEARCH_BY_ID ||
+                sel == SEARCH_BY_NAME)
         {
             printf("Patient not found.\n");
         }
