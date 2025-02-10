@@ -138,6 +138,15 @@ void addNewPatientRecord(void)
     printf("Patient added successfully!\n");
 }
 
+/**
+ * Prompts user for patient age, with checks to ensure patient age is valid
+ * according to the following criteria:
+ * 1) Patient age is a positive integer
+ * 2) Patient age is within valid range - i.e., greater than or equal to MIN_AGE_YEARS
+ *    and less than or equal to MAX_AGE_YEARS
+ *
+ * @return patient age
+ */
 int getPatientAge()
 {
     int age;
@@ -159,6 +168,14 @@ int getPatientAge()
     return age;
 }
 
+/**
+ * Validates whether input is of valid type (i.e., has been successfully read and
+ * assigned) and within range.
+ *
+ * @param itemsRead number of items successfully read
+ * @param age patient age
+ * @return 1 is age is valid, otherwise 0
+ */
 int validateAge(int itemsRead, int age)
 {
     int valid = 0;
@@ -174,6 +191,15 @@ int validateAge(int itemsRead, int age)
     return valid;
 }
 
+/**
+ * Wrapper function for scanf() which takes a prompt message to print and
+ * a value to which to assign the input. Clears the input buffer in case of invalid
+ * input.
+ *
+ * @param prompt prompt message
+ * @param input value to assign input
+ * @return number of items successfully read
+ */
 int getInput(char *prompt,
              int *input)
 {
@@ -186,6 +212,14 @@ int getInput(char *prompt,
     return itemsRead;
 }
 
+/**
+ * Validates whether input read was successful - checks that itemsRead
+ * is equal to READ_SUCCESS, indicating that an integer value was successfully
+ * extracted and assigned.
+ *
+ * @param itemsRead number of items successfully read
+ * @return 1 if input type is valid, otherwise 0
+ */
 int validateInputType(const int itemsRead)
 {
     int valid;
@@ -200,6 +234,14 @@ int validateInputType(const int itemsRead)
     return valid;
 }
 
+/**
+ * Validates whether number is within valid range.
+ *
+ * @param num number to validate
+ * @param lowerBound lower bound of valid range
+ * @param upperBound upper bound of valid range
+ * @return 1 if number is within valid range, otherwise 0
+ */
 int validateNum(const int num,
                 const int lowerBound,
                 const int upperBound)
@@ -208,8 +250,8 @@ int validateNum(const int num,
 
     valid = 0;
 
-    if(num > lowerBound &&
-       num < upperBound)
+    if(num >= lowerBound &&
+       num <= upperBound)
     {
         valid = 1;
     }
@@ -251,38 +293,6 @@ int getPatientID()
 
     return id;
 }
-
-/**
- * Prompts user for patient age, with checks to ensure patient age is valid
- * according to the following criteria:
- * 1) Patient age is a positive integer (greater than or equal to MIN_AGE_YEARS)
- *
- * @return patient age
- */
-// int getPatientAge()
-// {
-//     int age;
-//
-//     age = INVALID_INPUT;
-//
-//     do
-//     {
-//         printf("Enter patient age: ");
-//
-//         int input = scanf("%d", &age);
-//
-//         if(input != READ_SUCCESS ||
-//             age < MIN_AGE_YEARS)
-//         {
-//             printf("Invalid age! Please enter a positive integer.\n");
-//         }
-//
-//         clearInputBuffer();
-//     }
-//     while(age < MIN_AGE_YEARS);
-//
-//     return age;
-// }
 
 /**
  * Prompts user for patient information, with checks to ensure the information is valid
