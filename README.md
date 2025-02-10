@@ -33,15 +33,18 @@ View All patient records: void viewAllPatientRecords(void)
 - prints out all the entires in the patient array
 - modularize print statements
 
-Search for Patient: searchForAPatient()
+Search for Patient: searchForPatientRecord()
 - Search for duplicates before adding new patient
 - Need for both ID and name
 - Either overload or parse input to check type
 - Or make menu option to either search by ID or name
 - Print the record
 
-Print patient record: printPatientRecord(patientRerd)
-- Print the record to the screen
+Print patient record: printPatientRecord(patientID)
+- Print the requested record to the screen
+
+View all patient records: viewAllPatientRecords()
+- Print all patient records to the screen
 
 Discharge Patient: dischargePatient(patientRecord)
 - Remove record from patient array
