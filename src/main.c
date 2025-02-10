@@ -325,6 +325,7 @@ int getInput(char *prompt,
  * @param input data value to validate
  * @param lowerBound lower bound of valid range
  * @param upperBound upper bound of valid range
+ * @param errorMessage error message to print should data be invalid
  * @return 1 is data value is valid, otherwise 0
  */
 int validateData(int numItemsRead,
