@@ -1,7 +1,12 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/syslimits.h>
+
 #include "menu.h"
+
+#define TRUE 1
+#define FALSE 0
 
 #define NAME_MAX_CHAR 50
 #define DIAGNOSIS_MAX_CHAR 100
@@ -13,12 +18,14 @@
 
 #define TERMINAL_CHAR 0
 #define ID_MIN_VALUE 0
+#define ID_MAX_VALUE 50
 #define ID_NOT_FOUND (-1)
 
 #define INVALID_INPUT (-1)
 #define READ_SUCCESS 1
 
 #define ROOM_NUMBER_MIN 1
+#define ROOM_NUMBER_MAX 100
 
 #define SEARCH_BY_ID 1
 #define SEARCH_BY_NAME 2
@@ -37,13 +44,14 @@ struct patient
 
 void addNewPatientRecord(void);
 int idExists(struct patient arr[], int size, int id);
-int validateAge(int itemsRead, int age);
-int getInput(char *prompt, int *input);
-int validateInputType(int itemsRead);
-int validateNum(int num, int lowerBound, int upperBound);
+int getUniquePatientID(void);
 int getPatientID(void);
 int getPatientAge(void);
 int getPatientRoomNumber(void);
+int getInput(char *prompt, int *input);
+int validateData(int numItemsRead, int input, int lowerBound, int upperBound, char* errorMessage);
+int validateInputType(int numItemsRead);
+int validateNum(int num, int lowerBound, int upperBound);
 void searchForPatientRecord(void);
 int searchPatientByID(void);
 int searchPatientByName(void);
@@ -63,6 +71,8 @@ int main(void)
     printf("Patient Age: %d\n", patientRecords[0].age);
     printf("Patient Diagnosis: %s\n", patientRecords[0].diagnosis);
     printf("Patient Room #: %d\n", patientRecords[0].roomNumber);
+
+    addNewPatientRecord();
 
     viewAllPatientRecords();
 
@@ -114,7 +124,7 @@ void addNewPatientRecord(void)
     char diagnosis[DIAGNOSIS_MAX_CHAR];
     int roomNumber;
 
-    id = getPatientID();
+    id = getUniquePatientID();
 
     printf("Enter patient name: ");
     fgets(name, NAME_MAX_CHAR, stdin);
@@ -139,6 +149,84 @@ void addNewPatientRecord(void)
 }
 
 /**
+ * Prompts user for patient ID, with checks to ensure patient ID is valid
+ * according to the following criteria:
+ * 1) Patient ID is a positive integer
+ * 2) Patient ID is within valid range - i.e., greater than or equal to ID_MIN_VALUE
+ *    and less than or equal to ID_MAX_VALUE
+ * 3) Patient with the specified ID does not already exist
+ *
+ * @return patient ID
+ */
+int getUniquePatientID()
+{
+    int id;
+    int valid;
+    int unique;
+
+    valid = FALSE;
+    unique = FALSE;
+
+    do
+    {
+        id = ID_NOT_FOUND;
+
+        int numItemsRead;
+
+        numItemsRead = getInput("Enter patient ID: ", &id);
+        unique = idExists(patientRecords, totalPatients, id) == ID_NOT_FOUND;
+
+        valid = validateData(numItemsRead,
+                             id,
+                             ID_MIN_VALUE,
+                             ID_MAX_VALUE,
+                             "Invalid patient ID! Please enter a positive integer.\n");
+
+        if (valid && !unique)
+        {
+            printf("Duplicate patient ID! Please enter a unique ID.\n");
+        }
+    }
+    while(!(valid && unique));
+
+    return id;
+}
+
+/**
+ * Prompts user for patient ID, with checks to ensure patient ID is valid
+ * according to the following criteria:
+ * 1) Patient ID is a positive integer
+ * 2) Patient ID is within valid range - i.e., greater than or equal to ID_MIN_VALUE
+ *    and less than or equal to ID_MAX_VALUE
+ *
+ * @return patient ID
+ */
+int getPatientID()
+{
+    int id;
+    int valid;
+
+    id = ID_NOT_FOUND;
+    valid = FALSE;
+
+    do
+    {
+        int numItemsRead;
+
+        numItemsRead = getInput("Enter patient age: ", &id);
+
+        valid = validateData(numItemsRead,
+                             id,
+                             ID_MIN_VALUE,
+                             ID_MAX_VALUE,
+                             "Invalid patient ID! Please enter a positive integer.\n");
+    }
+    while(!valid);
+
+    return id;
+}
+
+/**
  * Prompts user for patient age, with checks to ensure patient age is valid
  * according to the following criteria:
  * 1) Patient age is a positive integer
@@ -153,15 +241,19 @@ int getPatientAge()
     int valid;
 
     age = INVALID_INPUT;
-    valid = 0;
+    valid = FALSE;
 
     do
     {
-        int itemsRead;
+        int numItemsRead;
 
-        itemsRead = getInput("Enter patient age: ", &age);
+        numItemsRead = getInput("Enter patient age: ", &age);
 
-        valid = validateAge(itemsRead, age);
+        valid = validateData(numItemsRead,
+                             age,
+                             MIN_AGE_YEARS,
+                             MAX_AGE_YEARS,
+                             "Invalid age! Please enter a positive integer.\n");
     }
     while(!valid);
 
@@ -169,26 +261,37 @@ int getPatientAge()
 }
 
 /**
- * Validates whether input is of valid type (i.e., has been successfully read and
- * assigned) and within range.
+ * Prompts user for patient room number, with checks to ensure room number is valid
+ * according to the following criteria:
+ * 1) Room number is a positive integer
+ * 2) Room number is within valid range - i.e., greater than or equal to ROOM_NUMBER_MIN
+ *    and less than or equal to ROOM_NUMBER_MAX
  *
- * @param itemsRead number of items successfully read
- * @param age patient age
- * @return 1 is age is valid, otherwise 0
+ * @return patient room number
  */
-int validateAge(int itemsRead, int age)
+int getPatientRoomNumber()
 {
-    int valid = 0;
+    int roomNumber;
+    int valid;
 
-    valid = validateInputType(itemsRead) &&
-            validateNum(age, MIN_AGE_YEARS, MAX_AGE_YEARS);
+    roomNumber = INVALID_INPUT;
+    valid = FALSE;
 
-    if(!valid)
+    do
     {
-        printf("Invalid age! Please enter a positive integer.\n");
-    }
+        int numItemsRead;
 
-    return valid;
+        numItemsRead = getInput("Enter patient room number: ", &roomNumber);
+
+        valid = validateData(numItemsRead,
+                             roomNumber,
+                             ROOM_NUMBER_MIN,
+                             ROOM_NUMBER_MAX,
+                             "Invalid room number! Please enter a positive integer.\n");
+    }
+    while(!valid);
+
+    return roomNumber;
 }
 
 /**
@@ -203,32 +306,61 @@ int validateAge(int itemsRead, int age)
 int getInput(char *prompt,
              int *input)
 {
-    int itemsRead;
+    int numItemsRead;
 
     printf("%s", prompt);
-    itemsRead = scanf("%d", input);
+    numItemsRead = scanf("%d", input);
     clearInputBuffer();
 
-    return itemsRead;
+    return numItemsRead;
 }
 
 /**
- * Validates whether input read was successful - checks that itemsRead
+ * Validates whether input value is of valid type (i.e., has been successfully read
+ * and assigned) and within range.
+ *
+ * @param numItemsRead number of items successfully read
+ * @param input data value to validate
+ * @param lowerBound lower bound of valid range
+ * @param upperBound upper bound of valid range
+ * @return 1 is data value is valid, otherwise 0
+ */
+int validateData(int numItemsRead,
+                 int input,
+                 int lowerBound,
+                 int upperBound,
+                 char* errorMessage)
+{
+    int valid = FALSE;
+
+    valid = validateInputType(numItemsRead) &&
+            validateNum(input, lowerBound, upperBound);
+
+    if(!valid)
+    {
+        printf("%s", errorMessage);
+    }
+
+    return valid;
+}
+
+/**
+ * Validates whether input read was successful - checks that numItemsRead
  * is equal to READ_SUCCESS, indicating that an integer value was successfully
  * extracted and assigned.
  *
- * @param itemsRead number of items successfully read
+ * @param numItemsRead number of items successfully read
  * @return 1 if input type is valid, otherwise 0
  */
-int validateInputType(const int itemsRead)
+int validateInputType(const int numItemsRead)
 {
     int valid;
 
-    valid = 0;
+    valid = FALSE;
 
-    if(itemsRead == READ_SUCCESS)
+    if(numItemsRead == READ_SUCCESS)
     {
-        valid = 1;
+        valid = TRUE;
     }
 
     return valid;
@@ -248,82 +380,15 @@ int validateNum(const int num,
 {
     int valid;
 
-    valid = 0;
+    valid = FALSE;
 
     if(num >= lowerBound &&
        num <= upperBound)
     {
-        valid = 1;
+        valid = TRUE;
     }
 
     return valid;
-}
-
-/**
- * Prompts user for patient ID, with checks to ensure patient ID is valid
- * according to the following criteria:
- * 1) Patient ID is a positive integer (greater than or equal to ID_MIN_VALUE)
- * 2) Patient with the specified ID does not already exist
- *
- * @return patient ID
- */
-int getPatientID()
-{
-    int id;
-
-    id = ID_NOT_FOUND;
-
-    do
-    {
-        printf("Enter patient ID: ");
-
-        // scanf returns number of items successfully assigned
-        int input = scanf("%d", &id);
-
-        if(input != READ_SUCCESS ||
-            id < ID_MIN_VALUE ||
-            (idExists(patientRecords, totalPatients, id) != ID_NOT_FOUND))
-        {
-            printf("Invalid or duplicate patient ID! Please enter a positive integer.\n");
-        }
-
-        clearInputBuffer();
-    }
-    while(id < ID_MIN_VALUE);
-
-    return id;
-}
-
-/**
- * Prompts user for patient information, with checks to ensure the information is valid
- * according to the following criteria:
- * 1)  is a positive integer (greater than or equal to ROOM_NUMBER_MIN)
- *
- * @return patient room number
- */
-int getPatientRoomNumber()
-{
-    int roomNumber;
-
-    roomNumber = INVALID_INPUT;
-
-    do
-    {
-        printf("Enter patient room number: ");
-
-        int input = scanf("%d", &roomNumber);
-
-        if(input != READ_SUCCESS ||
-            roomNumber < ROOM_NUMBER_MIN)
-        {
-            printf("Invalid room number! Please enter a positive integer.\n");
-        }
-
-        clearInputBuffer();
-    }
-    while(roomNumber < ROOM_NUMBER_MIN);
-
-    return roomNumber;
 }
 
 /**
