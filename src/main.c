@@ -53,6 +53,8 @@ int validateData(int numItemsRead, int input, int lowerBound, int upperBound, ch
 int validateInputType(int numItemsRead);
 int validateNum(int num, int lowerBound, int upperBound);
 void searchForPatientRecord(void);
+int searchCriteriaSelection(int sel);
+void handlePatientSearchResult(int index, int sel);
 int searchPatientByID(void);
 int searchPatientByName(void);
 void printPatientRecord(int id);
@@ -213,7 +215,7 @@ int getPatientID()
     {
         int numItemsRead;
 
-        numItemsRead = getInput("Enter patient age: ", &id);
+        numItemsRead = getInput("Enter patient ID: ", &id);
 
         valid = validateData(numItemsRead,
                              id,
@@ -411,40 +413,71 @@ void searchForPatientRecord()
         printf("2. Patient Name\n");
         printf("3. Return to Menu\n");
 
-        sel = getSelection();
-
-        switch(sel)
-        {
-            case SEARCH_BY_ID:
-                index = searchPatientByID();
-                break;
-            case SEARCH_BY_NAME:
-                index = searchPatientByName();
-                break;
-            case RETURN_TO_MENU:
-                printf("Returning to menu...\n");
-                break;
-            default:
-                printf("Invalid input! Try again.\n");
-        }
-
-        if(index != INVALID_INPUT)
-        {
-            printf("%-5s%-20s%-5s%-20s%-5s\n",
-                   "ID",
-                   "Name",
-                   "Age",
-                   "Diagnosis",
-                   "Room Number");
-            printPatientRecord(index);
-        }
-        else if(sel == SEARCH_BY_ID ||
-                sel == SEARCH_BY_NAME)
-        {
-            printf("Patient not found.\n");
-        }
+        getInput("Enter your selection: ", &sel);
+        index = searchCriteriaSelection(sel);
+        handlePatientSearchResult(index, sel);
     }
     while (sel != RETURN_TO_MENU);
+}
+
+/**
+ * Routes to the search method associated with the selection.
+ * If the selection is not available, prompts the user to try again.
+ *
+ * Search By:
+ *    1. Patient ID
+ *    2. Patient Name
+ *    3. Return to Menu
+ *
+ * @param sel selected menu item
+ */
+int searchCriteriaSelection(int sel)
+{
+    int index = INVALID_INPUT;
+
+    switch(sel)
+    {
+        case SEARCH_BY_ID:
+            index = searchPatientByID();
+            break;
+        case SEARCH_BY_NAME:
+            index = searchPatientByName();
+            break;
+        case RETURN_TO_MENU:
+            printf("Returning to menu...\n");
+            break;
+        default:
+            printf("Invalid input! Try again.\n");
+    }
+
+    return index;
+}
+
+/**
+ * If requested patient record is found, prints its details. Otherwise,
+ * if user menu selection was either SEARCH_BY_ID or SEARCH_BY_NAME
+ * (i.e., was not an invalid selection), prints that record was not found.
+ *
+ * @param index index of requested patient record in the patientRecord array
+ * @param sel user menu selection
+ */
+void handlePatientSearchResult(int index, int sel)
+{
+    if(index != INVALID_INPUT)
+    {
+        printf("%-5s%-20s%-5s%-20s%-5s\n",
+               "ID",
+               "Name",
+               "Age",
+               "Diagnosis",
+               "Room Number");
+        printPatientRecord(index);
+    }
+    else if(sel == SEARCH_BY_ID ||
+            sel == SEARCH_BY_NAME)
+    {
+        printf("Patient record not found.\n");
+    }
 }
 
 /**
