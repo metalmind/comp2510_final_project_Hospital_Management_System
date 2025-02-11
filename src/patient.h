@@ -73,25 +73,29 @@ void printPatientRecord(int id);
 
 void viewAllPatientRecords(void);
 
+void printPatientMenu();
+
 // TOOLS?
-int getInput(char *prompt,
-             int *input);
+int getInput(char* prompt,
+             int* input);
+
 //TOOLS
 int validateData(int numItemsRead,
                  int input,
                  int lowerBound,
                  int upperBound,
-                 char *errorMessage);
+                 char* errorMessage);
+
 //TOOLS
 int validateInputType(int numItemsRead);
+
 //TOOLS
 int validateNum(int num,
                 int lowerBound,
                 int upperBound);
+
 // TOOLS
 void clearInputBuffer(void);
-
-
 
 
 #endif //PATIENT_H

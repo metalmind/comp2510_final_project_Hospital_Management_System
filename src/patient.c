@@ -8,7 +8,7 @@
 
 
 patient patientRecords[MAX_PATIENTS] = {};
-int totalPatients = 0;
+int totalPatients                    = 0;
 
 
 /**
@@ -249,8 +249,8 @@ int getPatientRoomNumber()
  * @param input value to assign input
  * @return number of items successfully read
  */
-int getInput(char *prompt,
-             int *input)
+int getInput(char* prompt,
+             int* input)
 {
     int numItemsRead;
 
@@ -278,7 +278,7 @@ int validateData(int numItemsRead,
                  int input,
                  int lowerBound,
                  int upperBound,
-                 char *errorMessage)
+                 char* errorMessage)
 {
     int valid = FALSE;
 
@@ -355,11 +355,7 @@ void searchForPatientRecord()
     do
     {
         index = INVALID_INPUT;
-
-        printf("Search By:\n");
-        printf("1. Patient ID\n");
-        printf("2. Patient Name\n");
-        printf("3. Return to Menu\n");
+        printPatientMenu();
 
         getInput("Enter your selection: ",
                  &sel);
@@ -368,6 +364,17 @@ void searchForPatientRecord()
                                   sel);
     }
     while(sel != RETURN_TO_MENU);
+}
+
+/**
+ * Prints the patient menu.
+ */
+void printPatientMenu()
+{
+    printf("Search By:\n");
+    printf("1. Patient ID\n");
+    printf("2. Patient Name\n");
+    printf("3. Return to Menu\n");
 }
 
 /**
