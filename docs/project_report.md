@@ -23,3 +23,5 @@ Alison Kim A01434656
 ## Conclusion
 
 *Summarize the project outcomes.*
+
+This is a test for the linter
