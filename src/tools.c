@@ -5,9 +5,6 @@
 #include<stdio.h>
 #include"tools.h"
 
-
-
-
 int getInput(char* prompt,
              int* input)
 {
