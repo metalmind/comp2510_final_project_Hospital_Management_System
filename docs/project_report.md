@@ -40,12 +40,12 @@ requirements of the project.
 Table 2.1 Patient Data Structure
 
 | Description | Datatype | Not Null | Not Blank | Unique | Min Value | Max Value |
-|-------------|:--------:|:--------:|-----------|--------|-----------|-----------|
-| Patient ID  |   int    |   N/A    | N/A       | Y      | 1         | 50        |
-| Name        |  String  |    Y     | Y         | N      | N/A       | N/A       |
-| Age         |   int    |   N/A    | N/A       | N      | 0         | 100       |
-| Diagnosis   |  String  |    Y     | Y         | N      | N/A       | N/A       |
-| Room Number |   int    |   N/A    | N/A       | Y      | 1         | 200       |
+|-------------|:--------:|:--------:|:---------:|:------:|:---------:|:---------:|
+| Patient ID  |   int    |   N/A    |    N/A    |   Y    |     1     |    50     |
+| Name        |  String  |    Y     |     Y     |   N    |    N/A    |    N/A    |
+| Age         |   int    |   N/A    |    N/A    |   N    |     0     |    100    |
+| Diagnosis   |  String  |    Y     |     Y     |   N    |    N/A    |    N/A    |
+| Room Number |   int    |   N/A    |    N/A    |   Y    |     1     |    200    |
 
 #### 2.2 Basic Operations on Patient Records
 
@@ -59,8 +59,12 @@ Table 2.1 Patient Data Structure
 
 *Discuss any challenges faced during the project and how they were overcome.*
 
+Some of the challenges we faced are as follows:
+
 - Separating out Struct in patient.h and patient.c, took a while to figure out
   struct should be in .h file
+- Learning where to decompose functions and implement reuse
+
 
 ## 4. Testing Procedures and Results
 
