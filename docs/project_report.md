@@ -49,6 +49,28 @@ Table 2.1 Patient Data Structure
 
 #### 2.2 Basic Operations on Patient Records
 
+#### 2.2.2 Add a new Patient record: void addNewPatient(void)
+
+- Adds a new patient to the patientRecord array.
+
+#### 2.2.3 View All patient records: void viewAllPatientRecords(void)
+- prints out all the entires in the patient array
+- modularize print statements
+
+#### 2.2.4Search for Patient: searchForAPatient()
+- Search for duplicates before adding new patient
+- Need for both ID and name
+- Either overload or parse input to check type
+- Or make menu option to either search by ID or name
+- Print the record
+
+#### 2.2.5 Print patient record: printPatientRecord(patientRerd)
+- Print the record to the screen
+
+#### 2.2.6 Discharge Patient: dischargePatient(patientRecord)
+- Remove record from patient array
+- Deal with gap in array somehow
+
 #### 2.3 Doctor Schedule Management
 
 #### 2.4 Input Validation
