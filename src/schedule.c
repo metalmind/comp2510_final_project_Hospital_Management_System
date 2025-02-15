@@ -43,7 +43,7 @@ void getDayOfWeekNameStr(const enum daysInWeek dayOfWeek,
             break;
         default:
             strcpy(dayOfWeekName,
-                   "ERROR invald day of week");
+                   "ERROR invalid day of week");
             break;
     }
 }
