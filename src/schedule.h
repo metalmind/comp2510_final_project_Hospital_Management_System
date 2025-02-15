@@ -11,6 +11,7 @@
 #define DAYS_IN_WEEK 7
 #define NUM_SHIFTS 3
 #define MAX_CHAR_SHIFT 15
+#define SPACE_PER_COL 13
 
 #define MAX_DOCTORS 10
 

@@ -147,7 +147,7 @@ void printScheduleDivider()
 {
     for(int i = 0; i < DAYS_IN_WEEK + 1; i++)
     {
-        for(int j = 0; j < 13; j++)
+        for(int j = 0; j < SPACE_PER_COL; j++)
         {
             printf("-");
         }
