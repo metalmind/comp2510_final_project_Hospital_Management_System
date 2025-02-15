@@ -14,6 +14,8 @@
 
 #define READ_SUCCESS 1
 
+#define TERMINAL_CHAR 0
+
 /**
  * Wrapper function for scanf() which takes a prompt message to print and
  * a value to which to assign the input. Clears the input buffer in case of invalid
@@ -64,6 +66,19 @@ int validateInputType(int numItemsRead);
 int validateNum(int num,
                 int lowerBound,
                 int upperBound);
+
+/**
+ * Wrapper funciton for fgets() whicih takes a prompt message to print and
+ * a char array to which to assign the input.
+ *
+ * @param prompt prompt message
+ * @param input char array to assign input
+ * @param maxChar maximum characters allowed
+ * @return
+ */
+void getStringInput(char* prompt,
+                     char* input,
+                     int maxChar);
 
 /**
  * Helper method to flush the input buffer in the case of invalid inputs.

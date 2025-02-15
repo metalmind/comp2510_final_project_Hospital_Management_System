@@ -18,7 +18,6 @@
 #define MIN_AGE_YEARS 0
 #define MAX_AGE_YEARS 150
 
-#define TERMINAL_CHAR 0
 #define ID_MIN_VALUE 0
 #define ID_MAX_VALUE 50
 #define ID_NOT_FOUND (-1)

@@ -71,6 +71,21 @@ int validateNum(const int num,
 }
 
 
+void getStringInput(char* prompt,
+                     char* input,
+                     int maxChar)
+{
+    size_t length;
+
+    printf("%s", prompt);
+    fgets(input,
+          maxChar,
+          stdin);
+    length = strcspn(input,
+                "\n");
+    input[length] = TERMINAL_CHAR;
+}
+
 void clearInputBuffer()
 {
     while(getchar() != '\n');

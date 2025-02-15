@@ -41,21 +41,16 @@ void addNewPatientRecord(void)
 
     id = getUniquePatientID();
 
-    printf("Enter patient name: ");
-    fgets(name,
-          NAME_MAX_CHAR,
-          stdin);
-    name[strcspn(name,
-                 "\n")] = TERMINAL_CHAR;
+    getStringInput("Enter patient name: ",
+                   name,
+                   NAME_MAX_CHAR);
 
     age = getPatientAge();
 
-    printf("Enter patient diagnosis: ");
-    fgets(diagnosis,
-          DIAGNOSIS_MAX_CHAR,
-          stdin);
-    diagnosis[strcspn(diagnosis,
-                      "\n")] = TERMINAL_CHAR;
+
+    getStringInput("Enter patient diagnosis: ",
+                   diagnosis,
+                   DIAGNOSIS_MAX_CHAR);
 
     roomNumber = getPatientRoomNumber();
 
@@ -274,12 +269,9 @@ int searchPatientByName()
 
     index = INVALID_INPUT;
 
-    printf("Enter Patient Name: ");
-    fgets(name,
-          NAME_MAX_CHAR,
-          stdin);
-    name[strcspn(name,
-                 "\n")] = TERMINAL_CHAR;
+    getStringInput("Enter patient name: ",
+                   name,
+                   NAME_MAX_CHAR);
 
     for(int i = 0; i < totalPatients; i++)
     {
