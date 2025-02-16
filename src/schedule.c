@@ -2,7 +2,7 @@
 // Created by Owen on 15/02/2025.
 //
 
-#include "schedule.h"
+#include "../inc/schedule.h"
 #include <stdio.h>
 #include <string.h>
 

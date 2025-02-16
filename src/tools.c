@@ -3,7 +3,7 @@
 //
 
 #include<stdio.h>
-#include"tools.h"
+#include "../inc/tools.h"
 
 int getInput(char* prompt,
              int* input)
@@ -77,4 +77,4 @@ void clearInputBuffer()
 }
 
 
-#include "tools.h"
+#include "../inc/tools.h"
