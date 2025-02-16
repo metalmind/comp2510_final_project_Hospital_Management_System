@@ -31,6 +31,7 @@
 #define SEARCH_BY_NAME 2
 #define RETURN_TO_MENU 3
 
+#define NO_RECORDS 0
 #define RECORD_FOUND 0
 
 typedef struct patient patient;
@@ -131,18 +132,25 @@ void searchForPatientRecord(void);
  *
  * @param sel selected menu item
  */
-int searchCriteriaSelection(int sel);
+void searchCriteriaSelection(int sel);
 
 /**
  * If requested patient record is found, prints its details. Otherwise,
- * if user menu selection was either SEARCH_BY_ID or SEARCH_BY_NAME
- * (i.e., was not an invalid selection), prints that record was not found.
+ * prints that record was not found.
  *
  * @param index index of requested patient record in the patientRecord array
- * @param sel user menu selection
  */
-void handlePatientSearchResult(int index,
-                               int sel);
+void handlePatientSearchResult(int index);
+
+/**
+ * If the requested patient record is found, prints its details.
+ * If multiple matching records are found, prints details of each.
+ * Otherwise, prints that record was not found.
+ * @param indexes indexes of records matching the provided String input
+ * @param numRecordsFound number of matching records found
+ */
+void handleMultiplePatientSearchResults(int* indexes,
+                                       int numRecordsFound);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
@@ -150,7 +158,7 @@ void handlePatientSearchResult(int index,
  *
  * @return index of patient record corresponding to the specified ID
  */
-int searchPatientByID(void);
+void searchPatientByID(void);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
@@ -158,13 +166,14 @@ int searchPatientByID(void);
  *
  * @return index of patient record corresponding to the specified name
  */
-int searchPatientByName(void);
+void searchPatientByName(void);
 
 /**
- * Prints the patient record corresponding to the specified patient ID.
- * @param id patient id
+ * Prints the patient record corresponding to the specified index of the
+ * patient record array.
+ * @param index corresponding index of patient record array
  */
-void printPatientRecord(int id);
+void printPatientRecord(int index);
 
 /**
  * Prints all patient records in the patientRecord array.

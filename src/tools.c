@@ -72,8 +72,8 @@ int validateNum(const int num,
 
 
 void getStringInput(char* prompt,
-                     char* input,
-                     int maxChar)
+                    char* input,
+                    int maxChar)
 {
     size_t length;
 
@@ -82,7 +82,7 @@ void getStringInput(char* prompt,
           maxChar,
           stdin);
     length = strcspn(input,
-                "\n");
+                     "\n");
     input[length] = TERMINAL_CHAR;
 }
 

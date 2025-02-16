@@ -47,7 +47,6 @@ void addNewPatientRecord(void)
 
     age = getPatientAge();
 
-
     getStringInput("Enter patient diagnosis: ",
                    diagnosis,
                    DIAGNOSIS_MAX_CHAR);
@@ -184,18 +183,14 @@ int getPatientRoomNumber()
 void searchForPatientRecord()
 {
     int sel;
-    int index;
 
     do
     {
-        index = INVALID_INPUT;
         printPatientMenu();
 
         getInput("Enter your selection: ",
                  &sel);
-        index = searchCriteriaSelection(sel);
-        handlePatientSearchResult(index,
-                                  sel);
+        searchCriteriaSelection(sel);
     }
     while(sel != RETURN_TO_MENU);
 }
@@ -208,17 +203,15 @@ void printPatientMenu()
     printf("3. Return to Menu\n");
 }
 
-int searchCriteriaSelection(int sel)
+void searchCriteriaSelection(int sel)
 {
-    int index = INVALID_INPUT;
-
     switch(sel)
     {
         case SEARCH_BY_ID:
-            index = searchPatientByID();
+            searchPatientByID();
             break;
         case SEARCH_BY_NAME:
-            index = searchPatientByName();
+            searchPatientByName();
             break;
         case RETURN_TO_MENU:
             printf("Returning to menu...\n");
@@ -226,16 +219,13 @@ int searchCriteriaSelection(int sel)
         default:
             printf("Invalid input! Try again.\n");
     }
-
-    return index;
 }
 
-void handlePatientSearchResult(int index,
-                               int sel)
+void handlePatientSearchResult(int index)
 {
     if(index != INVALID_INPUT)
     {
-        printf("%-5s%-20s%-5s%-20s%-5s\n",
+        printf("%-8s%-20s%-8s%-20s%-8s\n",
                "ID",
                "Name",
                "Age",
@@ -243,13 +233,35 @@ void handlePatientSearchResult(int index,
                "Room Number");
         printPatientRecord(index);
     }
-    else if(sel == SEARCH_BY_ID || sel == SEARCH_BY_NAME)
+    else
     {
         printf("Patient record not found.\n");
     }
 }
 
-int searchPatientByID()
+void handleMultiplePatientSearchResults(int* indexes,
+                                        int numRecordsFound)
+{
+    if(numRecordsFound != NO_RECORDS)
+    {
+        printf("%-8s%-20s%-8s%-20s%-8s\n",
+               "ID",
+               "Name",
+               "Age",
+               "Diagnosis",
+               "Room Number");
+        for(int i = 0; i < numRecordsFound; i++)
+        {
+            printPatientRecord(indexes[i]);
+        }
+    }
+    else
+    {
+        printf("Patient record not found.\n");
+    }
+}
+
+void searchPatientByID()
 {
     int index;
     int id;
@@ -259,15 +271,17 @@ int searchPatientByID()
                      totalPatients,
                      id);
 
-    return index;
+    handlePatientSearchResult(index);
 }
 
-int searchPatientByName()
+void searchPatientByName()
 {
-    char name[NAME_MAX_CHAR];
-    int index;
+    int indexes[MAX_PATIENTS];
+    int numRecordsFound;
 
-    index = INVALID_INPUT;
+    numRecordsFound = NO_RECORDS;
+
+    char name[NAME_MAX_CHAR];
 
     getStringInput("Enter patient name: ",
                    name,
@@ -278,22 +292,22 @@ int searchPatientByName()
         if(strcmp(patientRecords[i].name,
                   name) == RECORD_FOUND)
         {
-            index = i;
-            break;
+            indexes[numRecordsFound] = i;
+            numRecordsFound++;
         }
     }
 
-    return index;
+    handleMultiplePatientSearchResults(indexes, numRecordsFound);
 }
 
-void printPatientRecord(int id)
+void printPatientRecord(int index)
 {
-    printf("%-5d%-20s%-5d%-20s%-5d\n",
-           patientRecords[id].patientID,
-           patientRecords[id].name,
-           patientRecords[id].age,
-           patientRecords[id].diagnosis,
-           patientRecords[id].roomNumber);
+    printf("%-8d%-20s%-8d%-20s%-8d\n",
+           patientRecords[index].patientID,
+           patientRecords[index].name,
+           patientRecords[index].age,
+           patientRecords[index].diagnosis,
+           patientRecords[index].roomNumber);
 }
 
 void viewAllPatientRecords()
@@ -305,7 +319,7 @@ void viewAllPatientRecords()
     }
 
     printf("\nPatient Records:\n");
-    printf("%-5s%-20s%-5s%-20s%-5s\n",
+    printf("%-8s%-20s%-8s%-20s%-8s\n",
            "ID",
            "Name",
            "Age",
