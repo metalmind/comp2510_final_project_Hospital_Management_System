@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "patient.h"
-#include "tools.h"
+#include "../inc/tools.h"
 
 patient patientRecords[MAX_PATIENTS] = {};
 int totalPatients                    = 0;

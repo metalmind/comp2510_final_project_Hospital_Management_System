@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include<String.h>
 //#include "tools.h"
-#include "schedule.h"
+#include "../inc/schedule.h"
 
 
 int main(void)
