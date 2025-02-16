@@ -8,4 +8,6 @@ add_executable(Assignment src/main.c
         src/patient.c
         src/patient.h
         src/tools.c
-        src/tools.h)
+        src/tools.h
+        src/schedule.c
+        src/schedule.h)

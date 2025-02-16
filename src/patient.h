@@ -5,6 +5,11 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 
+#include <stdio.h>
+#include <string.h>
+#include "patient.h"
+#include "tools.h"
+
 #define NAME_MAX_CHAR 50
 #define DIAGNOSIS_MAX_CHAR 100
 
