@@ -32,6 +32,7 @@ void getDayOfWeekNameStr(const enum daysInWeek dayOfWeek,
  * Takes in the enum shift and sets of the shift name to the string version.
  *
  * @param shift enum shift
+ * @param shiftName The name of the shift (Morning, Afternoon, Evening)
  */
 void getShiftNameStr(enum shift shift,
                      char* shiftName);
