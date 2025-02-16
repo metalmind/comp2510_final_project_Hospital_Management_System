@@ -6,8 +6,8 @@ set(CMAKE_C_STANDARD 23)
 add_executable(Assignment src/main.c
                           src/menu.c
         src/patient.c
-        incl/patient.h
+        inc/patient.h
         src/tools.c
-        incl/tools.h
+        inc/tools.h
         src/schedule.c
-        incl/schedule.h)
+        inc/schedule.h)

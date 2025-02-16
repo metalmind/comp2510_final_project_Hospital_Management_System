@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "patient.h"
+#include "../inc/patient.h"
 #include "../inc/tools.h"
 
 patient patientRecords[MAX_PATIENTS] = {};

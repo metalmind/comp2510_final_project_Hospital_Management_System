@@ -5,7 +5,7 @@
  * @author Owen Wou
  * @version February 2025
  */
-#include "menu.h"
+#include "../inc/menu.h"
 #include <stdio.h>
 
 void menu(void)
