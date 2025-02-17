@@ -37,6 +37,10 @@
 #define ENTRY_REMOVAL_OFFSET 1
 #define NEXT_ENTRY_OFFSET 1
 
+#define INT_FIELD_SPACING 9
+#define STRING_FIELD_SPACING 21
+#define ROOM_NUM_FIELD_SPACING 17
+
 typedef struct patient patient;
 
 struct patient
@@ -200,5 +204,22 @@ void viewAllPatientRecords(void);
  * Prints the patient menu.
  */
 void printPatientMenu();
+
+/**
+ * Helper function to print the patient record header, including top and
+ * bottom dividers.
+ */
+void printPatientRecordsHeader();
+
+/**
+ * Helper function that prints the crossbar for the patient records.
+ */
+void printPatientRecordDivider();
+
+/**
+ * Helper function that prints the specified number of dashes to the screen.
+ * @param numDashes number of dashes to print
+ */
+void printDashes(int numDashes);
 
 #endif //PATIENT_H

@@ -256,13 +256,9 @@ void handlePatientSearchResult(const int index)
 {
     if(index != INVALID_INPUT)
     {
-        printf("%-8s%-20s%-8s%-20s%-8s\n",
-               "ID",
-               "Name",
-               "Age",
-               "Diagnosis",
-               "Room Number");
+        printPatientRecordsHeader();
         printPatientRecord(index);
+        printPatientRecordDivider();
     }
     else
     {
@@ -275,16 +271,14 @@ void handleMultiplePatientSearchResults(const int* const indexes,
 {
     if(numRecordsFound != NO_RECORDS)
     {
-        printf("%-8s%-20s%-8s%-20s%-8s\n",
-               "ID",
-               "Name",
-               "Age",
-               "Diagnosis",
-               "Room Number");
+        printPatientRecordsHeader();
+
         for(int i = 0; i < numRecordsFound; i++)
         {
             printPatientRecord(indexes[i]);
         }
+
+        printPatientRecordDivider();
     }
     else
     {
@@ -333,12 +327,18 @@ void searchPatientByName()
 
 void printPatientRecord(const int index)
 {
-    printf("%-8d%-20s%-8d%-20s%-8d\n",
+    printf("%-2s%-8d%-2s%-20s%-2s%-8d%-2s%-20s%-2s%-16d%c\n",
+           "|",
            patientRecords[index].patientID,
+           "|",
            patientRecords[index].name,
+           "|",
            patientRecords[index].age,
+           "|",
            patientRecords[index].diagnosis,
-           patientRecords[index].roomNumber);
+           "|",
+           patientRecords[index].roomNumber,
+           '|');
 }
 
 void viewAllPatientRecords()
@@ -349,16 +349,56 @@ void viewAllPatientRecords()
         return;
     }
 
-    printf("\nPatient Records:\n");
-    printf("%-8s%-20s%-8s%-20s%-8s\n",
-           "ID",
-           "Name",
-           "Age",
-           "Diagnosis",
-           "Room Number");
+    printPatientRecordsHeader();
 
     for(int i = 0; i < totalPatients; i++)
     {
         printPatientRecord(i);
+    }
+
+    printPatientRecordDivider();
+}
+
+void printPatientRecordsHeader()
+{
+    printPatientRecordDivider();
+
+    printf("%-2s%-8s%-2s%-20s%-2s%-8s%-2s%-20s%-2s%-16s%c\n",
+       "|",
+       "ID",
+       "|",
+       "Name",
+       "|",
+       "Age",
+       "|",
+       "Diagnosis",
+       "|",
+       "Room Number",
+       '|');
+
+    printPatientRecordDivider();
+}
+
+void printPatientRecordDivider()
+{
+    printf("+");
+    printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(STRING_FIELD_SPACING);
+    printf("+");
+    printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(STRING_FIELD_SPACING);
+    printf("+");
+    printDashes(ROOM_NUM_FIELD_SPACING);
+    printf("+");
+    printf("\n");
+}
+
+void printDashes(const int numDashes)
+{
+    for(int i = 0; i < numDashes; i++)
+    {
+        printf("%c", '-');
     }
 }
