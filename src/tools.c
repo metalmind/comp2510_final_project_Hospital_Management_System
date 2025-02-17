@@ -3,6 +3,7 @@
 //
 
 #include<stdio.h>
+#include<string.h>
 #include "../inc/tools.h"
 
 int getInput(char* prompt,
@@ -90,6 +91,3 @@ void clearInputBuffer()
 {
     while(getchar() != '\n');
 }
-
-
-#include "../inc/tools.h"

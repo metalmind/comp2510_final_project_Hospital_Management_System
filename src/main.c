@@ -1,7 +1,7 @@
 //#include "menu.h"
 //#include "patient.h"
 #include<stdio.h>
-#include<String.h>
+#include<string.h>
 //#include "tools.h"
 #include "../inc/schedule.h"
 

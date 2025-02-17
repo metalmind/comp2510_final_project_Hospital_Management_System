@@ -37,7 +37,7 @@ int getInput(char* prompt,
  * @param lowerBound lower bound of valid range
  * @param upperBound upper bound of valid range
  * @param errorMessage error message to print should data be invalid
- * @return 1 is data value is valid, otherwise 0
+ * @return TRUE is data value is valid, otherwise FALSE
  */
 int validateData(int numItemsRead,
                  int input,
@@ -68,7 +68,7 @@ int validateNum(int num,
                 int upperBound);
 
 /**
- * Wrapper funciton for fgets() whicih takes a prompt message to print and
+ * Wrapper function for fgets() which takes a prompt message to print and
  * a char array to which to assign the input.
  *
  * @param prompt prompt message

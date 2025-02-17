@@ -65,6 +65,37 @@ void addNewPatientRecord(void)
     printf("Patient added successfully!\n");
 }
 
+void dischargePatient()
+{
+    int index;
+    int id;
+
+    id    = getPatientID();
+    index = idExists(patientRecords,
+                     totalPatients,
+                     id);
+
+    if(index != ID_NOT_FOUND)
+    {
+        removePatientRecord(index);
+    }
+    else
+    {
+        printf("Patient record not found.");
+    }
+}
+
+void removePatientRecord(const int index)
+{
+    for(int i = index; i < totalPatients - ENTRY_REMOVAL_OFFSET; i++)
+    {
+        patientRecords[i] = patientRecords[i + NEXT_ENTRY_OFFSET];
+    }
+
+    printf("Patient successfully discharged - record removed.");
+    totalPatients--;
+}
+
 int getUniquePatientID()
 {
     int id;

@@ -34,6 +34,9 @@
 #define NO_RECORDS 0
 #define RECORD_FOUND 0
 
+#define ENTRY_REMOVAL_OFFSET 1
+#define NEXT_ENTRY_OFFSET 1
+
 typedef struct patient patient;
 
 struct patient
@@ -51,6 +54,19 @@ struct patient
  * @author Owen Wou
  */
 void addNewPatientRecord(void);
+
+/**
+ * Discharges a patient from the hospital.
+ */
+void dischargePatient(void);
+
+/**
+ * Removes the specified patient record from the patientRecord array,
+ * shifting remaining patient records by NEXT_ENTRY_OFFSET to fill the
+ * gap.
+ * @param index index of patient record to be removed
+ */
+void removePatientRecord(int index);
 
 /**
  * Searches for a patientID in the array and returns its index if found;
