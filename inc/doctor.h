@@ -37,6 +37,14 @@ struct doctor
 int doctorIDExists(int id);
 
 /**
+ * Returns the doctor record corresponding to the specified index
+ * of the doctorRecords array.
+ * @param index index of doctor record to retrieve
+ * @return doctor record
+ */
+doctor* getDoctor(int index);
+
+/**
  * Adds a new doctor to the doctorRecord array.
  */
 void addNewDoctorRecord(void);

@@ -18,6 +18,16 @@ int doctorIDExists(const int id)
     return DOC_ID_NOT_FOUND;
 }
 
+doctor* getDoctor(const int index)
+{
+    if(index != DOC_ID_NOT_FOUND)
+    {
+        return &doctorRecords[index];
+    }
+
+    return NULL;
+}
+
 void addNewDoctorRecord(void)
 {
     if(totalDoctors >= MAX_DOCTORS)

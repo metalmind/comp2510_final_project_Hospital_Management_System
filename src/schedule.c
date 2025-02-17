@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 
-doctor schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
+int schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
 
 void getDayOfWeekNameStr(const enum daysInWeek dayOfWeek,
                          char* dayOfWeekName)
@@ -112,17 +112,24 @@ void printShiftsForWeek()
 
 void getDoctorOnShift(enum daysInWeek dayOfWeek,
                       enum shift shift,
-                      char* doctor)
+                      char* doctorName)
 {
-    if(schedule[dayOfWeek][shift].doctorID == UNASSIGNED_SHIFT)
+    int index;
+    doctor* doc;
+
+    index = doctorIDExists(schedule[dayOfWeek][shift]);
+    doc   = getDoctor(index);
+
+    if(doc == NULL ||
+       schedule[dayOfWeek][shift] == UNASSIGNED_SHIFT)
     {
-        strcpy(doctor,
+        strcpy(doctorName,
                " ");
     }
     else
     {
-        strcpy(doctor, "Dr. ");
-        strcat(doctor,  schedule[dayOfWeek][shift].lastName);
+        strcpy(doctorName, "Dr. ");
+        strcat(doctorName,  doc -> lastName);
         // strcpy(doctor, schedule[dayOfWeek][shift]);
     }
 }
@@ -158,10 +165,10 @@ void printScheduleDivider()
     printf("\n");
 }
 
-void addToSchedule(const doctor doctor,
+void addToSchedule(const doctor* const doctor,
                    const enum daysInWeek dayOfWeek,
                    const enum shift shiftToFill)
 {
     // schedule[dayOfWeek][shiftToFill] = doctorName;
-    schedule[dayOfWeek][shiftToFill] = doctor;
+    schedule[dayOfWeek][shiftToFill] = doctor -> doctorID;
 }

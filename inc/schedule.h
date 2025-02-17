@@ -51,7 +51,7 @@ void printDocWeekSchedule();
  * @param dayOfWeek The day to schedule the doctor on.
  * @param shiftToFill The shift you want to fill.
  */
-void addToSchedule(doctor doctor,
+void addToSchedule(const doctor* const doctor,
                    enum daysInWeek dayOfWeek,
                    enum shift shiftToFill);
 
@@ -75,10 +75,10 @@ void printShiftsForWeek();
  *
  * @param dayOfWeek The day of the week to check.
  * @param shift The shift you want to check
- * @param doctor The return value that will have the name of the doctor on shift.
+ * @param doctorName The return value that will have the name of the doctor on shift.
  */
 void getDoctorOnShift(enum daysInWeek dayOfWeek,
                       enum shift shift,
-                      char* doctor);
+                      char* doctorName);
 
 #endif //SCHEDULE_H

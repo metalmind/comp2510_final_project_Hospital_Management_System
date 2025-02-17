@@ -10,14 +10,20 @@ int main(void)
 {
     printDocWeekSchedule();
 
-    doctor shepard = {1, "Calzone", "Shepard", "Cardiology"};
+    addNewDoctorRecord();
+
+    doctor* shepard = getDoctor(0);
 
     addToSchedule (shepard,
                   SUN,
                   MORNING);
+
+    addToSchedule (shepard,
+                  TUE,
+                  EVENING);
+
     printDocWeekSchedule();
 
-    addNewDoctorRecord();
     addNewDoctorRecord();
     addNewDoctorRecord();
     viewAllDoctorRecords();
