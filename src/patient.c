@@ -2,7 +2,6 @@
 // Created by Owen on 10/02/2025.
 //
 
-
 #include <stdio.h>
 #include <string.h>
 #include "../inc/patient.h"
@@ -11,13 +10,11 @@
 patient patientRecords[MAX_PATIENTS] = {};
 int totalPatients                    = 0;
 
-int idExists(const patient* const arr,
-             const int size,
-             const int id)
+int idExists(const int id)
 {
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < totalPatients; i++)
     {
-        if(arr[i].patientID == id)
+        if(patientRecords[i].patientID == id)
         {
             return i;
         }
@@ -34,7 +31,7 @@ void addNewPatientRecord(void)
     }
 
     int id;
-    char name[NAME_MAX_CHAR];
+    char name[FULL_NAME_MAX_CHAR];
     int age;
     char diagnosis[DIAGNOSIS_MAX_CHAR];
     int roomNumber;
@@ -43,7 +40,7 @@ void addNewPatientRecord(void)
 
     getStringInput("Enter patient name: ",
                    name,
-                   NAME_MAX_CHAR);
+                   FULL_NAME_MAX_CHAR);
 
     age = getPatientAge();
 
@@ -306,11 +303,11 @@ void searchPatientByName()
 
     numRecordsFound = NO_RECORDS;
 
-    char name[NAME_MAX_CHAR];
+    char name[FULL_NAME_MAX_CHAR];
 
     getStringInput("Enter patient name: ",
                    name,
-                   NAME_MAX_CHAR);
+                   FULL_NAME_MAX_CHAR);
 
     for(int i = 0; i < totalPatients; i++)
     {

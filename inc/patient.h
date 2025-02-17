@@ -10,7 +10,7 @@
 #include "patient.h"
 #include "tools.h"
 
-#define NAME_MAX_CHAR 50
+#define FULL_NAME_MAX_CHAR 50
 #define DIAGNOSIS_MAX_CHAR 100
 
 #define MAX_PATIENTS 50
@@ -46,7 +46,7 @@ typedef struct patient patient;
 struct patient
 {
     int patientID;
-    char name[NAME_MAX_CHAR];
+    char name[FULL_NAME_MAX_CHAR];
     int age;
     char diagnosis[DIAGNOSIS_MAX_CHAR];
     int roomNumber;
@@ -84,9 +84,7 @@ void removePatientRecord(int index);
  * @author Ayesha Anzer
  * @author Owen Wou
  */
-int idExists(const patient* const arr,
-             int size,
-             int id);
+int idExists(int id);
 
 /**
  * Prompts user for patient ID, with checks to ensure patient ID is valid
