@@ -68,9 +68,7 @@ void dischargePatient()
     int id;
 
     id    = getPatientID();
-    index = idExists(patientRecords,
-                     totalPatients,
-                     id);
+    index = idExists(id);
 
     if(index != ID_NOT_FOUND)
     {
@@ -110,9 +108,7 @@ int getUniquePatientID()
 
         numItemsRead = getInput("Enter patient ID: ",
                                 &id);
-        unique = idExists(patientRecords,
-                          totalPatients,
-                          id) == ID_NOT_FOUND;
+        unique = idExists(id) == ID_NOT_FOUND;
 
         valid = validateData(numItemsRead,
                              id,
@@ -289,9 +285,7 @@ void searchPatientByID()
     int id;
 
     id    = getPatientID();
-    index = idExists(patientRecords,
-                     totalPatients,
-                     id);
+    index = idExists(id);
 
     handlePatientSearchResult(index);
 }
