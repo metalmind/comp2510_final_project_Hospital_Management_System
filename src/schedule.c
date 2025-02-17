@@ -91,7 +91,7 @@ void printShiftsForWeek()
         getShiftNameStr(shift,
                         shiftName);
         printf("| ");
-        printf("%-11s",
+        printf("%-12s",
                shiftName);
         printf("|");
         for(int dayOfWeek = 0; dayOfWeek < DAYS_IN_WEEK; dayOfWeek++)
@@ -127,7 +127,7 @@ void getDoctorOnShift(enum daysInWeek dayOfWeek,
 
 void printDayOfWeekHeader()
 {
-    printf("%-13s",
+    printf("%-14s",
            "|");
     printf("|");
     char dayOfWeekName[MAX_CHAR_SHIFT];
@@ -147,12 +147,13 @@ void printScheduleDivider()
 {
     for(int i = 0; i < DAYS_IN_WEEK + 1; i++)
     {
+        printf("+");
         for(int j = 0; j < SPACE_PER_COL; j++)
         {
             printf("-");
         }
-        printf("+");
     }
+    printf("+");
     printf("\n");
 }
 
