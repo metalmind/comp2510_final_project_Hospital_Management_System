@@ -8,12 +8,14 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
+#include "../inc/doctor.h"
+
 #define DAYS_IN_WEEK 7
 #define NUM_SHIFTS 3
 #define MAX_CHAR_SHIFT 15
 #define SPACE_PER_COL 13
 
-#define MAX_DOCTORS 10
+#define UNASSIGNED_SHIFT 0
 
 enum daysInWeek { SUN, MON, TUE, WED, THU, FRI, SAT };
 
@@ -45,11 +47,11 @@ void printDocWeekSchedule();
 /**
  * Adds a doctor to the schedule.
  *
- * @param doctorName Name of the doctor to add.
+ * @param doctor Name of the doctor to add.
  * @param dayOfWeek The day to schedule the doctor on.
  * @param shiftToFill The shift you want to fill.
  */
-void addToSchedule(char* doctorName,
+void addToSchedule(doctor doctor,
                    enum daysInWeek dayOfWeek,
                    enum shift shiftToFill);
 
