@@ -92,7 +92,7 @@ void removePatientRecord(const int index)
         patientRecords[i] = patientRecords[i + NEXT_ENTRY_OFFSET];
     }
 
-    printf("Patient successfully discharged - record removed.");
+    printf("Patient successfully discharged - record removed.\n");
     totalPatients--;
 }
 

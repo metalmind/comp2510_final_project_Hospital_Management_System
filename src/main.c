@@ -18,6 +18,8 @@ int main(void)
     addNewPatientRecord();
     viewAllPatientRecords();
     searchForPatientRecord();
+    dischargePatient();
+    viewAllPatientRecords();
 
     return 0;
 }
