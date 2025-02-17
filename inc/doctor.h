@@ -101,7 +101,7 @@ void viewAllDoctorRecords(void);
  * Helper function to print the doctor record header, including top and
  * bottom dividers.
  */
-void prinDoctorRecordsHeader(void);
+void printDoctorRecordsHeader(void);
 
 /**
  * Helper function that prints the crossbar for the doctor records.

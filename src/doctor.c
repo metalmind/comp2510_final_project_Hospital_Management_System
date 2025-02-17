@@ -181,7 +181,7 @@ void viewAllDoctorRecords()
         return;
     }
 
-    prinDoctorRecordsHeader();
+    printDoctorRecordsHeader();
 
     for(int i = 0; i < totalDoctors; i++)
     {
@@ -191,7 +191,7 @@ void viewAllDoctorRecords()
     printDoctorRecordDivider();
 }
 
-void prinDoctorRecordsHeader()
+void printDoctorRecordsHeader()
 {
     printDoctorRecordDivider();
 
