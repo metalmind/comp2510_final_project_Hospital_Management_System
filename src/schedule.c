@@ -114,7 +114,7 @@ void getDoctorOnShift(enum daysInWeek dayOfWeek,
                       enum shift shift,
                       char* doctor)
 {
-    if(schedule[dayOfWeek][shift].doctorID = UNASSIGNED_SHIFT)
+    if(schedule[dayOfWeek][shift].doctorID == UNASSIGNED_SHIFT)
     {
         strcpy(doctor,
                " ");
