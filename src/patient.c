@@ -11,9 +11,9 @@
 patient patientRecords[MAX_PATIENTS] = {};
 int totalPatients                    = 0;
 
-int idExists(patient arr[],
-             int size,
-             int id)
+int idExists(const patient* const arr,
+             const int size,
+             const int id)
 {
     for(int i = 0; i < size; i++)
     {
@@ -41,21 +41,15 @@ void addNewPatientRecord(void)
 
     id = getUniquePatientID();
 
-    printf("Enter patient name: ");
-    fgets(name,
-          NAME_MAX_CHAR,
-          stdin);
-    name[strcspn(name,
-                 "\n")] = TERMINAL_CHAR;
+    getStringInput("Enter patient name: ",
+                   name,
+                   NAME_MAX_CHAR);
 
     age = getPatientAge();
 
-    printf("Enter patient diagnosis: ");
-    fgets(diagnosis,
-          DIAGNOSIS_MAX_CHAR,
-          stdin);
-    diagnosis[strcspn(diagnosis,
-                      "\n")] = TERMINAL_CHAR;
+    getStringInput("Enter patient diagnosis: ",
+                   diagnosis,
+                   DIAGNOSIS_MAX_CHAR);
 
     roomNumber = getPatientRoomNumber();
 
@@ -69,6 +63,37 @@ void addNewPatientRecord(void)
     totalPatients++;
 
     printf("Patient added successfully!\n");
+}
+
+void dischargePatient()
+{
+    int index;
+    int id;
+
+    id    = getPatientID();
+    index = idExists(patientRecords,
+                     totalPatients,
+                     id);
+
+    if(index != ID_NOT_FOUND)
+    {
+        removePatientRecord(index);
+    }
+    else
+    {
+        printf("Patient record not found.");
+    }
+}
+
+void removePatientRecord(const int index)
+{
+    for(int i = index; i < totalPatients - ENTRY_REMOVAL_OFFSET; i++)
+    {
+        patientRecords[i] = patientRecords[i + NEXT_ENTRY_OFFSET];
+    }
+
+    printf("Patient successfully discharged - record removed.\n");
+    totalPatients--;
 }
 
 int getUniquePatientID()
@@ -189,18 +214,14 @@ int getPatientRoomNumber()
 void searchForPatientRecord()
 {
     int sel;
-    int index;
 
     do
     {
-        index = INVALID_INPUT;
         printPatientMenu();
 
         getInput("Enter your selection: ",
                  &sel);
-        index = searchCriteriaSelection(sel);
-        handlePatientSearchResult(index,
-                                  sel);
+        searchCriteriaSelection(sel);
     }
     while(sel != RETURN_TO_MENU);
 }
@@ -213,17 +234,15 @@ void printPatientMenu()
     printf("3. Return to Menu\n");
 }
 
-int searchCriteriaSelection(int sel)
+void searchCriteriaSelection(const int sel)
 {
-    int index = INVALID_INPUT;
-
     switch(sel)
     {
         case SEARCH_BY_ID:
-            index = searchPatientByID();
+            searchPatientByID();
             break;
         case SEARCH_BY_NAME:
-            index = searchPatientByName();
+            searchPatientByName();
             break;
         case RETURN_TO_MENU:
             printf("Returning to menu...\n");
@@ -231,30 +250,43 @@ int searchCriteriaSelection(int sel)
         default:
             printf("Invalid input! Try again.\n");
     }
-
-    return index;
 }
 
-void handlePatientSearchResult(int index,
-                               int sel)
+void handlePatientSearchResult(const int index)
 {
     if(index != INVALID_INPUT)
     {
-        printf("%-5s%-20s%-5s%-20s%-5s\n",
-               "ID",
-               "Name",
-               "Age",
-               "Diagnosis",
-               "Room Number");
+        printPatientRecordsHeader();
         printPatientRecord(index);
+        printPatientRecordDivider();
     }
-    else if(sel == SEARCH_BY_ID || sel == SEARCH_BY_NAME)
+    else
     {
         printf("Patient record not found.\n");
     }
 }
 
-int searchPatientByID()
+void handleMultiplePatientSearchResults(const int* const indexes,
+                                        const int numRecordsFound)
+{
+    if(numRecordsFound != NO_RECORDS)
+    {
+        printPatientRecordsHeader();
+
+        for(int i = 0; i < numRecordsFound; i++)
+        {
+            printPatientRecord(indexes[i]);
+        }
+
+        printPatientRecordDivider();
+    }
+    else
+    {
+        printf("Patient record not found.\n");
+    }
+}
+
+void searchPatientByID()
 {
     int index;
     int id;
@@ -264,44 +296,49 @@ int searchPatientByID()
                      totalPatients,
                      id);
 
-    return index;
+    handlePatientSearchResult(index);
 }
 
-int searchPatientByName()
+void searchPatientByName()
 {
+    int indexes[MAX_PATIENTS];
+    int numRecordsFound;
+
+    numRecordsFound = NO_RECORDS;
+
     char name[NAME_MAX_CHAR];
-    int index;
 
-    index = INVALID_INPUT;
-
-    printf("Enter Patient Name: ");
-    fgets(name,
-          NAME_MAX_CHAR,
-          stdin);
-    name[strcspn(name,
-                 "\n")] = TERMINAL_CHAR;
+    getStringInput("Enter patient name: ",
+                   name,
+                   NAME_MAX_CHAR);
 
     for(int i = 0; i < totalPatients; i++)
     {
         if(strcmp(patientRecords[i].name,
                   name) == RECORD_FOUND)
         {
-            index = i;
-            break;
+            indexes[numRecordsFound] = i;
+            numRecordsFound++;
         }
     }
 
-    return index;
+    handleMultiplePatientSearchResults(indexes, numRecordsFound);
 }
 
-void printPatientRecord(int id)
+void printPatientRecord(const int index)
 {
-    printf("%-5d%-20s%-5d%-20s%-5d\n",
-           patientRecords[id].patientID,
-           patientRecords[id].name,
-           patientRecords[id].age,
-           patientRecords[id].diagnosis,
-           patientRecords[id].roomNumber);
+    printf("%-2s%-8d%-2s%-20s%-2s%-8d%-2s%-20s%-2s%-16d%c\n",
+           "|",
+           patientRecords[index].patientID,
+           "|",
+           patientRecords[index].name,
+           "|",
+           patientRecords[index].age,
+           "|",
+           patientRecords[index].diagnosis,
+           "|",
+           patientRecords[index].roomNumber,
+           '|');
 }
 
 void viewAllPatientRecords()
@@ -312,16 +349,56 @@ void viewAllPatientRecords()
         return;
     }
 
-    printf("\nPatient Records:\n");
-    printf("%-5s%-20s%-5s%-20s%-5s\n",
-           "ID",
-           "Name",
-           "Age",
-           "Diagnosis",
-           "Room Number");
+    printPatientRecordsHeader();
 
     for(int i = 0; i < totalPatients; i++)
     {
         printPatientRecord(i);
+    }
+
+    printPatientRecordDivider();
+}
+
+void printPatientRecordsHeader()
+{
+    printPatientRecordDivider();
+
+    printf("%-2s%-8s%-2s%-20s%-2s%-8s%-2s%-20s%-2s%-16s%c\n",
+       "|",
+       "ID",
+       "|",
+       "Name",
+       "|",
+       "Age",
+       "|",
+       "Diagnosis",
+       "|",
+       "Room Number",
+       '|');
+
+    printPatientRecordDivider();
+}
+
+void printPatientRecordDivider()
+{
+    printf("+");
+    printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(STRING_FIELD_SPACING);
+    printf("+");
+    printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(STRING_FIELD_SPACING);
+    printf("+");
+    printDashes(ROOM_NUM_FIELD_SPACING);
+    printf("+");
+    printf("\n");
+}
+
+void printDashes(const int numDashes)
+{
+    for(int i = 0; i < numDashes; i++)
+    {
+        printf("%c", '-');
     }
 }

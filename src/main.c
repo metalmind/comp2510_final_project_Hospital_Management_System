@@ -1,7 +1,7 @@
 //#include "menu.h"
-//#include "patient.h"
+#include "../inc/patient.h"
 #include<stdio.h>
-#include<String.h>
+#include<string.h>
 //#include "tools.h"
 #include "../inc/schedule.h"
 
@@ -14,10 +14,12 @@ int main(void)
                   MORNING);
     printDocWeekSchedule();
 
-    // addNewPatientRecord();
-    // addNewPatientRecord();
-    // viewAllPatientRecords();
-    // searchForPatientRecord();
+    addNewPatientRecord();
+    addNewPatientRecord();
+    viewAllPatientRecords();
+    searchForPatientRecord();
+    dischargePatient();
+    viewAllPatientRecords();
 
     return 0;
 }
