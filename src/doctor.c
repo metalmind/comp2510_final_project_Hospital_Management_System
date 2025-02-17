@@ -15,7 +15,7 @@ int doctorIDExists(const int id)
             return i;
         }
     }
-    return ID_NOT_FOUND;
+    return DOC_ID_NOT_FOUND;
 }
 
 void addNewDoctorRecord(void)
@@ -65,7 +65,7 @@ void fireDoctor()
     id    = getDoctorID();
     index = doctorIDExists(id);
 
-    if(index != ID_NOT_FOUND)
+    if(index != DOC_ID_NOT_FOUND)
     {
         removeDoctorRecord(index);
     }
@@ -97,18 +97,18 @@ int getUniqueDoctorID()
 
     do
     {
-        id = ID_NOT_FOUND;
+        id = DOC_ID_NOT_FOUND;
 
         int numItemsRead;
 
         numItemsRead = getInput("Enter doctor ID: ",
                                 &id);
-        unique = doctorIDExists(id) == ID_NOT_FOUND;
+        unique = doctorIDExists(id) == DOC_ID_NOT_FOUND;
 
         valid = validateData(numItemsRead,
                              id,
-                             ID_MIN_VALUE,
-                             ID_MAX_VALUE,
+                             DOC_ID_MIN_VALUE,
+                             DOC_ID_MAX_VALUE,
                              "Invalid doctor ID! Please enter a positive integer.\n");
 
         if(valid && !unique)
@@ -126,7 +126,7 @@ int getDoctorID()
     int id;
     int valid;
 
-    id    = ID_NOT_FOUND;
+    id    = DOC_ID_NOT_FOUND;
     valid = FALSE;
 
     do
@@ -138,8 +138,8 @@ int getDoctorID()
 
         valid = validateData(numItemsRead,
                              id,
-                             ID_MIN_VALUE,
-                             ID_MAX_VALUE,
+                             DOC_ID_MIN_VALUE,
+                             DOC_ID_MAX_VALUE,
                              "Invalid doctor ID! Please enter a positive integer.\n");
     }
     while(!valid);

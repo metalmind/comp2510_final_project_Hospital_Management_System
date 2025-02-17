@@ -6,9 +6,9 @@
 
 #define MAX_DOCTORS 10
 
-#define ID_MIN_VALUE 1
-#define ID_MAX_VALUE 10
-#define ID_NOT_FOUND (-1)
+#define DOC_ID_MIN_VALUE 1
+#define DOC_ID_MAX_VALUE 10
+#define DOC_ID_NOT_FOUND (-1)
 
 #define INT_FIELD_SPACING 9
 #define NAME_FIELD_SPACING 17
@@ -19,8 +19,8 @@ typedef struct doctor doctor;
 struct doctor
 {
     int doctorID;
-    char lastName[NAME_MAX_CHAR];
     char firstName[NAME_MAX_CHAR];
+    char lastName[NAME_MAX_CHAR];
     char specialty[SPECIALTY_MAX_CHAR];
 };
 
