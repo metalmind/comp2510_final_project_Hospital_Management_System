@@ -209,10 +209,4 @@ void printPatientRecordsHeader();
  */
 void printPatientRecordDivider();
 
-/**
- * Helper function that prints the specified number of dashes to the screen.
- * @param numDashes number of dashes to print
- */
-void printDashes(int numDashes);
-
 #endif //PATIENT_H

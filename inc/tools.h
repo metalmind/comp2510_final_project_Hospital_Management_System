@@ -16,6 +16,9 @@
 
 #define TERMINAL_CHAR 0
 
+#define ENTRY_REMOVAL_OFFSET 1
+#define NEXT_ENTRY_OFFSET 1
+
 /**
  * Wrapper function for scanf() which takes a prompt message to print and
  * a value to which to assign the input. Clears the input buffer in case of invalid
@@ -84,5 +87,11 @@ void getStringInput(const char* const prompt,
  * Helper method to flush the input buffer in the case of invalid inputs.
  */
 void clearInputBuffer(void);
+
+/**
+ * Helper function that prints the specified number of dashes to the screen.
+ * @param numDashes number of dashes to print
+ */
+void printDashes(int numDashes);
 
 #endif //TOOLS_H
