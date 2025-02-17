@@ -18,7 +18,7 @@
 #define MIN_AGE_YEARS 0
 #define MAX_AGE_YEARS 150
 
-#define ID_MIN_VALUE 0
+#define ID_MIN_VALUE 1
 #define ID_MAX_VALUE 50
 #define ID_NOT_FOUND (-1)
 
@@ -34,9 +34,6 @@
 #define NO_RECORDS 0
 #define RECORD_FOUND 0
 
-#define ENTRY_REMOVAL_OFFSET 1
-#define NEXT_ENTRY_OFFSET 1
-
 #define INT_FIELD_SPACING 9
 #define STRING_FIELD_SPACING 21
 #define ROOM_NUM_FIELD_SPACING 17
@@ -51,6 +48,18 @@ struct patient
     char diagnosis[DIAGNOSIS_MAX_CHAR];
     int roomNumber;
 };
+
+/**
+ * Searches for a patientID in the array and returns its index if found;
+ * otherwise, it returns ID_NOT_FOUND.
+ *
+ * @param id The ID we want to check for existence
+ * @return id index if found, otherwise ID_NOT_FOUND
+ *
+ * @author Ayesha Anzer
+ * @author Owen Wou
+ */
+int idExists(int id);
 
 /**
  * Adds a new patient to the patientRecord array.
@@ -71,20 +80,6 @@ void dischargePatient(void);
  * @param index index of patient record to be removed
  */
 void removePatientRecord(int index);
-
-/**
- * Searches for a patientID in the array and returns its index if found;
- * otherwise, it returns ID_NOT_FOUND.
- *
- * @param arr Array of Patient Structs
- * @param size The number of patient records in the array as an int
- * @param id The ID we want to check for existence
- * @return id index if found, otherwise ID_NOT_FOUND
- *
- * @author Ayesha Anzer
- * @author Owen Wou
- */
-int idExists(int id);
 
 /**
  * Prompts user for patient ID, with checks to ensure patient ID is valid

@@ -1,0 +1,389 @@
+#include "../inc/doctor.h"
+#include <stdio.h>
+#include <string.h>
+#include "../inc/tools.h"
+
+doctor doctorRecords[MAX_DOCTORS] = {};
+int totalDoctors                  = 0;
+
+int idExists(const doctor* const arr,
+             const int size,
+             const int id)
+{
+    for(int i = 0; i < size; i++)
+    {
+        if(arr[i].doctorID == id)
+        {
+            return i;
+        }
+    }
+    return ID_NOT_FOUND;
+}
+
+void addNewPatientRecord(void)
+{
+    if(totalDoctors >= MAX_DOCTORS)
+    {
+        printf("No open positions for new doctors! Cannot add any more doctors.\n");
+        return;
+    }
+
+    int id;
+    char firstName[NAME_MAX_CHAR];
+    char lastName[NAME_MAX_CHAR];
+
+    id = getUniqueDoctorID();
+
+    getStringInput("Enter doctor first name: ",
+                   firstName,
+                   NAME_MAX_CHAR);
+
+    getStringInput("Enter doctor last name: ",
+                   lastName,
+                   NAME_MAX_CHAR);
+
+    doctorRecords[totalDoctors].doctorID = id;
+    strcpy(doctorRecords[totalDoctors].firstName,
+           firstName);
+    strcpy(doctorRecords[totalDoctors].lastName,
+       lastName);
+    totalDoctors++;
+
+    printf("Doctor added successfully!\n");
+}
+
+void removeDoctor()
+{
+    int index;
+    int id;
+
+    id    = getDoctorID();
+    index = idExists(id);
+
+    if(index != ID_NOT_FOUND)
+    {
+        removePatientRecord(index);
+    }
+    else
+    {
+        printf("Patient record not found.");
+    }
+}
+
+void removePatientRecord(const int index)
+{
+    for(int i = index; i < totalPatients - ENTRY_REMOVAL_OFFSET; i++)
+    {
+        patientRecords[i] = patientRecords[i + NEXT_ENTRY_OFFSET];
+    }
+
+    printf("Patient successfully discharged - record removed.\n");
+    totalPatients--;
+}
+
+int getUniquePatientID()
+{
+    int id;
+    int valid;
+    int unique;
+
+    valid  = FALSE;
+    unique = FALSE;
+
+    do
+    {
+        id = ID_NOT_FOUND;
+
+        int numItemsRead;
+
+        numItemsRead = getInput("Enter patient ID: ",
+                                &id);
+        unique = idExists(patientRecords,
+                          totalPatients,
+                          id) == ID_NOT_FOUND;
+
+        valid = validateData(numItemsRead,
+                             id,
+                             ID_MIN_VALUE,
+                             ID_MAX_VALUE,
+                             "Invalid patient ID! Please enter a positive integer.\n");
+
+        if(valid && !unique)
+        {
+            printf("Duplicate patient ID! Please enter a unique ID.\n");
+        }
+    }
+    while(!(valid && unique));
+
+    return id;
+}
+
+int getPatientID()
+{
+    int id;
+    int valid;
+
+    id    = ID_NOT_FOUND;
+    valid = FALSE;
+
+    do
+    {
+        int numItemsRead;
+
+        numItemsRead = getInput("Enter patient ID: ",
+                                &id);
+
+        valid = validateData(numItemsRead,
+                             id,
+                             ID_MIN_VALUE,
+                             ID_MAX_VALUE,
+                             "Invalid patient ID! Please enter a positive integer.\n");
+    }
+    while(!valid);
+
+    return id;
+}
+
+int getPatientAge()
+{
+    int age;
+    int valid;
+
+    age   = INVALID_INPUT;
+    valid = FALSE;
+
+    do
+    {
+        int numItemsRead;
+
+        numItemsRead = getInput("Enter patient age: ",
+                                &age);
+
+        valid = validateData(numItemsRead,
+                             age,
+                             MIN_AGE_YEARS,
+                             MAX_AGE_YEARS,
+                             "Invalid age! Please enter a positive integer.\n");
+    }
+    while(!valid);
+
+    return age;
+}
+
+int getPatientRoomNumber()
+{
+    int roomNumber;
+    int valid;
+
+    roomNumber = INVALID_INPUT;
+    valid      = FALSE;
+
+    do
+    {
+        int numItemsRead;
+
+        numItemsRead = getInput("Enter patient room number: ",
+                                &roomNumber);
+
+        valid = validateData(numItemsRead,
+                             roomNumber,
+                             ROOM_NUMBER_MIN,
+                             ROOM_NUMBER_MAX,
+                             "Invalid room number! Please enter a positive integer.\n");
+    }
+    while(!valid);
+
+    return roomNumber;
+}
+
+void searchForPatientRecord()
+{
+    int sel;
+
+    do
+    {
+        printPatientMenu();
+
+        getInput("Enter your selection: ",
+                 &sel);
+        searchCriteriaSelection(sel);
+    }
+    while(sel != RETURN_TO_MENU);
+}
+
+void printPatientMenu()
+{
+    printf("Search By:\n");
+    printf("1. Patient ID\n");
+    printf("2. Patient Name\n");
+    printf("3. Return to Menu\n");
+}
+
+void searchCriteriaSelection(const int sel)
+{
+    switch(sel)
+    {
+        case SEARCH_BY_ID:
+            searchPatientByID();
+            break;
+        case SEARCH_BY_NAME:
+            searchPatientByName();
+            break;
+        case RETURN_TO_MENU:
+            printf("Returning to menu...\n");
+            break;
+        default:
+            printf("Invalid input! Try again.\n");
+    }
+}
+
+void handlePatientSearchResult(const int index)
+{
+    if(index != INVALID_INPUT)
+    {
+        printPatientRecordsHeader();
+        printPatientRecord(index);
+        printPatientRecordDivider();
+    }
+    else
+    {
+        printf("Patient record not found.\n");
+    }
+}
+
+void handleMultiplePatientSearchResults(const int* const indexes,
+                                        const int numRecordsFound)
+{
+    if(numRecordsFound != NO_RECORDS)
+    {
+        printPatientRecordsHeader();
+
+        for(int i = 0; i < numRecordsFound; i++)
+        {
+            printPatientRecord(indexes[i]);
+        }
+
+        printPatientRecordDivider();
+    }
+    else
+    {
+        printf("Patient record not found.\n");
+    }
+}
+
+void searchPatientByID()
+{
+    int index;
+    int id;
+
+    id    = getPatientID();
+    index = idExists(patientRecords,
+                     totalPatients,
+                     id);
+
+    handlePatientSearchResult(index);
+}
+
+void searchPatientByName()
+{
+    int indexes[MAX_PATIENTS];
+    int numRecordsFound;
+
+    numRecordsFound = NO_RECORDS;
+
+    char name[FULL_NAME_MAX_CHAR];
+
+    getStringInput("Enter patient name: ",
+                   name,
+                   FULL_NAME_MAX_CHAR);
+
+    for(int i = 0; i < totalPatients; i++)
+    {
+        if(strcmp(patientRecords[i].name,
+                  name) == RECORD_FOUND)
+        {
+            indexes[numRecordsFound] = i;
+            numRecordsFound++;
+        }
+    }
+
+    handleMultiplePatientSearchResults(indexes, numRecordsFound);
+}
+
+void printPatientRecord(const int index)
+{
+    printf("%-2s%-8d%-2s%-20s%-2s%-8d%-2s%-20s%-2s%-16d%c\n",
+           "|",
+           patientRecords[index].patientID,
+           "|",
+           patientRecords[index].name,
+           "|",
+           patientRecords[index].age,
+           "|",
+           patientRecords[index].diagnosis,
+           "|",
+           patientRecords[index].roomNumber,
+           '|');
+}
+
+void viewAllPatientRecords()
+{
+    if(totalPatients == 0)
+    {
+        printf("No patient records on file.\n");
+        return;
+    }
+
+    printPatientRecordsHeader();
+
+    for(int i = 0; i < totalPatients; i++)
+    {
+        printPatientRecord(i);
+    }
+
+    printPatientRecordDivider();
+}
+
+void printPatientRecordsHeader()
+{
+    printPatientRecordDivider();
+
+    printf("%-2s%-8s%-2s%-20s%-2s%-8s%-2s%-20s%-2s%-16s%c\n",
+       "|",
+       "ID",
+       "|",
+       "Name",
+       "|",
+       "Age",
+       "|",
+       "Diagnosis",
+       "|",
+       "Room Number",
+       '|');
+
+    printPatientRecordDivider();
+}
+
+void printPatientRecordDivider()
+{
+    printf("+");
+    printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(STRING_FIELD_SPACING);
+    printf("+");
+    printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(STRING_FIELD_SPACING);
+    printf("+");
+    printDashes(ROOM_NUM_FIELD_SPACING);
+    printf("+");
+    printf("\n");
+}
+
+void printDashes(const int numDashes)
+{
+    for(int i = 0; i < numDashes; i++)
+    {
+        printf("%c", '-');
+    }
+}
