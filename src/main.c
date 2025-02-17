@@ -30,6 +30,8 @@ int main(void)
     fireDoctor();
     viewAllDoctorRecords();
 
+    printDocWeekSchedule();
+
     addNewPatientRecord();
     addNewPatientRecord();
     viewAllPatientRecords();

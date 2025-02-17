@@ -81,4 +81,10 @@ void getDoctorOnShift(enum daysInWeek dayOfWeek,
                       enum shift shift,
                       char* doctorName);
 
+/**
+ * Clears the shifts that the specified doctor is scheduled in for.
+ * @param id id of doctor whose shifts to clear
+ */
+void clearDoctorShifts(int id);
+
 #endif //SCHEDULE_H

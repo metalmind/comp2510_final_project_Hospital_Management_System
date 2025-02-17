@@ -1,4 +1,5 @@
 #include "../inc/doctor.h"
+#include "../inc/schedule.h"
 #include <stdio.h>
 #include <string.h>
 #include "../inc/tools.h"
@@ -78,6 +79,7 @@ void fireDoctor()
     if(index != DOC_ID_NOT_FOUND)
     {
         removeDoctorRecord(index);
+        clearDoctorShifts(id);
     }
     else
     {

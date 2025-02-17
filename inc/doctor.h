@@ -104,7 +104,7 @@ void viewAllDoctorRecords(void);
 void prinDoctorRecordsHeader(void);
 
 /**
- * Helper function that prints the crossbar for the doctorrecords.
+ * Helper function that prints the crossbar for the doctor records.
  */
 void printDoctorRecordDivider(void);
 

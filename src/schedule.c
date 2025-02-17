@@ -120,8 +120,7 @@ void getDoctorOnShift(enum daysInWeek dayOfWeek,
     index = doctorIDExists(schedule[dayOfWeek][shift]);
     doc   = getDoctor(index);
 
-    if(doc == NULL ||
-       schedule[dayOfWeek][shift] == UNASSIGNED_SHIFT)
+    if(doc == NULL)
     {
         strcpy(doctorName,
                " ");
@@ -171,4 +170,18 @@ void addToSchedule(const doctor* const doctor,
 {
     // schedule[dayOfWeek][shiftToFill] = doctorName;
     schedule[dayOfWeek][shiftToFill] = doctor -> doctorID;
+}
+
+void clearDoctorShifts(const int id)
+{
+    for(int i = 0; i < DAYS_IN_WEEK; i++)
+    {
+        for(int j = 0; j < NUM_SHIFTS; j++)
+        {
+            if(schedule[i][j] == id)
+            {
+                schedule[i][j] = UNASSIGNED_SHIFT;
+            }
+        }
+    }
 }
