@@ -11,9 +11,9 @@
 patient patientRecords[MAX_PATIENTS] = {};
 int totalPatients                    = 0;
 
-int idExists(patient arr[],
-             int size,
-             int id)
+int idExists(const patient* const arr,
+             const int size,
+             const int id)
 {
     for(int i = 0; i < size; i++)
     {
@@ -234,7 +234,7 @@ void printPatientMenu()
     printf("3. Return to Menu\n");
 }
 
-void searchCriteriaSelection(int sel)
+void searchCriteriaSelection(const int sel)
 {
     switch(sel)
     {
@@ -252,7 +252,7 @@ void searchCriteriaSelection(int sel)
     }
 }
 
-void handlePatientSearchResult(int index)
+void handlePatientSearchResult(const int index)
 {
     if(index != INVALID_INPUT)
     {
@@ -270,8 +270,8 @@ void handlePatientSearchResult(int index)
     }
 }
 
-void handleMultiplePatientSearchResults(int* indexes,
-                                        int numRecordsFound)
+void handleMultiplePatientSearchResults(const int* const indexes,
+                                        const int numRecordsFound)
 {
     if(numRecordsFound != NO_RECORDS)
     {
@@ -331,7 +331,7 @@ void searchPatientByName()
     handleMultiplePatientSearchResults(indexes, numRecordsFound);
 }
 
-void printPatientRecord(int index)
+void printPatientRecord(const int index)
 {
     printf("%-8d%-20s%-8d%-20s%-8d\n",
            patientRecords[index].patientID,

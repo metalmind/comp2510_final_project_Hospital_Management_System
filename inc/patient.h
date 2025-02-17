@@ -80,7 +80,7 @@ void removePatientRecord(int index);
  * @author Ayesha Anzer
  * @author Owen Wou
  */
-int idExists(patient arr[],
+int idExists(const patient* const arr,
              int size,
              int id);
 
@@ -165,8 +165,8 @@ void handlePatientSearchResult(int index);
  * @param indexes indexes of records matching the provided String input
  * @param numRecordsFound number of matching records found
  */
-void handleMultiplePatientSearchResults(int* indexes,
-                                       int numRecordsFound);
+void handleMultiplePatientSearchResults(const int* const indexes,
+                                        int numRecordsFound);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding

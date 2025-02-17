@@ -6,8 +6,8 @@
 #include<string.h>
 #include "../inc/tools.h"
 
-int getInput(char* prompt,
-             int* input)
+int getInput(const char* const prompt,
+             int* const input)
 {
     int numItemsRead;
 
@@ -20,11 +20,11 @@ int getInput(char* prompt,
     return numItemsRead;
 }
 
-int validateData(int numItemsRead,
-                 int input,
-                 int lowerBound,
-                 int upperBound,
-                 char* errorMessage)
+int validateData(const int numItemsRead,
+                 const int input,
+                 const int lowerBound,
+                 const int upperBound,
+                 const char* const errorMessage)
 {
     int valid = FALSE;
 
@@ -72,9 +72,9 @@ int validateNum(const int num,
 }
 
 
-void getStringInput(char* prompt,
-                    char* input,
-                    int maxChar)
+void getStringInput(const char* const prompt,
+                    char* const input,
+                    const int maxChar)
 {
     size_t length;
 

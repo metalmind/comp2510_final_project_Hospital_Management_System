@@ -25,8 +25,8 @@
  * @param input value to assign input
  * @return number of items successfully read
  */
-int getInput(char* prompt,
-             int* input);
+int getInput(const char* const prompt,
+             int* const input);
 
 /**
  * Validates whether input value is of valid type (i.e., has been successfully read
@@ -43,7 +43,7 @@ int validateData(int numItemsRead,
                  int input,
                  int lowerBound,
                  int upperBound,
-                 char* errorMessage);
+                 const char* const errorMessage);
 
 /**
  * Validates whether input read was successful - checks that numItemsRead
@@ -76,9 +76,9 @@ int validateNum(int num,
  * @param maxChar maximum characters allowed
  * @return
  */
-void getStringInput(char* prompt,
-                     char* input,
-                     int maxChar);
+void getStringInput(const char* const prompt,
+                    char* const input,
+                    int maxChar);
 
 /**
  * Helper method to flush the input buffer in the case of invalid inputs.
