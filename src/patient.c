@@ -76,7 +76,7 @@ void dischargePatient()
     }
     else
     {
-        printf("Patient record not found.");
+        printf("Patient record not found.\n");
     }
 }
 
