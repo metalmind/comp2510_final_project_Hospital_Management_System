@@ -18,7 +18,6 @@
 #define MIN_AGE_YEARS 0
 #define MAX_AGE_YEARS 150
 
-#define TERMINAL_CHAR 0
 #define ID_MIN_VALUE 0
 #define ID_MAX_VALUE 50
 #define ID_NOT_FOUND (-1)
@@ -32,7 +31,15 @@
 #define SEARCH_BY_NAME 2
 #define RETURN_TO_MENU 3
 
+#define NO_RECORDS 0
 #define RECORD_FOUND 0
+
+#define ENTRY_REMOVAL_OFFSET 1
+#define NEXT_ENTRY_OFFSET 1
+
+#define INT_FIELD_SPACING 9
+#define STRING_FIELD_SPACING 21
+#define ROOM_NUM_FIELD_SPACING 17
 
 typedef struct patient patient;
 
@@ -53,6 +60,19 @@ struct patient
 void addNewPatientRecord(void);
 
 /**
+ * Discharges a patient from the hospital.
+ */
+void dischargePatient(void);
+
+/**
+ * Removes the specified patient record from the patientRecord array,
+ * shifting remaining patient records by NEXT_ENTRY_OFFSET to fill the
+ * gap.
+ * @param index index of patient record to be removed
+ */
+void removePatientRecord(int index);
+
+/**
  * Searches for a patientID in the array and returns its index if found;
  * otherwise, it returns ID_NOT_FOUND.
  *
@@ -64,7 +84,7 @@ void addNewPatientRecord(void);
  * @author Ayesha Anzer
  * @author Owen Wou
  */
-int idExists(patient arr[],
+int idExists(const patient* const arr,
              int size,
              int id);
 
@@ -132,18 +152,25 @@ void searchForPatientRecord(void);
  *
  * @param sel selected menu item
  */
-int searchCriteriaSelection(int sel);
+void searchCriteriaSelection(int sel);
 
 /**
  * If requested patient record is found, prints its details. Otherwise,
- * if user menu selection was either SEARCH_BY_ID or SEARCH_BY_NAME
- * (i.e., was not an invalid selection), prints that record was not found.
+ * prints that record was not found.
  *
  * @param index index of requested patient record in the patientRecord array
- * @param sel user menu selection
  */
-void handlePatientSearchResult(int index,
-                               int sel);
+void handlePatientSearchResult(int index);
+
+/**
+ * If the requested patient record is found, prints its details.
+ * If multiple matching records are found, prints details of each.
+ * Otherwise, prints that record was not found.
+ * @param indexes indexes of records matching the provided String input
+ * @param numRecordsFound number of matching records found
+ */
+void handleMultiplePatientSearchResults(const int* const indexes,
+                                        int numRecordsFound);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
@@ -151,7 +178,7 @@ void handlePatientSearchResult(int index,
  *
  * @return index of patient record corresponding to the specified ID
  */
-int searchPatientByID(void);
+void searchPatientByID(void);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
@@ -159,13 +186,14 @@ int searchPatientByID(void);
  *
  * @return index of patient record corresponding to the specified name
  */
-int searchPatientByName(void);
+void searchPatientByName(void);
 
 /**
- * Prints the patient record corresponding to the specified patient ID.
- * @param id patient id
+ * Prints the patient record corresponding to the specified index of the
+ * patient record array.
+ * @param index corresponding index of patient record array
  */
-void printPatientRecord(int id);
+void printPatientRecord(int index);
 
 /**
  * Prints all patient records in the patientRecord array.
@@ -176,5 +204,22 @@ void viewAllPatientRecords(void);
  * Prints the patient menu.
  */
 void printPatientMenu();
+
+/**
+ * Helper function to print the patient record header, including top and
+ * bottom dividers.
+ */
+void printPatientRecordsHeader();
+
+/**
+ * Helper function that prints the crossbar for the patient records.
+ */
+void printPatientRecordDivider();
+
+/**
+ * Helper function that prints the specified number of dashes to the screen.
+ * @param numDashes number of dashes to print
+ */
+void printDashes(int numDashes);
 
 #endif //PATIENT_H
