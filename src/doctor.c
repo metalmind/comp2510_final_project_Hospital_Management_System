@@ -81,7 +81,7 @@ void fireDoctor()
     }
     else
     {
-        printf("Doctor record not found.");
+        printf("Doctor record not found.\n");
     }
 }
 
@@ -99,34 +99,13 @@ void removeDoctorRecord(const int index)
 int getUniqueDoctorID()
 {
     int id;
-    int valid;
-    int unique;
 
-    valid  = FALSE;
-    unique = FALSE;
-
-    do
-    {
-        id = DOC_ID_NOT_FOUND;
-
-        int numItemsRead;
-
-        numItemsRead = getInput("Enter doctor ID: ",
-                                &id);
-        unique = doctorIDExists(id) == DOC_ID_NOT_FOUND;
-
-        valid = validateData(numItemsRead,
-                             id,
-                             DOC_ID_MIN_VALUE,
-                             DOC_ID_MAX_VALUE,
-                             "Invalid doctor ID! Please enter a positive integer.\n");
-
-        if(valid && !unique)
-        {
-            printf("Duplicate doctor ID! Please enter a unique ID.\n");
-        }
-    }
-    while(!(valid && unique));
+    id = promptForUniqueInput("Enter doctor ID: ",
+                              "Invalid doctor ID! Please enter a positive integer.\n",
+                              "Duplicate doctor ID! Please enter a unique ID.\n",
+                              &doctorIDExists,
+                              DOC_ID_MIN_VALUE,
+                              DOC_ID_MAX_VALUE);
 
     return id;
 }
@@ -134,25 +113,11 @@ int getUniqueDoctorID()
 int getDoctorID()
 {
     int id;
-    int valid;
 
-    id    = DOC_ID_NOT_FOUND;
-    valid = FALSE;
-
-    do
-    {
-        int numItemsRead;
-
-        numItemsRead = getInput("Enter doctor ID: ",
-                                &id);
-
-        valid = validateData(numItemsRead,
-                             id,
-                             DOC_ID_MIN_VALUE,
-                             DOC_ID_MAX_VALUE,
-                             "Invalid doctor ID! Please enter a positive integer.\n");
-    }
-    while(!valid);
+    id = promptForInput("Enter doctor ID: ",
+                        "Invalid doctor ID! Please enter a positive integer.\n",
+                        DOC_ID_MIN_VALUE,
+                        DOC_ID_MAX_VALUE);
 
     return id;
 }
@@ -168,31 +133,17 @@ doctor* getDoctorByID()
     return getDoctor(index);
 }
 
-void getDoctorName(char* prompt,
+void getDoctorName(const char* prompt,
                    char* const name)
 {
-    int valid;
-
-    valid = FALSE;
-
-    do
-    {
-        getStringInput(prompt,
-                       name,
-                       NAME_MAX_CHAR);
-        valid = validateName(name);
-
-        if(!valid)
-        {
-            printf("Invalid name! Only alphabetic characters allowed.\n");
-        }
-    }
-    while(!valid);
+    promptForNameStr(prompt,
+                     name,
+                     NAME_MAX_CHAR);
 }
 
 void printDoctorRecord(const int index)
 {
-    printf("%-2s%-8d%-2s%-16s%-2s%-16s%-2s%-20s%c\n",
+    printf("%-2s%-8d%-2s%-16s%-2s%-16s%-2s%-28s%c\n",
            "|",
            doctorRecords[index].doctorID,
            "|",
@@ -226,7 +177,7 @@ void printDoctorRecordsHeader()
 {
     printDoctorRecordDivider();
 
-    printf("%-2s%-8s%-2s%-16s%-2s%-16s%-2s%-20s%c\n",
+    printf("%-2s%-8s%-2s%-16s%-2s%-16s%-2s%-28s%c\n",
        "|",
        "ID",
        "|",

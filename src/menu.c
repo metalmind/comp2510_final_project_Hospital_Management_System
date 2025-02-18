@@ -32,11 +32,10 @@ void printMenu(void)
     printf("%d. Exit\n", EXIT);
     printf("%d. Add Patient Record\n", ADD_PATIENT_RECORDS);
     printf("%d. View ALl Patients\n", VIEW_ALL_PATIENTS);
-    printf("%d. Search Patient by ID\n", SEARCH_PATIENT_BY_ID);
+    printf("%d. Search Patient\n", SEARCH_PATIENT);
     printf("%d. Discharge Patient\n", DISCHARGE_PATIENT);
     printf("%d. Manage Doctors\n", DOCTOR_MENU);
     printf("%d. Manage Schedule\n", SCHEDULE_MENU);
-
 }
 
 int getSelection(void)
@@ -61,7 +60,7 @@ void routeSelection(const int sel)
         case VIEW_ALL_PATIENTS:
             viewAllPatientRecords();
             break;
-        case SEARCH_PATIENT_BY_ID:
+        case SEARCH_PATIENT:
             searchForPatientRecord();
             break;
         case DISCHARGE_PATIENT:

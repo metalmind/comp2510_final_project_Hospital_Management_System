@@ -48,7 +48,8 @@ void addNewPatientRecord(void)
 
     id = getUniquePatientID();
 
-    getPatientName(name);
+    getPatientName("Enter patient name: ",
+                   name);
 
     age = getPatientAge();
 
@@ -102,34 +103,13 @@ void removePatientRecord(const int index)
 int getUniquePatientID()
 {
     int id;
-    int valid;
-    int unique;
 
-    valid  = FALSE;
-    unique = FALSE;
-
-    do
-    {
-        id = ID_NOT_FOUND;
-
-        int numItemsRead;
-
-        numItemsRead = getInput("Enter patient ID: ",
-                                &id);
-        unique = idExists(id) == ID_NOT_FOUND;
-
-        valid = validateData(numItemsRead,
-                             id,
-                             ID_MIN_VALUE,
-                             ID_MAX_VALUE,
-                             "Invalid patient ID! Please enter a positive integer.\n");
-
-        if(valid && !unique)
-        {
-            printf("Duplicate patient ID! Please enter a unique ID.\n");
-        }
-    }
-    while(!(valid && unique));
+    id = promptForUniqueInput("Enter patient ID: ",
+                              "Invalid patient ID! Please enter a positive integer.\n",
+                              "Duplicate patient ID! Please enter a unique ID.\n",
+                              &idExists,
+                              ID_MIN_VALUE,
+                              ID_MAX_VALUE);
 
     return id;
 }
@@ -137,72 +117,31 @@ int getUniquePatientID()
 int getPatientID()
 {
     int id;
-    int valid;
 
-    id    = ID_NOT_FOUND;
-    valid = FALSE;
-
-    do
-    {
-        int numItemsRead;
-
-        numItemsRead = getInput("Enter patient ID: ",
-                                &id);
-
-        valid = validateData(numItemsRead,
-                             id,
-                             ID_MIN_VALUE,
-                             ID_MAX_VALUE,
-                             "Invalid patient ID! Please enter a positive integer.\n");
-    }
-    while(!valid);
+    id = promptForInput("Enter patient ID: ",
+                        "Invalid patient ID! Please enter a positive integer.\n",
+                        ID_MIN_VALUE,
+                        ID_MAX_VALUE);
 
     return id;
 }
 
-void getPatientName(char* const name)
+void getPatientName(const char* prompt,
+                    char* const name)
 {
-    int valid;
-
-    valid = FALSE;
-
-    do
-    {
-        getStringInput("Enter patient name: ",
-               name,
-               FULL_NAME_MAX_CHAR);
-        valid = validateName(name);
-
-        if(!valid)
-        {
-            printf("Invalid name! Only alphabetic characters allowed.\n");
-        }
-    }
-    while(!valid);
+    promptForNameStr(prompt,
+                     name,
+                     FULL_NAME_MAX_CHAR);
 }
 
 int getPatientAge()
 {
     int age;
-    int valid;
 
-    age   = INVALID_INPUT;
-    valid = FALSE;
-
-    do
-    {
-        int numItemsRead;
-
-        numItemsRead = getInput("Enter patient age: ",
-                                &age);
-
-        valid = validateData(numItemsRead,
-                             age,
-                             MIN_AGE_YEARS,
-                             MAX_AGE_YEARS,
-                             "Invalid age! Please enter a positive integer.\n");
-    }
-    while(!valid);
+    age = promptForInput("Enter patient age: ",
+                         "Invalid age! Please enter a positive integer.\n",
+                         MIN_AGE_YEARS,
+                         MAX_AGE_YEARS);
 
     return age;
 }
@@ -210,25 +149,11 @@ int getPatientAge()
 int getPatientRoomNumber()
 {
     int roomNumber;
-    int valid;
 
-    roomNumber = INVALID_INPUT;
-    valid      = FALSE;
-
-    do
-    {
-        int numItemsRead;
-
-        numItemsRead = getInput("Enter patient room number: ",
-                                &roomNumber);
-
-        valid = validateData(numItemsRead,
-                             roomNumber,
-                             ROOM_NUMBER_MIN,
-                             ROOM_NUMBER_MAX,
-                             "Invalid room number! Please enter a positive integer.\n");
-    }
-    while(!valid);
+    roomNumber = promptForInput("Enter patient room number: ",
+                         "Invalid room number! Please enter a positive integer.\n",
+                         ROOM_NUMBER_MIN,
+                         ROOM_NUMBER_MAX);
 
     return roomNumber;
 }
@@ -347,7 +272,7 @@ void searchPatientByName()
 
 void printPatientRecord(const int index)
 {
-    printf("%-2s%-8d%-2s%-20s%-2s%-8d%-2s%-20s%-2s%-16d%c\n",
+    printf("%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-28s%-2s%-16d%c\n",
            "|",
            patientRecords[index].patientID,
            "|",
@@ -383,7 +308,7 @@ void printPatientRecordsHeader()
 {
     printPatientRecordDivider();
 
-    printf("%-2s%-8s%-2s%-20s%-2s%-8s%-2s%-20s%-2s%-16s%c\n",
+    printf("%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-28s%-2s%-16s%c\n",
        "|",
        "ID",
        "|",
