@@ -27,7 +27,7 @@ enum shift { MORNING, AFTERNOON, EVENING };
  * @param dayOfWeek enum daysInWeek
  * @param dayOfWeekName The String to populate.
  */
-void getDayOfWeekNameStr(const enum daysInWeek dayOfWeek,
+void getDayOfWeekNameStr(enum daysInWeek dayOfWeek,
                          char* dayOfWeekName);
 
 /**
@@ -51,7 +51,7 @@ void printDocWeekSchedule();
  * @param dayOfWeek The day to schedule the doctor on.
  * @param shiftToFill The shift you want to fill.
  */
-void addToSchedule(const doctor* const doctor,
+void addToSchedule(const doctor* doctor,
                    enum daysInWeek dayOfWeek,
                    enum shift shiftToFill);
 

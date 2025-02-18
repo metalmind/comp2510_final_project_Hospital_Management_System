@@ -119,7 +119,7 @@ int getPatientID(void);
  *
  * @param name char array to assign name
  */
-void getPatientName(char* const name);
+void getPatientName(char* name);
 
 /**
  * Prompts user for patient age, with checks to ensure patient age is valid
@@ -179,7 +179,7 @@ void handlePatientSearchResult(int index);
  * @param indexes indexes of records matching the provided String input
  * @param numRecordsFound number of matching records found
  */
-void handleMultiplePatientSearchResults(const int* const indexes,
+void handleMultiplePatientSearchResults(const int* indexes,
                                         int numRecordsFound);
 
 /**

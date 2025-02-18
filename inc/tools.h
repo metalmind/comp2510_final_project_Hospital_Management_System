@@ -30,8 +30,8 @@
  * @param input value to assign input
  * @return number of items successfully read
  */
-int getInput(const char* const prompt,
-             int* const input);
+int getInput(const char* prompt,
+             int* input);
 
 /**
  * Validates whether input value is of valid type (i.e., has been successfully read
@@ -48,7 +48,7 @@ int validateData(int numItemsRead,
                  int input,
                  int lowerBound,
                  int upperBound,
-                 const char* const errorMessage);
+                 const char* errorMessage);
 
 /**
  * Validates whether input read was successful - checks that numItemsRead
@@ -79,7 +79,7 @@ int validateNum(int num,
  * @param name name to validate
  * @return TRUE if name is valid, otherwise FALSE
  */
-int validateName(const char* const name);
+int validateName(const char* name);
 
 /**
  * Wrapper function for fgets() which takes a prompt message to print and
@@ -90,8 +90,8 @@ int validateName(const char* const name);
  * @param maxChar maximum characters allowed
  * @return
  */
-void getStringInput(const char* const prompt,
-                    char* const input,
+void getStringInput(const char* prompt,
+                    char* input,
                     int maxChar);
 
 /**
@@ -100,7 +100,7 @@ void getStringInput(const char* const prompt,
  * @param str string to check if blank
  * @return TRUE if string is blank, otherwise FALSE
  */
-int isBlank(const char* const str);
+int isBlank(const char* str);
 
 /**
  * Helper method to flush the input buffer in the case of invalid inputs.

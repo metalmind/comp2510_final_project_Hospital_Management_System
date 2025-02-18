@@ -102,7 +102,7 @@ doctor* getDoctorByID();
  * @param name char array to assign name
  */
 void getDoctorName(char* prompt,
-                   char* const name);
+                   char* name);
 
 /**
  * Prints the doctor record corresponding to the specified index of the
