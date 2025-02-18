@@ -25,7 +25,9 @@ compliance.
 *Describe the design approach and implementation steps*.
 
 Our design approach relies heavily on every section being as modular as possible
-and maintaining strong coding standards.
+and maintaining strong coding standards. Each section is separated into its 
+own files and grouped together with related functions such as menu, patient, 
+doctor, schedule and tools.
 
 ### 2. Features Implemented
 
@@ -52,19 +54,42 @@ Table 2.1 Patient Data Structure
 
 #### 2.2 Basic Operations on Patient Records
 
-#### 2.2.2 Add a new patient record: void addNewPatientRecord(void)
-- Add a new patient to the patientRecord array, ensuring each entry has a unique ID
+#### 2.2.2 Add a new Patient record: void addNewPatient(void)
+
+1. Checks if the hospital is full
+2. Gets the user to input a unique ID by comparing against existing patient IDs
+3. Gets the user to input the patients name as (accepts only letters)
+4. Gets the user to input the patient's age (within a specified range)
+5. Gets the user to input the patient's diagnosis (accepts only letters)
+6. Gets the user to input the room number (not required to be unique, but 
+   within a specified range)
+7. Creates the patient record
+8. Prints to screen that the patient has been successfully added
 
 #### 2.2.3 Search for patient record: searchForPatientRecord(void)
-- Search for patient records matching the specified criteria
-- Menu options to search by ID and or by name, leveraging idExists() and strcmp
-- Print matching record(s)
+
+1. Prints to screen the available options for the user to select
+2. Gets and validates the number input from the user
+3. Goes to a submenu to select searching by patient ID or name
+4. Both do a linear search through the array and return the result, however if 
+   searching by name it will return a list of patients if there are duplicates
+5. The user will repeat 1-4 until they select to return to the main menu.
 
 #### 2.2.4 Print patient record: printPatientRecord(patientRecord)
-- Print the specified patient record to the screen
+
+This function prints the patient records to the screen in the following format.
+
+
 
 #### 2.2.5 View all patient records: void viewAllPatientRecords(void)
-- Print out all patient records in the patient array
+```
++---------+-----------------------------+---------+-----------------------------+-----------------+
+| ID      | Name                        | Age     | Diagnosis                   | Room Number     |
++---------+-----------------------------+---------+-----------------------------+-----------------+
+| 1       | Owen                        | 25      | Concussion                  | 2               |
+| 2       | Alison                      | 25      | Concussion                  | 90              |
++---------+-----------------------------+---------+-----------------------------+-----------------+
+```
 
 #### 2.2.6 Discharge Patient: dischargePatient(void)
 - Remove patient record from patient array
@@ -84,6 +109,35 @@ Table 2.1 Patient Data Structure
 #### 2.5 Input Validation
 
 #### 2.6 Menu Driven Interface
+
+```
+Hospital Management System
+0. Exit
+1. Add Patient Record
+2. View ALl Patients
+3. Search Patient
+4. Discharge Patient
+5. Manage Doctors
+6. Manage Schedule
+   Enter your selection:
+```
+
+3. Search Patient
+```
+0. Return to Menu
+1. Search by Patient ID
+2. Search by Patient Name
+Enter your selection:
+```
+
+5. Manage Doctors
+```
+0. Return to Main Menu
+1. Add New Doctor
+2. Fire Doctor
+3. View All Doctor Records
+Enter your selection:
+```
 
 ## 3. Challenges and Solutions
 
