@@ -159,6 +159,17 @@ int getDoctorID()
     return id;
 }
 
+doctor* getDoctorByID()
+{
+    int id;
+    int index;
+
+    id    = getDoctorID();
+    index = doctorIDExists(id);
+
+    return getDoctor(index);
+}
+
 void printDoctorRecord(const int index)
 {
     printf("%-2s%-8d%-2s%-16s%-2s%-16s%-2s%-20s%c\n",

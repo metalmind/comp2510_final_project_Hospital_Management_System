@@ -86,9 +86,15 @@ int getUniqueDoctorID(void);
 int getDoctorID(void);
 
 /**
+ * Helper method to search the doctorRecord array for the doctor record corresponding
+ * to the specified ID.
+ */
+doctor* getDoctorByID();
+
+/**
  * Prints the doctor record corresponding to the specified index of the
  * doctor record array.
- * @param index corresponding index of doctor record array
+ * @param index index of doctor record
  */
 void printDoctorRecord(int index);
 
