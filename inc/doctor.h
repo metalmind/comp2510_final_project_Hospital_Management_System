@@ -14,6 +14,12 @@
 #define NAME_FIELD_SPACING 17
 #define STRING_FIELD_SPACING 21
 
+#define RETURN_TO_MAIN_MENU 0
+#define ADD_NEW_DOCTOR 1
+#define FIRE_DOCTOR 2
+#define VIEW_ALL_DOCTOR_RECORDS 3
+
+
 typedef struct doctor doctor;
 
 struct doctor
@@ -126,5 +132,21 @@ void printDoctorRecordsHeader(void);
  * Helper function that prints the crossbar for the doctor records.
  */
 void printDoctorRecordDivider(void);
+
+/**
+ * Main entry point for selecting doctor related functions.
+ */
+void doctorMenu();
+
+/**
+ * Prints the related doctor menu items to the screen.
+ */
+void printDoctorMenu();
+
+/**
+ * Routes to the function selected.
+ * @param sel The number of the selected doctor item.
+ */
+void routeDoctorMenu(const int sel);
 
 #endif //DOCTOR_H
