@@ -99,34 +99,13 @@ void removeDoctorRecord(const int index)
 int getUniqueDoctorID()
 {
     int id;
-    int valid;
-    int unique;
 
-    valid  = FALSE;
-    unique = FALSE;
-
-    do
-    {
-        id = DOC_ID_NOT_FOUND;
-
-        int numItemsRead;
-
-        numItemsRead = getInput("Enter doctor ID: ",
-                                &id);
-        unique = doctorIDExists(id) == DOC_ID_NOT_FOUND;
-
-        valid = validateData(numItemsRead,
-                             id,
-                             DOC_ID_MIN_VALUE,
-                             DOC_ID_MAX_VALUE,
-                             "Invalid doctor ID! Please enter a positive integer.\n");
-
-        if(valid && !unique)
-        {
-            printf("Duplicate doctor ID! Please enter a unique ID.\n");
-        }
-    }
-    while(!(valid && unique));
+    id = promptForUniqueInput("Enter doctor ID: ",
+                              "Invalid doctor ID! Please enter a positive integer.\n",
+                              "Duplicate doctor ID! Please enter a unique ID.\n",
+                              &doctorIDExists,
+                              DOC_ID_MIN_VALUE,
+                              DOC_ID_MAX_VALUE);
 
     return id;
 }

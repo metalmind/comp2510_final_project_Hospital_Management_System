@@ -7,6 +7,8 @@
 #include <ctype.h>
 #include "../inc/tools.h"
 
+#include "../inc/patient.h"
+
 int promptForInput(const char* const prompt,
                    const char* const errorMessage,
                    const int lowerBound,
@@ -32,6 +34,46 @@ int promptForInput(const char* const prompt,
                              errorMessage);
     }
     while(!valid);
+
+    return input;
+}
+
+int promptForUniqueInput(const char* const prompt,
+                         const char* const errorMessage,
+                         const char* const duplicateErrorMessage,
+                         int(*isUniqueInput)(int),
+                         const int lowerBound,
+                         const int upperBound)
+{
+    int input;
+    int valid;
+    int unique;
+
+    valid  = FALSE;
+    unique = FALSE;
+
+    do
+    {
+        input = INVALID_INPUT;
+
+        int numItemsRead;
+
+        numItemsRead = getInput(prompt,
+                                &input);
+        unique = isUniqueInput(input) == INVALID_INPUT;
+
+        valid = validateData(numItemsRead,
+                             input,
+                             lowerBound,
+                             upperBound,
+                             errorMessage);
+
+        if(valid && !unique)
+        {
+            printf("%s", duplicateErrorMessage);
+        }
+    }
+    while(!(valid && unique));
 
     return input;
 }

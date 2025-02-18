@@ -31,12 +31,30 @@
  * @param errorMessage error message
  * @param lowerBound lower bound of valid range
  * @param upperBound upper bound of valid range
- * @return
+ * @return valid input
  */
 int promptForInput(const char* prompt,
                    const char* errorMessage,
                    int lowerBound,
                    int upperBound);
+
+/**
+ * Wrapper function which prompts for valid and unique input from the user,
+ * re-prompting in case of invalid or duplicate input.
+ *
+ * @param prompt prompt message
+ * @param errorMessage error message
+ * @param isUniqueInput
+ * @param lowerBound lower bound of valid range
+ * @param upperBound upper bound of valid range
+ * @return valid unique input
+ */
+int promptForUniqueInput(const char* prompt,
+                         const char* errorMessage,
+                         const char* duplicateErrorMessage,
+                         int(*isUniqueInput)(int),
+                         int lowerBound,
+                         int upperBound);
 
 /**
  * Wrapper function for scanf() which takes a prompt message to print and
