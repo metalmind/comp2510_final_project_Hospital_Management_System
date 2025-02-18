@@ -88,6 +88,8 @@ int getDoctorID(void);
 /**
  * Helper method to search the doctorRecord array for the doctor record corresponding
  * to the specified ID.
+ *
+ * @return doctor record corresponding to the specified ID
  */
 doctor* getDoctorByID();
 
