@@ -54,10 +54,12 @@ Table 2.1 Patient Data Structure
 - Adds a new patient to the patientRecord array.
 
 #### 2.2.3 View All patient records: void viewAllPatientRecords(void)
+
 - prints out all the entires in the patient array
 - modularize print statements
 
-#### 2.2.4Search for Patient: searchForAPatient()
+#### 2.2.4 Search for Patient: searchForAPatient()
+
 - Search for duplicates before adding new patient
 - Need for both ID and name
 - Either overload or parse input to check type
@@ -65,13 +67,22 @@ Table 2.1 Patient Data Structure
 - Print the record
 
 #### 2.2.5 Print patient record: printPatientRecord(patientRerd)
+
 - Print the record to the screen
 
 #### 2.2.6 Discharge Patient: dischargePatient(patientRecord)
+
 - Remove record from patient array
 - Deal with gap in array somehow
 
 #### 2.3 Doctor Schedule Management
+
+| Description | Datatype | Not Null | Not Blank | Unique | Min Value | Max Value |
+|-------------|:--------:|:--------:|:---------:|:------:|:---------:|:---------:|
+| Patient ID  |   int    |   N/A    |    N/A    |   Y    |     1     |    50     |
+| First Name  |  String  |   N/A    |    N/A    |   N    |    N/A    |    N/A    |
+| Last Name   |  String  |   N/A    |    N/A    |   N    |    N/A    |    N/A    |
+| Specialty   |  String  |   N/A    |    N/A    |   N    |    N/A    |    N/A    |
 
 #### 2.4 Input Validation
 
@@ -86,7 +97,6 @@ Some of the challenges we faced are as follows:
 - Separating out Struct in patient.h and patient.c, took a while to figure out
   struct should be in .h file
 - Learning where to decompose functions and implement reuse
-
 
 ## 4. Testing Procedures and Results
 
