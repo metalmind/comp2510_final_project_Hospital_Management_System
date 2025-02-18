@@ -137,3 +137,11 @@ void clearInputBuffer()
 {
     while(getchar() != '\n');
 }
+
+void printDashes(const int numDashes)
+{
+    for(int i = 0; i < numDashes; i++)
+    {
+        printf("%c", '-');
+    }
+}
