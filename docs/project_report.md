@@ -66,7 +66,7 @@ Table 2.1 Patient Data Structure
 7. Creates the patient record
 8. Prints to screen that the patient has been successfully added
 
-#### 2.2.3 Search for patient record: searchForPatientRecord(void)
+#### 2.2.3 Search for patient record: void searchForPatientRecord(void)
 
 1. Prints to screen the available options for the user to select
 2. Gets and validates the number input from the user
@@ -75,7 +75,7 @@ Table 2.1 Patient Data Structure
    searching by name it will return a list of patients if there are duplicates
 5. The user will repeat 1-4 until they select to return to the main menu.
 
-#### 2.2.4 Print patient record: printPatientRecord(patientRecord)
+#### 2.2.4 Print patient record: void printPatientRecord(patientRecord)
 
 This function prints the patient records to the screen in the following format.
 
@@ -91,7 +91,7 @@ This function prints the patient records to the screen in the following format.
 +---------+-----------------------------+---------+-----------------------------+-----------------+
 ```
 
-#### 2.2.6 Discharge Patient: dischargePatient(void)
+#### 2.2.6 Discharge Patient: void dischargePatient(void)
 - Remove patient record from patient array
 - Resulting gap in the array is addressed by shifting each element one place to the left
 
@@ -103,6 +103,8 @@ This function prints the patient records to the screen in the following format.
 | First Name  |  String  |    Y     |     Y     |   N    |    N/A    |    N/A    |
 | Last Name   |  String  |    Y     |     Y     |   N    |    N/A    |    N/A    |
 | Specialty   |  String  |    N     |     N     |   N    |    N/A    |    N/A    |
+
+#### 2.3.1 Add a new doctor record: void addNewDoctorRecord()
 
 #### 2.4 Shift Management
 
@@ -145,23 +147,37 @@ Enter your selection:
 
 Some of the challenges we faced are as follows:
 
-### 3.1 Separating out Struct in patient.h and patient.c, took a while to figure out struct should be in .h file
+### 3.1 Input validation
 
-### 3.2 Learning where to decompose functions and implement reuse
+### 3.2 Separating out Struct in patient.h and patient.c
 
-### 3.3 Issues assigning Strings to schedules after they have been initially assigned
+took a while to figure out struct should be in .h file
 
-When initially prototyping the schedule module, we were putting the doctors' 
-names to indicate that a doctor was assigned a schedule. This lead to an 
-issue of reassigning the shifts in the char array because once they are 
-initialized they become a string literal which are immutable.
+### 3.3 Learning where to decompose functions and implement reuse
+We started out with significant repetition within our codebase, as we struggled with
+modularizing each functionality.
+
+This became especially obvious when prompting
+for user input for different fields of the same data type - for example, when prompting
+for patient age and room number. Given that the only differences between these two
+prompts are the lower and upper bounds of the value and the printed prompt / error messages,
+we created a set of utility functions to wrap this functionality, starting from low level
+functionality such as clearing the input buffer to higher level functionality such as
+the do-while loop to prompt for valid input.
+
+### 3.4 Issues assigning Strings to schedule cells after they have been initially assigned
+
+When initially prototyping the schedule module, we were inserting the doctors' 
+names to indicate that a doctor was assigned a schedule. This creates issues when
+reassigning the shifts in the char array, because once initialized, they become an immutable
+String literal.
 
 To solve this we make each doctor a struct with a unique ID which acts as a 
-primary key. This then allows us to make the schedule array an array of ints 
-instead of char* and lets us change the shift assignments much more easily. 
-The tradeoff of this being that displaying the schedule requires more 
-overhead before the doctor's name can be displayed, however this is a small 
-tradeoff in comparison.
+primary key. This then allows us to make the schedule array an array of ints
+(simulating a foreign key to doctor ID) instead of char* and lets us change
+the shift assignments much more easily. The tradeoff of this is that displaying
+the schedule requires more overhead before the doctor's name can be displayed;
+however, this is a small tradeoff in comparison.
 
 ## 4. Testing Procedures and Results
 
