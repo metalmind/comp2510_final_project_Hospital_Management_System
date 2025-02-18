@@ -96,9 +96,23 @@ Table 2.1 Patient Data Structure
 
 Some of the challenges we faced are as follows:
 
-- Separating out Struct in patient.h and patient.c, took a while to figure out
-  struct should be in .h file
-- Learning where to decompose functions and implement reuse
+### 3.1 Separating out Struct in patient.h and patient.c, took a while to figure out struct should be in .h file
+
+### 3.2 Learning where to decompose functions and implement reuse
+
+### 3.3 Issues assigning Strings to schedules after they have been initially assigned
+
+When initially prototyping the schedule module, we were putting the doctors' 
+names to indicate that a doctor was assigned a schedule. This lead to an 
+issue of reassigning the shifts in the char array because once they are 
+initialized they become a string literal which are immutable.
+
+To solve this we make each doctor a struct with a unique ID which acts as a 
+primary key. This then allows us to make the schedule array an array of ints 
+instead of char* and lets us change the shift assignments much more easily. 
+The tradeoff of this being that displaying the schedule requires more 
+overhead before the doctor's name can be displayed, however this is a small 
+tradeoff in comparison.
 
 ## 4. Testing Procedures and Results
 
