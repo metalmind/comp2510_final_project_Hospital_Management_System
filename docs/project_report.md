@@ -12,12 +12,13 @@
 *Outline the goals and scope of the project.*
 
 The objective of this project is to design and implement a Hospital Management
-System in the C programming language. The system will manage patient records and
-doctor scheduling.
+System in the C programming language. The system will allow for management of patient
+records, doctor records, and hospital shift scheduling.
 
-Phase 1 implements foundational programming concepts that we learned, in a
-modular fashion to implement the basic
-functionality of hte system.
+Phase 1 implements foundational programming concepts that we have learned, in a
+modular fashion to implement the basic functionality of the system. This includes
+handling of user input as well as validation checks for data integrity and type
+compliance.
 
 ## 2. Design and Implementation Details
 
@@ -34,10 +35,9 @@ and maintaining strong coding standards.
 #### 2.1 Patient Records Management
 
 Each patient record was implemented as a struct, with the information and
-limitations from Table 2.1. The implementation for the
-validation of these inputs are discussed further in section
+limitations from Table 2.1. The implementation for the validation of these inputs are discussed further in section
 [2.4 Input Validation](#24-input-validation).
-These structs are then held in an array with a max size of 50, as per the
+These structs are then held in a patient array with a max size of 50, as per the
 requirements of the project.
 
 Table 2.1 Patient Data Structure
@@ -52,40 +52,32 @@ Table 2.1 Patient Data Structure
 
 #### 2.2 Basic Operations on Patient Records
 
-#### 2.2.2 Add a new Patient record: void addNewPatient(void)
+#### 2.2.2 Add a new patient record: void addNewPatientRecord(void)
+- Add a new patient to the patientRecord array, ensuring each entry has a unique ID
 
-- Adds a new patient to the patientRecord array.
+#### 2.2.3 Search for patient record: searchForPatientRecord(void)
+- Search for patient records matching the specified criteria
+- Menu options to search by ID and or by name, leveraging idExists() and strcmp
+- Print matching record(s)
 
-#### 2.2.3 View All patient records: void viewAllPatientRecords(void)
+#### 2.2.4 Print patient record: printPatientRecord(patientRecord)
+- Print the specified patient record to the screen
 
-- prints out all the entires in the patient array
-- modularize print statements
+#### 2.2.5 View all patient records: void viewAllPatientRecords(void)
+- Print out all patient records in the patient array
 
-#### 2.2.4 Search for Patient: searchForAPatient()
-
-- Search for duplicates before adding new patient
-- Need for both ID and name
-- Either overload or parse input to check type
-- Or make menu option to either search by ID or name
-- Print the record
-
-#### 2.2.5 Print patient record: printPatientRecord(patientRerd)
-
-- Print the record to the screen
-
-#### 2.2.6 Discharge Patient: dischargePatient(patientRecord)
-
-- Remove record from patient array
-- Deal with gap in array somehow
+#### 2.2.6 Discharge Patient: dischargePatient(void)
+- Remove patient record from patient array
+- Resulting gap in the array is addressed by shifting each element one place to the left
 
 #### 2.3 Doctor Management
 
 | Description | Datatype | Not Null | Not Blank | Unique | Min Value | Max Value |
 |-------------|:--------:|:--------:|:---------:|:------:|:---------:|:---------:|
-| Doctor ID   |   int    |   N/A    |    N/A    |   Y    |     1     |    50     |
-| First Name  |  String  |   N/A    |    N/A    |   N    |    N/A    |    N/A    |
-| Last Name   |  String  |   N/A    |    N/A    |   N    |    N/A    |    N/A    |
-| Specialty   |  String  |   N/A    |    N/A    |   N    |    N/A    |    N/A    |
+| Doctor ID   |   int    |   N/A    |    N/A    |   Y    |     1     |    10     |
+| First Name  |  String  |    Y     |     Y     |   N    |    N/A    |    N/A    |
+| Last Name   |  String  |    Y     |     Y     |   N    |    N/A    |    N/A    |
+| Specialty   |  String  |    N     |     N     |   N    |    N/A    |    N/A    |
 
 #### 2.4 Shift Management
 
