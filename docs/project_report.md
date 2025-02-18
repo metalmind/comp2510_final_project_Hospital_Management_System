@@ -28,6 +28,9 @@ and maintaining strong coding standards.
 
 ### 2. Features Implemented
 
+![top_level_diagram.svg](top_level_diagram.svg)
+
+
 #### 2.1 Patient Records Management
 
 Each patient record was implemented as a struct, with the information and
