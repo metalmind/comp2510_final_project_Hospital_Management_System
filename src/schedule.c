@@ -3,10 +3,11 @@
 //
 
 #include "../inc/schedule.h"
+#include "../inc/doctor.h"
 #include <stdio.h>
 #include <string.h>
 
-char* schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
+int schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
 
 void getDayOfWeekNameStr(const enum daysInWeek dayOfWeek,
                          char* dayOfWeekName)
@@ -111,17 +112,24 @@ void printShiftsForWeek()
 
 void getDoctorOnShift(enum daysInWeek dayOfWeek,
                       enum shift shift,
-                      char* doctor)
+                      char* doctorName)
 {
-    if(NULL == schedule[dayOfWeek][shift])
+    int index;
+    doctor* doc;
+
+    index = doctorIDExists(schedule[dayOfWeek][shift]);
+    doc   = getDoctor(index);
+
+    if(doc == NULL)
     {
-        strcpy(doctor,
+        strcpy(doctorName,
                " ");
     }
     else
     {
-        strcpy(doctor,
-               schedule[dayOfWeek][shift]);
+        strcpy(doctorName, "Dr. ");
+        strcat(doctorName,  doc -> lastName);
+        // strcpy(doctor, schedule[dayOfWeek][shift]);
     }
 }
 
@@ -156,9 +164,24 @@ void printScheduleDivider()
     printf("\n");
 }
 
-void addToSchedule(char* doctorName,
+void addToSchedule(const doctor* const doctor,
                    const enum daysInWeek dayOfWeek,
                    const enum shift shiftToFill)
 {
-    schedule[dayOfWeek][shiftToFill] = doctorName;
+    // schedule[dayOfWeek][shiftToFill] = doctorName;
+    schedule[dayOfWeek][shiftToFill] = doctor -> doctorID;
+}
+
+void clearDoctorShifts(const int id)
+{
+    for(int i = 0; i < DAYS_IN_WEEK; i++)
+    {
+        for(int j = 0; j < NUM_SHIFTS; j++)
+        {
+            if(schedule[i][j] == id)
+            {
+                schedule[i][j] = UNASSIGNED_SHIFT;
+            }
+        }
+    }
 }

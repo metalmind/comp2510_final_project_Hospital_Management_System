@@ -2,7 +2,6 @@
 // Created by Owen on 10/02/2025.
 //
 
-
 #include <stdio.h>
 #include <string.h>
 #include "../inc/patient.h"
@@ -11,18 +10,26 @@
 patient patientRecords[MAX_PATIENTS] = {};
 int totalPatients                    = 0;
 
-int idExists(const patient* const arr,
-             const int size,
-             const int id)
+int idExists(const int id)
 {
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < totalPatients; i++)
     {
-        if(arr[i].patientID == id)
+        if(patientRecords[i].patientID == id)
         {
             return i;
         }
     }
     return ID_NOT_FOUND;
+}
+
+patient* getPatient(int index)
+{
+    if(index != ID_NOT_FOUND)
+    {
+        return &patientRecords[index];
+    }
+
+    return NULL;
 }
 
 void addNewPatientRecord(void)
@@ -34,16 +41,14 @@ void addNewPatientRecord(void)
     }
 
     int id;
-    char name[NAME_MAX_CHAR];
+    char name[FULL_NAME_MAX_CHAR];
     int age;
     char diagnosis[DIAGNOSIS_MAX_CHAR];
     int roomNumber;
 
     id = getUniquePatientID();
 
-    getStringInput("Enter patient name: ",
-                   name,
-                   NAME_MAX_CHAR);
+    getPatientName(name);
 
     age = getPatientAge();
 
@@ -71,9 +76,7 @@ void dischargePatient()
     int id;
 
     id    = getPatientID();
-    index = idExists(patientRecords,
-                     totalPatients,
-                     id);
+    index = idExists(id);
 
     if(index != ID_NOT_FOUND)
     {
@@ -81,7 +84,7 @@ void dischargePatient()
     }
     else
     {
-        printf("Patient record not found.");
+        printf("Patient record not found.\n");
     }
 }
 
@@ -113,9 +116,7 @@ int getUniquePatientID()
 
         numItemsRead = getInput("Enter patient ID: ",
                                 &id);
-        unique = idExists(patientRecords,
-                          totalPatients,
-                          id) == ID_NOT_FOUND;
+        unique = idExists(id) == ID_NOT_FOUND;
 
         valid = validateData(numItemsRead,
                              id,
@@ -157,6 +158,27 @@ int getPatientID()
     while(!valid);
 
     return id;
+}
+
+void getPatientName(char* const name)
+{
+    int valid;
+
+    valid = FALSE;
+
+    do
+    {
+        getStringInput("Enter patient name: ",
+               name,
+               FULL_NAME_MAX_CHAR);
+        valid = validateName(name);
+
+        if(!valid)
+        {
+            printf("Invalid name! Only alphabetic characters allowed.\n");
+        }
+    }
+    while(!valid);
 }
 
 int getPatientAge()
@@ -292,9 +314,7 @@ void searchPatientByID()
     int id;
 
     id    = getPatientID();
-    index = idExists(patientRecords,
-                     totalPatients,
-                     id);
+    index = idExists(id);
 
     handlePatientSearchResult(index);
 }
@@ -306,11 +326,11 @@ void searchPatientByName()
 
     numRecordsFound = NO_RECORDS;
 
-    char name[NAME_MAX_CHAR];
+    char name[FULL_NAME_MAX_CHAR];
 
     getStringInput("Enter patient name: ",
                    name,
-                   NAME_MAX_CHAR);
+                   FULL_NAME_MAX_CHAR);
 
     for(int i = 0; i < totalPatients; i++)
     {
@@ -393,12 +413,4 @@ void printPatientRecordDivider()
     printDashes(ROOM_NUM_FIELD_SPACING);
     printf("+");
     printf("\n");
-}
-
-void printDashes(const int numDashes)
-{
-    for(int i = 0; i < numDashes; i++)
-    {
-        printf("%c", '-');
-    }
 }

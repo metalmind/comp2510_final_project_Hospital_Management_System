@@ -10,7 +10,7 @@
 #include "patient.h"
 #include "tools.h"
 
-#define NAME_MAX_CHAR 50
+#define FULL_NAME_MAX_CHAR 50
 #define DIAGNOSIS_MAX_CHAR 100
 
 #define MAX_PATIENTS 50
@@ -18,7 +18,7 @@
 #define MIN_AGE_YEARS 0
 #define MAX_AGE_YEARS 150
 
-#define ID_MIN_VALUE 0
+#define ID_MIN_VALUE 1
 #define ID_MAX_VALUE 50
 #define ID_NOT_FOUND (-1)
 
@@ -34,9 +34,6 @@
 #define NO_RECORDS 0
 #define RECORD_FOUND 0
 
-#define ENTRY_REMOVAL_OFFSET 1
-#define NEXT_ENTRY_OFFSET 1
-
 #define INT_FIELD_SPACING 9
 #define STRING_FIELD_SPACING 21
 #define ROOM_NUM_FIELD_SPACING 17
@@ -46,11 +43,31 @@ typedef struct patient patient;
 struct patient
 {
     int patientID;
-    char name[NAME_MAX_CHAR];
+    char name[FULL_NAME_MAX_CHAR];
     int age;
     char diagnosis[DIAGNOSIS_MAX_CHAR];
     int roomNumber;
 };
+
+/**
+ * Searches for a patientID in the array and returns its index if found;
+ * otherwise, it returns ID_NOT_FOUND.
+ *
+ * @param id The ID we want to check for existence
+ * @return id index if found, otherwise ID_NOT_FOUND
+ *
+ * @author Ayesha Anzer
+ * @author Owen Wou
+ */
+int idExists(int id);
+
+/**
+ * Returns the patient record corresponding to the specified index
+ * of the patientRecords array.
+ * @param index index of patient record to retrieve
+ * @return patient record
+ */
+patient* getPatient(int index);
 
 /**
  * Adds a new patient to the patientRecord array.
@@ -71,22 +88,6 @@ void dischargePatient(void);
  * @param index index of patient record to be removed
  */
 void removePatientRecord(int index);
-
-/**
- * Searches for a patientID in the array and returns its index if found;
- * otherwise, it returns ID_NOT_FOUND.
- *
- * @param arr Array of Patient Structs
- * @param size The number of patient records in the array as an int
- * @param id The ID we want to check for existence
- * @return id index if found, otherwise ID_NOT_FOUND
- *
- * @author Ayesha Anzer
- * @author Owen Wou
- */
-int idExists(const patient* const arr,
-             int size,
-             int id);
 
 /**
  * Prompts user for patient ID, with checks to ensure patient ID is valid
@@ -110,6 +111,15 @@ int getUniquePatientID(void);
  * @return patient ID
  */
 int getPatientID(void);
+
+/**
+ * Prompts user for patient name, with checks to ensure patient name is valid
+ * according to the following criteria:
+ * 1) Patient name contains only alphabetic characters and spaces
+ *
+ * @param name char array to assign name
+ */
+void getPatientName(char* name);
 
 /**
  * Prompts user for patient age, with checks to ensure patient age is valid
@@ -169,22 +179,18 @@ void handlePatientSearchResult(int index);
  * @param indexes indexes of records matching the provided String input
  * @param numRecordsFound number of matching records found
  */
-void handleMultiplePatientSearchResults(const int* const indexes,
+void handleMultiplePatientSearchResults(const int* indexes,
                                         int numRecordsFound);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
  * to the specified ID.
- *
- * @return index of patient record corresponding to the specified ID
  */
 void searchPatientByID(void);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
  * to the specified name.
- *
- * @return index of patient record corresponding to the specified name
  */
 void searchPatientByName(void);
 
@@ -215,11 +221,5 @@ void printPatientRecordsHeader();
  * Helper function that prints the crossbar for the patient records.
  */
 void printPatientRecordDivider();
-
-/**
- * Helper function that prints the specified number of dashes to the screen.
- * @param numDashes number of dashes to print
- */
-void printDashes(int numDashes);
 
 #endif //PATIENT_H

@@ -3,15 +3,33 @@
 #include<stdio.h>
 #include<string.h>
 //#include "tools.h"
+#include "../inc/doctor.h"
 #include "../inc/schedule.h"
-
 
 int main(void)
 {
     printDocWeekSchedule();
-    addToSchedule("Dr. Shepard",
+
+    addNewDoctorRecord();
+
+    doctor* shepard = getDoctor(0);
+
+    addToSchedule (shepard,
                   SUN,
                   MORNING);
+
+    addToSchedule (shepard,
+                  TUE,
+                  EVENING);
+
+    printDocWeekSchedule();
+
+    addNewDoctorRecord();
+    addNewDoctorRecord();
+    viewAllDoctorRecords();
+    fireDoctor();
+    viewAllDoctorRecords();
+
     printDocWeekSchedule();
 
     addNewPatientRecord();

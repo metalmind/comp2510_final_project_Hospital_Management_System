@@ -16,6 +16,11 @@
 
 #define TERMINAL_CHAR 0
 
+#define EMPTY_STRING 0
+
+#define ENTRY_REMOVAL_OFFSET 1
+#define NEXT_ENTRY_OFFSET 1
+
 /**
  * Wrapper function for scanf() which takes a prompt message to print and
  * a value to which to assign the input. Clears the input buffer in case of invalid
@@ -25,8 +30,8 @@
  * @param input value to assign input
  * @return number of items successfully read
  */
-int getInput(const char* const prompt,
-             int* const input);
+int getInput(const char* prompt,
+             int* input);
 
 /**
  * Validates whether input value is of valid type (i.e., has been successfully read
@@ -43,7 +48,7 @@ int validateData(int numItemsRead,
                  int input,
                  int lowerBound,
                  int upperBound,
-                 const char* const errorMessage);
+                 const char* errorMessage);
 
 /**
  * Validates whether input read was successful - checks that numItemsRead
@@ -51,7 +56,7 @@ int validateData(int numItemsRead,
  * extracted and assigned.
  *
  * @param numItemsRead number of items successfully read
- * @return 1 if input type is valid, otherwise 0
+ * @return TRUE if input type is valid, otherwise FALSE
  */
 int validateInputType(int numItemsRead);
 
@@ -61,11 +66,20 @@ int validateInputType(int numItemsRead);
  * @param num number to validate
  * @param lowerBound lower bound of valid range
  * @param upperBound upper bound of valid range
- * @return 1 if number is within valid range, otherwise 0
+ * @return TRUE if number is within valid range, otherwise FALSE
  */
 int validateNum(int num,
                 int lowerBound,
                 int upperBound);
+
+/**
+ * Validates whether the name is valid (i.e., is not null or blank, does not
+ * start or end with a space, and does not contain numbers or special characters).
+ *
+ * @param name name to validate
+ * @return TRUE if name is valid, otherwise FALSE
+ */
+int validateName(const char* name);
 
 /**
  * Wrapper function for fgets() which takes a prompt message to print and
@@ -76,13 +90,27 @@ int validateNum(int num,
  * @param maxChar maximum characters allowed
  * @return
  */
-void getStringInput(const char* const prompt,
-                    char* const input,
+void getStringInput(const char* prompt,
+                    char* input,
                     int maxChar);
+
+/**
+ * Checks whether a given string is blank - i.e., is empty or consists
+ * of only spaces.
+ * @param str string to check if blank
+ * @return TRUE if string is blank, otherwise FALSE
+ */
+int isBlank(const char* str);
 
 /**
  * Helper method to flush the input buffer in the case of invalid inputs.
  */
 void clearInputBuffer(void);
+
+/**
+ * Helper function that prints the specified number of dashes to the screen.
+ * @param numDashes number of dashes to print
+ */
+void printDashes(int numDashes);
 
 #endif //TOOLS_H

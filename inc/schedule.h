@@ -8,12 +8,14 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 
+#include "../inc/doctor.h"
+
 #define DAYS_IN_WEEK 7
 #define NUM_SHIFTS 3
 #define MAX_CHAR_SHIFT 15
 #define SPACE_PER_COL 13
 
-#define MAX_DOCTORS 10
+#define UNASSIGNED_SHIFT 0
 
 enum daysInWeek { SUN, MON, TUE, WED, THU, FRI, SAT };
 
@@ -25,7 +27,7 @@ enum shift { MORNING, AFTERNOON, EVENING };
  * @param dayOfWeek enum daysInWeek
  * @param dayOfWeekName The String to populate.
  */
-void getDayOfWeekNameStr(const enum daysInWeek dayOfWeek,
+void getDayOfWeekNameStr(enum daysInWeek dayOfWeek,
                          char* dayOfWeekName);
 
 /**
@@ -45,11 +47,11 @@ void printDocWeekSchedule();
 /**
  * Adds a doctor to the schedule.
  *
- * @param doctorName Name of the doctor to add.
+ * @param doctor Name of the doctor to add.
  * @param dayOfWeek The day to schedule the doctor on.
  * @param shiftToFill The shift you want to fill.
  */
-void addToSchedule(char* doctorName,
+void addToSchedule(const doctor* doctor,
                    enum daysInWeek dayOfWeek,
                    enum shift shiftToFill);
 
@@ -73,10 +75,16 @@ void printShiftsForWeek();
  *
  * @param dayOfWeek The day of the week to check.
  * @param shift The shift you want to check
- * @param doctor The return value that will have the name of the doctor on shift.
+ * @param doctorName The return value that will have the name of the doctor on shift.
  */
 void getDoctorOnShift(enum daysInWeek dayOfWeek,
                       enum shift shift,
-                      char* doctor);
+                      char* doctorName);
+
+/**
+ * Clears the shifts that the specified doctor is scheduled in for.
+ * @param id id of doctor whose shifts to clear
+ */
+void clearDoctorShifts(int id);
 
 #endif //SCHEDULE_H
