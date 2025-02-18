@@ -4,6 +4,7 @@
 
 #include<stdio.h>
 #include<string.h>
+#include <ctype.h>
 #include "../inc/tools.h"
 
 int getInput(const char* const prompt,
@@ -71,6 +72,28 @@ int validateNum(const int num,
     return valid;
 }
 
+int validateName(const char* const name)
+{
+    size_t nameLength;
+
+    nameLength = strlen(name);
+
+    if(name == NULL ||
+       isBlank(name))
+    {
+        return FALSE;
+    }
+
+    for (size_t i = 0; i < nameLength; i++)
+    {
+        if (!(isalpha(name[i]) || name[i] == ' '))
+        {
+            return FALSE;
+        }
+    }
+
+    return TRUE;
+}
 
 void getStringInput(const char* const prompt,
                     char* const input,
@@ -84,7 +107,30 @@ void getStringInput(const char* const prompt,
           stdin);
     length = strcspn(input,
                      "\n");
+
     input[length] = TERMINAL_CHAR;
+}
+
+int isBlank(const char* const str)
+{
+    size_t length;
+
+    length = strlen(str);
+
+    if(length == EMPTY_STRING)
+    {
+        return TRUE;
+    }
+
+    for(size_t i = 0; i < length; i++)
+    {
+        if(!isspace(str[i]))
+        {
+            return FALSE;
+        }
+    }
+
+    return TRUE;
 }
 
 void clearInputBuffer()

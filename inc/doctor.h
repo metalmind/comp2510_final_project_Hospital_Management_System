@@ -94,6 +94,17 @@ int getDoctorID(void);
 doctor* getDoctorByID();
 
 /**
+ * Prompts user for doctor name, with checks to ensure doctor name is valid
+ * according to the following criteria:
+ * 1) Doctor name contains only alphabetic characters and spaces
+ *
+ * @param prompt prompt message
+ * @param name char array to assign name
+ */
+void getDoctorName(char* prompt,
+                   char* const name);
+
+/**
  * Prints the doctor record corresponding to the specified index of the
  * doctor record array.
  * @param index index of doctor record

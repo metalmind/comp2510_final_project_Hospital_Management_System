@@ -113,6 +113,15 @@ int getUniquePatientID(void);
 int getPatientID(void);
 
 /**
+ * Prompts user for patient name, with checks to ensure patient name is valid
+ * according to the following criteria:
+ * 1) Patient name contains only alphabetic characters and spaces
+ *
+ * @param name char array to assign name
+ */
+void getPatientName(char* const name);
+
+/**
  * Prompts user for patient age, with checks to ensure patient age is valid
  * according to the following criteria:
  * 1) Patient age is a positive integer

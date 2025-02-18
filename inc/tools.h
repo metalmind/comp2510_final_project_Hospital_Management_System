@@ -16,6 +16,8 @@
 
 #define TERMINAL_CHAR 0
 
+#define EMPTY_STRING 0
+
 #define ENTRY_REMOVAL_OFFSET 1
 #define NEXT_ENTRY_OFFSET 1
 
@@ -54,7 +56,7 @@ int validateData(int numItemsRead,
  * extracted and assigned.
  *
  * @param numItemsRead number of items successfully read
- * @return 1 if input type is valid, otherwise 0
+ * @return TRUE if input type is valid, otherwise FALSE
  */
 int validateInputType(int numItemsRead);
 
@@ -64,11 +66,20 @@ int validateInputType(int numItemsRead);
  * @param num number to validate
  * @param lowerBound lower bound of valid range
  * @param upperBound upper bound of valid range
- * @return 1 if number is within valid range, otherwise 0
+ * @return TRUE if number is within valid range, otherwise FALSE
  */
 int validateNum(int num,
                 int lowerBound,
                 int upperBound);
+
+/**
+ * Validates whether the name is valid (i.e., is not null or blank, does not
+ * start or end with a space, and does not contain numbers or special characters).
+ *
+ * @param name name to validate
+ * @return TRUE if name is valid, otherwise FALSE
+ */
+int validateName(const char* const name);
 
 /**
  * Wrapper function for fgets() which takes a prompt message to print and
@@ -82,6 +93,14 @@ int validateNum(int num,
 void getStringInput(const char* const prompt,
                     char* const input,
                     int maxChar);
+
+/**
+ * Checks whether a given string is blank - i.e., is empty or consists
+ * of only spaces.
+ * @param str string to check if blank
+ * @return TRUE if string is blank, otherwise FALSE
+ */
+int isBlank(const char* const str);
 
 /**
  * Helper method to flush the input buffer in the case of invalid inputs.

@@ -44,13 +44,11 @@ void addNewDoctorRecord(void)
 
     id = getUniqueDoctorID();
 
-    getStringInput("Enter doctor first name: ",
-                   firstName,
-                   NAME_MAX_CHAR);
+    getDoctorName("Enter doctor first name: ",
+                  firstName);
 
-    getStringInput("Enter doctor last name: ",
-                   lastName,
-                   NAME_MAX_CHAR);
+    getDoctorName("Enter doctor last name: ",
+                  lastName);
 
     getStringInput("Enter doctor specialty: ",
                    specialty,
@@ -168,6 +166,28 @@ doctor* getDoctorByID()
     index = doctorIDExists(id);
 
     return getDoctor(index);
+}
+
+void getDoctorName(char* prompt,
+                   char* const name)
+{
+    int valid;
+
+    valid = FALSE;
+
+    do
+    {
+        getStringInput(prompt,
+                       name,
+                       NAME_MAX_CHAR);
+        valid = validateName(name);
+
+        if(!valid)
+        {
+            printf("Invalid name! Only alphabetic characters allowed.\n");
+        }
+    }
+    while(!valid);
 }
 
 void printDoctorRecord(const int index)
