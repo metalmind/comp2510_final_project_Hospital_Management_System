@@ -75,18 +75,20 @@ Table 2.1 Patient Data Structure
 - Remove record from patient array
 - Deal with gap in array somehow
 
-#### 2.3 Doctor Schedule Management
+#### 2.3 Doctor Management
 
 | Description | Datatype | Not Null | Not Blank | Unique | Min Value | Max Value |
 |-------------|:--------:|:--------:|:---------:|:------:|:---------:|:---------:|
-| Patient ID  |   int    |   N/A    |    N/A    |   Y    |     1     |    50     |
+| Doctor ID   |   int    |   N/A    |    N/A    |   Y    |     1     |    50     |
 | First Name  |  String  |   N/A    |    N/A    |   N    |    N/A    |    N/A    |
 | Last Name   |  String  |   N/A    |    N/A    |   N    |    N/A    |    N/A    |
 | Specialty   |  String  |   N/A    |    N/A    |   N    |    N/A    |    N/A    |
 
-#### 2.4 Input Validation
+#### 2.4 Shift Management
 
-#### 2.5 Menu Driven Interface
+#### 2.5 Input Validation
+
+#### 2.6 Menu Driven Interface
 
 ## 3. Challenges and Solutions
 
