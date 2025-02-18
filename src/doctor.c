@@ -81,7 +81,7 @@ void fireDoctor()
     }
     else
     {
-        printf("Doctor record not found.");
+        printf("Doctor record not found.\n");
     }
 }
 
@@ -134,25 +134,11 @@ int getUniqueDoctorID()
 int getDoctorID()
 {
     int id;
-    int valid;
 
-    id    = DOC_ID_NOT_FOUND;
-    valid = FALSE;
-
-    do
-    {
-        int numItemsRead;
-
-        numItemsRead = getInput("Enter doctor ID: ",
-                                &id);
-
-        valid = validateData(numItemsRead,
-                             id,
-                             DOC_ID_MIN_VALUE,
-                             DOC_ID_MAX_VALUE,
-                             "Invalid doctor ID! Please enter a positive integer.\n");
-    }
-    while(!valid);
+    id = promptForInput("Enter doctor ID: ",
+                        "Invalid doctor ID! Please enter a positive integer.\n",
+                        DOC_ID_MIN_VALUE,
+                        DOC_ID_MAX_VALUE);
 
     return id;
 }

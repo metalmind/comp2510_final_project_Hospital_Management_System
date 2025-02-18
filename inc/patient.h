@@ -22,8 +22,6 @@
 #define ID_MAX_VALUE 50
 #define ID_NOT_FOUND (-1)
 
-#define INVALID_INPUT (-1)
-
 #define ROOM_NUMBER_MIN 1
 #define ROOM_NUMBER_MAX 100
 

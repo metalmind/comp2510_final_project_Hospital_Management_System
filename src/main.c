@@ -1,4 +1,4 @@
-#include "..\inc\menu.h"
+#include "../inc/menu.h"
 
 
 int main(void)

@@ -7,6 +7,35 @@
 #include <ctype.h>
 #include "../inc/tools.h"
 
+int promptForInput(const char* const prompt,
+                   const char* const errorMessage,
+                   const int lowerBound,
+                   const int upperBound)
+{
+    int input;
+    int valid;
+
+    input = INVALID_INPUT;
+    valid = FALSE;
+
+    do
+    {
+        int numItemsRead;
+
+        numItemsRead = getInput(prompt,
+                                &input);
+
+        valid = validateData(numItemsRead,
+                             input,
+                             lowerBound,
+                             upperBound,
+                             errorMessage);
+    }
+    while(!valid);
+
+    return input;
+}
+
 int getInput(const char* const prompt,
              int* const input)
 {
