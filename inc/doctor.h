@@ -1,7 +1,7 @@
 #ifndef DOCTOR_H
 #define DOCTOR_H
 
-#define NAME_MAX_CHAR 25
+#define NAME_MAX_CHAR 12
 #define SPECIALTY_MAX_CHAR 50
 
 #define MAX_DOCTORS 10

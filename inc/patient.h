@@ -10,8 +10,8 @@
 #include "patient.h"
 #include "tools.h"
 
-#define FULL_NAME_MAX_CHAR 50
-#define DIAGNOSIS_MAX_CHAR 100
+#define FULL_NAME_MAX_CHAR 25
+#define DIAGNOSIS_MAX_CHAR 50
 
 #define MAX_PATIENTS 50
 
