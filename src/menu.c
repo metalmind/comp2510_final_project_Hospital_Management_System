@@ -56,24 +56,22 @@ void routeSelection(const int sel)
     switch(sel)
     {
         case ADD_PATIENT_RECORDS:
-            //addNewPatientRecords();
-            printf("1. Add Patient Record\n");
+            addNewPatientRecord();
             break;
         case VIEW_ALL_PATIENTS:
-            //viewAllPatients();
-            printf("2. View ALl Patients\n");
+            viewAllPatientRecords();
             break;
         case SEARCH_PATIENT_BY_ID:
-            //searchPatientByID();
-            printf("3. Search Patient by ID\n");
+            searchForPatientRecord();
             break;
         case DISCHARGE_PATIENT:
-            //dischargePatient();
-            printf("4. Discharge Patient\n");
+            dischargePatient();
             break;
-        case MANAGE_DOCTOR_SCHEDULE:
-            //manageDoctorSchedule();
-            printf("5. Manage Doctor Schedule\n");
+        case DOCTOR_MENU:
+            doctorMenu();
+            break;
+        case SCHEDULE_MENU:
+            scheduleMenu();
             break;
         case EXIT:
             printf("Exiting...\n");

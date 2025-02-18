@@ -8,12 +8,13 @@
 #ifndef MENU_H
 #define MENU_H
 
+#define EXIT 0
 #define ADD_PATIENT_RECORDS 1
 #define VIEW_ALL_PATIENTS 2
 #define SEARCH_PATIENT_BY_ID 3
 #define DISCHARGE_PATIENT 4
-#define MANAGE_DOCTOR_SCHEDULE 5
-#define EXIT 6
+#define DOCTOR_MENU 5
+#define SCHEDULE_MENU 6
 
 /**
  * A text-based menu to guide user interaction.
