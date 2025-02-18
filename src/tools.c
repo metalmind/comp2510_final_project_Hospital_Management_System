@@ -194,13 +194,21 @@ void getStringInput(const char* const prompt,
                     const int maxChar)
 {
     size_t length;
+    int exceedMaxChar;
 
     printf("%s", prompt);
     fgets(input,
           maxChar,
           stdin);
+
     length = strcspn(input,
                      "\n");
+    exceedMaxChar = strchr(input, '\n') == NULL;
+
+    if(exceedMaxChar)
+    {
+        clearInputBuffer();
+    }
 
     input[length] = TERMINAL_CHAR;
 }
