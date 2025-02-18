@@ -11,7 +11,7 @@
 #include "tools.h"
 
 #define FULL_NAME_MAX_CHAR 25
-#define DIAGNOSIS_MAX_CHAR 50
+#define DIAGNOSIS_MAX_CHAR 25
 
 #define MAX_PATIENTS 50
 
@@ -34,7 +34,7 @@
 #define RECORD_FOUND 0
 
 #define INT_FIELD_SPACING 9
-#define STRING_FIELD_SPACING 21
+#define STRING_FIELD_SPACING 29
 #define ROOM_NUM_FIELD_SPACING 17
 
 typedef struct patient patient;

@@ -272,7 +272,7 @@ void searchPatientByName()
 
 void printPatientRecord(const int index)
 {
-    printf("%-2s%-8d%-2s%-20s%-2s%-8d%-2s%-20s%-2s%-16d%c\n",
+    printf("%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-28s%-2s%-16d%c\n",
            "|",
            patientRecords[index].patientID,
            "|",
@@ -308,7 +308,7 @@ void printPatientRecordsHeader()
 {
     printPatientRecordDivider();
 
-    printf("%-2s%-8s%-2s%-20s%-2s%-8s%-2s%-20s%-2s%-16s%c\n",
+    printf("%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-28s%-2s%-16s%c\n",
        "|",
        "ID",
        "|",

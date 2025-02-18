@@ -143,7 +143,7 @@ void getDoctorName(const char* prompt,
 
 void printDoctorRecord(const int index)
 {
-    printf("%-2s%-8d%-2s%-16s%-2s%-16s%-2s%-20s%c\n",
+    printf("%-2s%-8d%-2s%-16s%-2s%-16s%-2s%-28s%c\n",
            "|",
            doctorRecords[index].doctorID,
            "|",
@@ -177,7 +177,7 @@ void printDoctorRecordsHeader()
 {
     printDoctorRecordDivider();
 
-    printf("%-2s%-8s%-2s%-16s%-2s%-16s%-2s%-20s%c\n",
+    printf("%-2s%-8s%-2s%-16s%-2s%-16s%-2s%-28s%c\n",
        "|",
        "ID",
        "|",
