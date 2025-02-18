@@ -253,3 +253,47 @@ void printDoctorRecordDivider()
     printf("+");
     printf("\n");
 }
+
+void doctorMenu()
+{
+    int sel;
+
+    do
+    {
+        printDoctorMenu();
+
+        getInput("Enter your selection: ",
+                 &sel);
+        routeDoctorMenu(sel);
+    }
+    while(sel != RETURN_TO_MAIN_MENU);
+}
+
+void printDoctorMenu()
+{
+    printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
+    printf("%d. Add New Doctor\n", ADD_NEW_DOCTOR);
+    printf("%d. Fire Doctor\n", FIRE_DOCTOR);
+    printf("%d. View All Doctor Records\n", VIEW_ALL_DOCTOR_RECORDS);
+}
+
+void routeDoctorMenu(const int sel)
+{
+    switch(sel)
+    {
+        case ADD_NEW_DOCTOR:
+            addNewDoctorRecord();
+            break;
+        case FIRE_DOCTOR:
+            fireDoctor();
+            break;
+        case VIEW_ALL_DOCTOR_RECORDS:
+            viewAllDoctorRecords();
+            break;
+        case RETURN_TO_MAIN_MENU:
+            printf("Returning to menu...\n");
+            break;
+        default:
+            printf("Invalid input! Try again.\n");
+    }
+}

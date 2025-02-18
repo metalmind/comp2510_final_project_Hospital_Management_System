@@ -17,6 +17,10 @@
 
 #define UNASSIGNED_SHIFT 0
 
+#define ADD_DOCTOR_TO_SCHEDULE 1
+#define VIEW_WEEK_SCHEDULE 2
+
+
 enum daysInWeek { SUN, MON, TUE, WED, THU, FRI, SAT };
 
 enum shift { MORNING, AFTERNOON, EVENING };
@@ -51,7 +55,7 @@ void printDocWeekSchedule();
  * @param dayOfWeek The day to schedule the doctor on.
  * @param shiftToFill The shift you want to fill.
  */
-void addToSchedule(const doctor* doctor,
+void addDoctorToSchedule(const doctor* doctor,
                    enum daysInWeek dayOfWeek,
                    enum shift shiftToFill);
 
@@ -86,5 +90,21 @@ void getDoctorOnShift(enum daysInWeek dayOfWeek,
  * @param id id of doctor whose shifts to clear
  */
 void clearDoctorShifts(int id);
+
+/**
+ * Helper function which prints the menu options to the screen
+ */
+void printScheduleMenu();
+
+/**
+ * Helper function to call the selected function from the menu.
+ * @param sel The input from the user.
+ */
+void routeScheduleMenu(const int sel);
+
+/**
+ * The main entry point into the schedule menu.
+ */
+void scheduleMenu();
 
 #endif //SCHEDULE_H

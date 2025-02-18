@@ -245,28 +245,28 @@ void searchForPatientRecord()
                  &sel);
         searchCriteriaSelection(sel);
     }
-    while(sel != RETURN_TO_MENU);
+    while(sel != RETURN_TO_MAIN_MENU);
 }
 
 void printPatientMenu()
 {
-    printf("Search By:\n");
-    printf("1. Patient ID\n");
-    printf("2. Patient Name\n");
-    printf("3. Return to Menu\n");
+    printf("%d. Return to Menu\n", RETURN_TO_MAIN_MENU);
+    printf("%d. Search by Patient ID\n", SEARCH_BY_PATIENT_ID);
+    printf("%d. Search by Patient Name\n", SEARCH_BY_PATIENT_NAME);
+
 }
 
 void searchCriteriaSelection(const int sel)
 {
     switch(sel)
     {
-        case SEARCH_BY_ID:
+        case SEARCH_BY_PATIENT_ID:
             searchPatientByID();
             break;
-        case SEARCH_BY_NAME:
+        case SEARCH_BY_PATIENT_NAME:
             searchPatientByName();
             break;
-        case RETURN_TO_MENU:
+        case RETURN_TO_MAIN_MENU:
             printf("Returning to menu...\n");
             break;
         default:
