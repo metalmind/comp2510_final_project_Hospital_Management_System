@@ -173,6 +173,12 @@ void assignShift()
 
     doc       = getDoctorByID();
 
+    if(doc == NULL)
+    {
+        printf("Requested doctor not found in the system.\n");
+        return;
+    }
+
     printDayOfWeekMenu();
     dayOfWeek = promptForInput("Enter day of week: ",
                                "Invalid day of week! Try again.\n",
