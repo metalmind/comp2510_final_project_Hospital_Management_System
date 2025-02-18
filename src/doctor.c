@@ -127,6 +127,7 @@ doctor* getDoctorByID()
     int id;
     int index;
 
+
     id    = getDoctorID();
     index = doctorIDExists(id);
 
