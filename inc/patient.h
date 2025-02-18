@@ -116,9 +116,11 @@ int getPatientID(void);
  * according to the following criteria:
  * 1) Patient name contains only alphabetic characters and spaces
  *
+ * @param prompt prompt message
  * @param name char array to assign name
  */
-void getPatientName(char* name);
+void getPatientName(const char* prompt,
+                    char* name);
 
 /**
  * Prompts user for patient age, with checks to ensure patient age is valid

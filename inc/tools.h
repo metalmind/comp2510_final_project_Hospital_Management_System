@@ -44,6 +44,7 @@ int promptForInput(const char* prompt,
  *
  * @param prompt prompt message
  * @param errorMessage error message
+ * @param duplicateErrorMessage error message for duplicate input
  * @param isUniqueInput
  * @param lowerBound lower bound of valid range
  * @param upperBound upper bound of valid range
@@ -55,6 +56,17 @@ int promptForUniqueInput(const char* prompt,
                          int(*isUniqueInput)(int),
                          int lowerBound,
                          int upperBound);
+
+/**
+ * Wrapper function which prompts for a valid name String from the user,
+ * re-prompting in case of invalid input.
+ * @param prompt prompt message
+ * @param input char array to assign input
+ * @param maxChars maximum allowed characters
+ */
+void promptForNameStr(const char* prompt,
+                      char* input,
+                      int maxChars);
 
 /**
  * Wrapper function for scanf() which takes a prompt message to print and

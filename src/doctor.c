@@ -133,26 +133,12 @@ doctor* getDoctorByID()
     return getDoctor(index);
 }
 
-void getDoctorName(char* prompt,
+void getDoctorName(const char* prompt,
                    char* const name)
 {
-    int valid;
-
-    valid = FALSE;
-
-    do
-    {
-        getStringInput(prompt,
-                       name,
-                       NAME_MAX_CHAR);
-        valid = validateName(name);
-
-        if(!valid)
-        {
-            printf("Invalid name! Only alphabetic characters allowed.\n");
-        }
-    }
-    while(!valid);
+    promptForNameStr(prompt,
+                     name,
+                     NAME_MAX_CHAR);
 }
 
 void printDoctorRecord(const int index)

@@ -78,6 +78,29 @@ int promptForUniqueInput(const char* const prompt,
     return input;
 }
 
+void promptForNameStr(const char* const prompt,
+                      char* const input,
+                      const int maxChars)
+{
+    int valid;
+
+    valid = FALSE;
+
+    do
+    {
+        getStringInput(prompt,
+                       input,
+                       maxChars);
+        valid = validateName(input);
+
+        if(!valid)
+        {
+            printf("Invalid name! Only alphabetic characters allowed.\n");
+        }
+    }
+    while(!valid);
+}
+
 int getInput(const char* const prompt,
              int* const input)
 {

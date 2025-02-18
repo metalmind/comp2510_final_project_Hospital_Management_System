@@ -107,7 +107,7 @@ doctor* getDoctorByID();
  * @param prompt prompt message
  * @param name char array to assign name
  */
-void getDoctorName(char* prompt,
+void getDoctorName(const char* prompt,
                    char* name);
 
 /**

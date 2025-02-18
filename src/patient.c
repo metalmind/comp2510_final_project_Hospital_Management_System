@@ -48,7 +48,8 @@ void addNewPatientRecord(void)
 
     id = getUniquePatientID();
 
-    getPatientName(name);
+    getPatientName("Enter patient name: ",
+                   name);
 
     age = getPatientAge();
 
@@ -125,25 +126,12 @@ int getPatientID()
     return id;
 }
 
-void getPatientName(char* const name)
+void getPatientName(const char* prompt,
+                    char* const name)
 {
-    int valid;
-
-    valid = FALSE;
-
-    do
-    {
-        getStringInput("Enter patient name: ",
-                       name,
-                       FULL_NAME_MAX_CHAR);
-        valid = validateName(name);
-
-        if(!valid)
-        {
-            printf("Invalid name! Only alphabetic characters allowed.\n");
-        }
-    }
-    while(!valid);
+    promptForNameStr(prompt,
+                     name,
+                     FULL_NAME_MAX_CHAR);
 }
 
 int getPatientAge()
