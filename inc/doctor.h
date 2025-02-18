@@ -1,8 +1,8 @@
 #ifndef DOCTOR_H
 #define DOCTOR_H
 
-#define NAME_MAX_CHAR 25
-#define SPECIALTY_MAX_CHAR 50
+#define NAME_MAX_CHAR 12
+#define SPECIALTY_MAX_CHAR 25
 
 #define MAX_DOCTORS 10
 
@@ -12,7 +12,7 @@
 
 #define INT_FIELD_SPACING 9
 #define NAME_FIELD_SPACING 17
-#define STRING_FIELD_SPACING 21
+#define STRING_FIELD_SPACING 29
 
 #define RETURN_TO_MAIN_MENU 0
 #define ADD_NEW_DOCTOR 1
@@ -107,7 +107,7 @@ doctor* getDoctorByID();
  * @param prompt prompt message
  * @param name char array to assign name
  */
-void getDoctorName(char* prompt,
+void getDoctorName(const char* prompt,
                    char* name);
 
 /**

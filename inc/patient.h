@@ -10,8 +10,8 @@
 #include "patient.h"
 #include "tools.h"
 
-#define FULL_NAME_MAX_CHAR 50
-#define DIAGNOSIS_MAX_CHAR 100
+#define FULL_NAME_MAX_CHAR 25
+#define DIAGNOSIS_MAX_CHAR 25
 
 #define MAX_PATIENTS 50
 
@@ -21,8 +21,6 @@
 #define ID_MIN_VALUE 1
 #define ID_MAX_VALUE 50
 #define ID_NOT_FOUND (-1)
-
-#define INVALID_INPUT (-1)
 
 #define ROOM_NUMBER_MIN 1
 #define ROOM_NUMBER_MAX 100
@@ -36,7 +34,7 @@
 #define RECORD_FOUND 0
 
 #define INT_FIELD_SPACING 9
-#define STRING_FIELD_SPACING 21
+#define STRING_FIELD_SPACING 29
 #define ROOM_NUM_FIELD_SPACING 17
 
 typedef struct patient patient;
@@ -118,9 +116,11 @@ int getPatientID(void);
  * according to the following criteria:
  * 1) Patient name contains only alphabetic characters and spaces
  *
+ * @param prompt prompt message
  * @param name char array to assign name
  */
-void getPatientName(char* name);
+void getPatientName(const char* prompt,
+                    char* name);
 
 /**
  * Prompts user for patient age, with checks to ensure patient age is valid

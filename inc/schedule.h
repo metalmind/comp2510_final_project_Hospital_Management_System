@@ -17,9 +17,10 @@
 
 #define UNASSIGNED_SHIFT 0
 
-#define ADD_DOCTOR_TO_SCHEDULE 1
+#define ASSIGN_DOC_TO_SHIFT 1
 #define VIEW_WEEK_SCHEDULE 2
 
+#define MENU_NUMBERING_OFFSET 1
 
 enum daysInWeek { SUN, MON, TUE, WED, THU, FRI, SAT };
 
@@ -95,6 +96,16 @@ void clearDoctorShifts(int id);
  * Helper function which prints the menu options to the screen
  */
 void printScheduleMenu();
+
+/**
+ * Helper function which prints the day of week options to the screen
+ */
+void printDayOfWeekMenu();
+
+/**
+ * Helper function which prints the shift options to the screen
+ */
+void printShiftMenu();
 
 /**
  * Helper function to call the selected function from the menu.

@@ -12,6 +12,8 @@
 #define TRUE 1
 #define FALSE 0
 
+#define INVALID_INPUT (-1)
+
 #define READ_SUCCESS 1
 
 #define TERMINAL_CHAR 0
@@ -20,6 +22,51 @@
 
 #define ENTRY_REMOVAL_OFFSET 1
 #define NEXT_ENTRY_OFFSET 1
+
+/**
+ * Wrapper function which prompts for valid input from the user, re-prompting
+ * in case of invalid input.
+ *
+ * @param prompt prompt message
+ * @param errorMessage error message
+ * @param lowerBound lower bound of valid range
+ * @param upperBound upper bound of valid range
+ * @return valid input
+ */
+int promptForInput(const char* prompt,
+                   const char* errorMessage,
+                   int lowerBound,
+                   int upperBound);
+
+/**
+ * Wrapper function which prompts for valid and unique input from the user,
+ * re-prompting in case of invalid or duplicate input.
+ *
+ * @param prompt prompt message
+ * @param errorMessage error message
+ * @param duplicateErrorMessage error message for duplicate input
+ * @param isUniqueInput
+ * @param lowerBound lower bound of valid range
+ * @param upperBound upper bound of valid range
+ * @return valid unique input
+ */
+int promptForUniqueInput(const char* prompt,
+                         const char* errorMessage,
+                         const char* duplicateErrorMessage,
+                         int(*isUniqueInput)(int),
+                         int lowerBound,
+                         int upperBound);
+
+/**
+ * Wrapper function which prompts for a valid name String from the user,
+ * re-prompting in case of invalid input.
+ * @param prompt prompt message
+ * @param input char array to assign input
+ * @param maxChars maximum allowed characters
+ */
+void promptForNameStr(const char* prompt,
+                      char* input,
+                      int maxChars);
 
 /**
  * Wrapper function for scanf() which takes a prompt message to print and

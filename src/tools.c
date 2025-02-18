@@ -7,6 +7,100 @@
 #include <ctype.h>
 #include "../inc/tools.h"
 
+#include "../inc/patient.h"
+
+int promptForInput(const char* const prompt,
+                   const char* const errorMessage,
+                   const int lowerBound,
+                   const int upperBound)
+{
+    int input;
+    int valid;
+
+    input = INVALID_INPUT;
+    valid = FALSE;
+
+    do
+    {
+        int numItemsRead;
+
+        numItemsRead = getInput(prompt,
+                                &input);
+
+        valid = validateData(numItemsRead,
+                             input,
+                             lowerBound,
+                             upperBound,
+                             errorMessage);
+    }
+    while(!valid);
+
+    return input;
+}
+
+int promptForUniqueInput(const char* const prompt,
+                         const char* const errorMessage,
+                         const char* const duplicateErrorMessage,
+                         int(*isUniqueInput)(int),
+                         const int lowerBound,
+                         const int upperBound)
+{
+    int input;
+    int valid;
+    int unique;
+
+    valid  = FALSE;
+    unique = FALSE;
+
+    do
+    {
+        input = INVALID_INPUT;
+
+        int numItemsRead;
+
+        numItemsRead = getInput(prompt,
+                                &input);
+        unique = isUniqueInput(input) == INVALID_INPUT;
+
+        valid = validateData(numItemsRead,
+                             input,
+                             lowerBound,
+                             upperBound,
+                             errorMessage);
+
+        if(valid && !unique)
+        {
+            printf("%s", duplicateErrorMessage);
+        }
+    }
+    while(!(valid && unique));
+
+    return input;
+}
+
+void promptForNameStr(const char* const prompt,
+                      char* const input,
+                      const int maxChars)
+{
+    int valid;
+
+    valid = FALSE;
+
+    do
+    {
+        getStringInput(prompt,
+                       input,
+                       maxChars);
+        valid = validateName(input);
+
+        if(!valid)
+        {
+            printf("Invalid name! Only alphabetic characters allowed.\n");
+        }
+    }
+    while(!valid);
+}
+
 int getInput(const char* const prompt,
              int* const input)
 {
@@ -100,13 +194,21 @@ void getStringInput(const char* const prompt,
                     const int maxChar)
 {
     size_t length;
+    int exceedMaxChar;
 
     printf("%s", prompt);
     fgets(input,
           maxChar,
           stdin);
+
     length = strcspn(input,
                      "\n");
+    exceedMaxChar = strchr(input, '\n') == NULL;
+
+    if(exceedMaxChar)
+    {
+        clearInputBuffer();
+    }
 
     input[length] = TERMINAL_CHAR;
 }
