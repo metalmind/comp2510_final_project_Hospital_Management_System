@@ -22,6 +22,16 @@ int idExists(const int id)
     return ID_NOT_FOUND;
 }
 
+patient* getPatient(int index)
+{
+    if(index != ID_NOT_FOUND)
+    {
+        return &patientRecords[index];
+    }
+
+    return NULL;
+}
+
 void addNewPatientRecord(void)
 {
     if(totalPatients >= MAX_PATIENTS)

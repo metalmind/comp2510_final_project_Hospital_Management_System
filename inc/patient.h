@@ -62,6 +62,14 @@ struct patient
 int idExists(int id);
 
 /**
+ * Returns the patient record corresponding to the specified index
+ * of the patientRecords array.
+ * @param index index of patient record to retrieve
+ * @return patient record
+ */
+patient* getPatient(int index);
+
+/**
  * Adds a new patient to the patientRecord array.
  * @author Ayesha Anzer
  * @author Owen Wou
@@ -168,16 +176,12 @@ void handleMultiplePatientSearchResults(const int* const indexes,
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
  * to the specified ID.
- *
- * @return index of patient record corresponding to the specified ID
  */
 void searchPatientByID(void);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
  * to the specified name.
- *
- * @return index of patient record corresponding to the specified name
  */
 void searchPatientByName(void);
 
