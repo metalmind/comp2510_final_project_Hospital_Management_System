@@ -165,12 +165,48 @@ void printScheduleDivider()
     printf("\n");
 }
 
-void addDoctorToSchedule(const doctor* const doctor,
-                   const enum daysInWeek dayOfWeek,
-                   const enum shift shiftToFill)
+void assignShift()
 {
-    // schedule[dayOfWeek][shiftToFill] = doctorName;
+    doctor* doc;
+    int dayOfWeek;
+    int shiftToFill;
+
+    doc       = getDoctorByID();
+
+    printDayOfWeekMenu();
+    dayOfWeek = promptForInput("Enter day of week: ",
+                               "Invalid day of week! Try again.\n",
+                               SUN + MENU_NUMBERING_OFFSET,
+                               SAT + MENU_NUMBERING_OFFSET);
+    dayOfWeek -= MENU_NUMBERING_OFFSET;
+
+    printShiftMenu();
+    shiftToFill = promptForInput("Enter shift to fill: ",
+                                 "Invalid shift! Try again.\n",
+                                 MORNING + MENU_NUMBERING_OFFSET,
+                                 EVENING + MENU_NUMBERING_OFFSET);
+    shiftToFill -= MENU_NUMBERING_OFFSET;
+
+    addDoctorToSchedule(doc,
+                        dayOfWeek,
+                        shiftToFill);
+}
+
+void addDoctorToSchedule(const doctor* const doctor,
+                         const enum daysInWeek dayOfWeek,
+                         const enum shift shiftToFill)
+{
     schedule[dayOfWeek][shiftToFill] = doctor -> doctorID;
+    const char dayOfWeekStr[MAX_CHAR_SHIFT];
+    const char shiftNameStr[MAX_CHAR_SHIFT];
+
+    getDayOfWeekNameStr(dayOfWeek, dayOfWeekStr);
+    getShiftNameStr(shiftToFill, shiftNameStr);
+
+    printf("Successfully assigned Dr. %s to the %s %s shift!\n",
+           doctor -> lastName,
+           dayOfWeekStr,
+           shiftNameStr);
 }
 
 void clearDoctorShifts(const int id)
@@ -205,16 +241,44 @@ void scheduleMenu()
 void printScheduleMenu()
 {
     printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
-    printf("%d. Add To Schedule\n", ADD_DOCTOR_TO_SCHEDULE);
+    printf("%d. Assign Doctor to Shift\n", ASSIGN_DOC_TO_SHIFT);
     printf("%d. View Week Schedule\n", VIEW_WEEK_SCHEDULE);
+}
+
+void printDayOfWeekMenu()
+{
+    printf("%d. Sunday\n",
+           SUN + MENU_NUMBERING_OFFSET);
+    printf("%d. Monday\n",
+           MON + MENU_NUMBERING_OFFSET);
+    printf("%d. Tuesday\n",
+           TUE + MENU_NUMBERING_OFFSET);
+    printf("%d. Wednesday\n",
+           WED + MENU_NUMBERING_OFFSET);
+    printf("%d. Thursday\n",
+           THU + MENU_NUMBERING_OFFSET);
+    printf("%d. Friday\n",
+           FRI + MENU_NUMBERING_OFFSET);
+    printf("%d. Saturday\n",
+           SAT + MENU_NUMBERING_OFFSET);
+}
+
+void printShiftMenu()
+{
+    printf("%d. Morning\n",
+           MORNING + MENU_NUMBERING_OFFSET);
+    printf("%d. Afternoon\n",
+           AFTERNOON + MENU_NUMBERING_OFFSET);
+    printf("%d. Evening\n",
+           EVENING + MENU_NUMBERING_OFFSET);
 }
 
 void routeScheduleMenu(const int sel)
 {
     switch(sel)
     {
-        case ADD_DOCTOR_TO_SCHEDULE:
-            //addDoctorToSchedule();
+        case ASSIGN_DOC_TO_SHIFT:
+            assignShift();
         break;
         case VIEW_WEEK_SCHEDULE:
             printDocWeekSchedule();
