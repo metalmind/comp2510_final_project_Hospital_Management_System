@@ -2,10 +2,11 @@
 // Created by Owen on 15/02/2025.
 //
 
-#include "../inc/schedule.h"
-#include "../inc/doctor.h"
 #include <stdio.h>
 #include <string.h>
+#include "../inc/schedule.h"
+#include "../inc/doctor.h"
+#include "../inc/tools.h"
 
 int schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
 
@@ -129,7 +130,6 @@ void getDoctorOnShift(enum daysInWeek dayOfWeek,
     {
         strcpy(doctorName, "Dr. ");
         strcat(doctorName,  doc -> lastName);
-        // strcpy(doctor, schedule[dayOfWeek][shift]);
     }
 }
 
@@ -165,7 +165,7 @@ void printScheduleDivider()
     printf("\n");
 }
 
-void addToSchedule(const doctor* const doctor,
+void addDoctorToSchedule(const doctor* const doctor,
                    const enum daysInWeek dayOfWeek,
                    const enum shift shiftToFill)
 {
@@ -184,5 +184,45 @@ void clearDoctorShifts(const int id)
                 schedule[i][j] = UNASSIGNED_SHIFT;
             }
         }
+    }
+}
+
+void scheduleMenu()
+{
+    int sel;
+
+    do
+    {
+        printScheduleMenu();
+
+        getInput("Enter your selection: ",
+                 &sel);
+        routeScheduleMenu(sel);
+    }
+    while(sel != RETURN_TO_MAIN_MENU);
+}
+
+void printScheduleMenu()
+{
+    printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
+    printf("%d. Add To Schedule\n", ADD_DOCTOR_TO_SCHEDULE);
+    printf("%d. View Week Schedule\n", VIEW_WEEK_SCHEDULE);
+}
+
+void routeScheduleMenu(const int sel)
+{
+    switch(sel)
+    {
+        case ADD_DOCTOR_TO_SCHEDULE:
+            //addDoctorToSchedule();
+        break;
+        case VIEW_WEEK_SCHEDULE:
+            printDocWeekSchedule();
+        break;
+        case RETURN_TO_MAIN_MENU:
+            printf("Returning to menu...\n");
+        break;
+        default:
+            printf("Invalid input! Try again.\n");
     }
 }
