@@ -175,7 +175,7 @@ void searchForPatientRecord()
 
 void printPatientMenu()
 {
-    printf("%d. Return to Menu\n", RETURN_TO_MAIN_MENU);
+    printf("\n%d. Return to Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Search by Patient ID\n", SEARCH_BY_PATIENT_ID);
     printf("%d. Search by Patient Name\n", SEARCH_BY_PATIENT_NAME);
 

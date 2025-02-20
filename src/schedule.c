@@ -276,7 +276,7 @@ void scheduleMenu()
 
 void printScheduleMenu()
 {
-    printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
+    printf("\n%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Assign Doctor to Shift\n", ASSIGN_DOC_TO_SHIFT);
     printf("%d. Clear Shift\n", CLEAR_SHIFT);
     printf("%d. View Week Schedule\n", VIEW_WEEK_SCHEDULE);
@@ -284,7 +284,7 @@ void printScheduleMenu()
 
 void printDayOfWeekMenu()
 {
-    printf("%d. Sunday\n",
+    printf("\n%d. Sunday\n",
            SUN + MENU_NUMBERING_OFFSET);
     printf("%d. Monday\n",
            MON + MENU_NUMBERING_OFFSET);
@@ -302,7 +302,7 @@ void printDayOfWeekMenu()
 
 void printShiftMenu()
 {
-    printf("%d. Morning\n",
+    printf("\n%d. Morning\n",
            MORNING + MENU_NUMBERING_OFFSET);
     printf("%d. Afternoon\n",
            AFTERNOON + MENU_NUMBERING_OFFSET);
