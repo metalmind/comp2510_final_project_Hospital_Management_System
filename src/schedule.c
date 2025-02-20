@@ -215,6 +215,36 @@ void addDoctorToSchedule(const doctor* const doctor,
            shiftNameStr);
 }
 
+void clearShift()
+{
+    int dayOfWeek;
+    int shiftToClear;
+
+    printDayOfWeekMenu();
+    dayOfWeek = promptForInput("Enter day of week: ",
+                               "Invalid day of week! Try again.\n",
+                               SUN + MENU_NUMBERING_OFFSET,
+                               SAT + MENU_NUMBERING_OFFSET);
+    dayOfWeek -= MENU_NUMBERING_OFFSET;
+
+    printShiftMenu();
+    shiftToClear = promptForInput("Enter shift to clear: ",
+                                 "Invalid shift! Try again.\n",
+                                 MORNING + MENU_NUMBERING_OFFSET,
+                                 EVENING + MENU_NUMBERING_OFFSET);
+    shiftToClear -= MENU_NUMBERING_OFFSET;
+
+    if(schedule[dayOfWeek][shiftToClear] != UNASSIGNED_SHIFT)
+    {
+        schedule[dayOfWeek][shiftToClear] = UNASSIGNED_SHIFT;
+        printf("Shift successfully cleared!\n");
+    }
+    else
+    {
+        printf("Shift not cleared - no doctor assigned to shift.\n");
+    }
+}
+
 void clearDoctorShifts(const int id)
 {
     for(int i = 0; i < DAYS_IN_WEEK; i++)
@@ -248,6 +278,7 @@ void printScheduleMenu()
 {
     printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Assign Doctor to Shift\n", ASSIGN_DOC_TO_SHIFT);
+    printf("%d. Clear Shift\n", CLEAR_SHIFT);
     printf("%d. View Week Schedule\n", VIEW_WEEK_SCHEDULE);
 }
 
@@ -285,13 +316,16 @@ void routeScheduleMenu(const int sel)
     {
         case ASSIGN_DOC_TO_SHIFT:
             assignShift();
-        break;
+            break;
+        case CLEAR_SHIFT:
+            clearShift();
+            break;
         case VIEW_WEEK_SCHEDULE:
             printDocWeekSchedule();
-        break;
+            break;
         case RETURN_TO_MAIN_MENU:
             printf("Returning to menu...\n");
-        break;
+            break;
         default:
             printf("Invalid input! Try again.\n");
     }
