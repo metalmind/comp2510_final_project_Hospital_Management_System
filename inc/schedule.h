@@ -18,7 +18,8 @@
 #define UNASSIGNED_SHIFT 0
 
 #define ASSIGN_DOC_TO_SHIFT 1
-#define VIEW_WEEK_SCHEDULE 2
+#define CLEAR_SHIFT 2
+#define VIEW_WEEK_SCHEDULE 3
 
 #define MENU_NUMBERING_OFFSET 1
 
@@ -61,14 +62,25 @@ void addDoctorToSchedule(const doctor* doctor,
                    enum shift shiftToFill);
 
 /**
- * Helper function to that prints the crossbar for the schedule to the screen.
+ * Prompts for a shift and a doctor, and assigns the specified doctor
+ * to the shift.
  */
-void printScheduleDivider();
+void assignShift();
+
+/**
+ * Prompts for a shift to clear, and clears the specified shift.
+ */
+void clearShift();
 
 /**
  * Helper function to print the day of the week header to the screen.
  */
 void printDayOfWeekHeader();
+
+/**
+ * Helper function to that prints the crossbar for the schedule to the screen.
+ */
+void printScheduleDivider();
 
 /**
  * Helper function that prints the shifts for the week to the screen.
@@ -93,17 +105,17 @@ void getDoctorOnShift(enum daysInWeek dayOfWeek,
 void clearDoctorShifts(int id);
 
 /**
- * Helper function which prints the menu options to the screen
+ * Helper function which prints the menu options to the screen.
  */
 void printScheduleMenu();
 
 /**
- * Helper function which prints the day of week options to the screen
+ * Helper function which prints the day of week options to the screen.
  */
 void printDayOfWeekMenu();
 
 /**
- * Helper function which prints the shift options to the screen
+ * Helper function which prints the shift options to the screen.
  */
 void printShiftMenu();
 
