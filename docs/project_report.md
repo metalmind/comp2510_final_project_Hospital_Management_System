@@ -262,4 +262,5 @@ subsequent scanners are not accidentally being handed the overflow.
 
 *Summarize the project outcomes.*
 
-This is a test for the linter
+This project implements structures, input validation, menu-driven interfaces 
+and pointers to build a functional hospital management system. 
