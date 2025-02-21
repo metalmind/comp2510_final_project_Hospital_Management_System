@@ -80,9 +80,19 @@ Table 2.1 Patient Data Structure
 
 This function prints the patient records to the screen in the following format:
 
-
+``````
++------+-------------+---------+-----------------+---------------+
+| ID   | Name        | Age     | Diagnosis       | Room Number   |
++------+-------------+---------+-----------------+---------------+
+| 1    | Owen        | 25      | Concussion      | 2             |
++------+-------------+---------+-----------------+---------------+
+``````
 
 #### 2.2.4 View all patient records: void viewAllPatientRecords(void)
+
+View all patient records function calls printPatientRecord once for each 
+patient.
+
 ```
 +------+-------------+---------+-----------------+---------------+
 | ID   | Name        | Age     | Diagnosis       | Room Number   |
@@ -129,6 +139,8 @@ Parallels implementation of
 #### 2.5 Input Validation
 
 #### 2.6 Menu Driven Interface
+
+Our system has four main menus that users will navigate through.
 
 ```
 Hospital Management System
@@ -213,6 +225,26 @@ however, we deemed this to be a small tradeoff in comparison.
 
 *Explain the testing methods used and present the results.*
 
+Our testing consisted solely of manual test regarding inputs of various 
+types where they shouldn't be. All tests of this type did not uncover any 
+bugs as our input validation is relatively strict.
+
+Our testing did however uncover bugs when it came to printing the tables of 
+patitent and doctor information as can be seen below. In the first image the 
+input by the user is the full english alphabet twice, this is longer than 
+the max characters allowed in a doctors first name, and last name. This 
+overflow of characters is automatically consumed by the last name scanner as 
+well and even the specialty's scanner. This caused not only the incorrect last 
+name and specialty to be saved, but also formatting errors in the table 
+printed to the screen.
+
+To resolve this, we check if the inputted string contains a `\n`newline 
+character. If the newline character is not present, then the input is 
+considered invalid and the user is prompted to try entering a string again.
+
+![character_buffer_overflow_input.jpg](character_buffer_overflow_input.jpg)
+
+![character_buffer_overflow_output.jpg](character_buffer_overflow_output.jpg)
 ## 5. Conclusion
 
 *Summarize the project outcomes.*
