@@ -31,7 +31,7 @@ doctor, schedule and tools.
 
 ### 2. Features Implemented
 
-![top_level_diagram.svg](top_level_diagram.svg)
+![system_diagram.png](system_diagram.png)
 
 
 #### 2.1 Patient Records Management
