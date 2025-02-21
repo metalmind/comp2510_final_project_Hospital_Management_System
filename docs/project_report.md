@@ -137,6 +137,16 @@ Parallels implementation of
 #### 2.4 Shift Management
 
 #### 2.5 Input Validation
+We implemented strict checks for valid inputs across our program by creating modular
+components which:
+1. Scan for input from the buffer
+2. Check that input was of the correct type (by ensuring it was successfully read and assigned, using the return value of scanf)
+3. Check that input was within the specified range / domain of values, taken in as a parameter
+4. In the case of names, check that input was not null or blank or non-alphabetic, using functions from ctype.h
+
+Each step re-prompts the user when invalid input is detected, and is contained inside a do-while loop.
+
+For further implementation details, documentation for `promptForInput()`, `getInput()`, and `validateData()`.
 
 #### 2.6 Menu Driven Interface
 
@@ -225,22 +235,25 @@ however, we deemed this to be a small tradeoff in comparison.
 
 *Explain the testing methods used and present the results.*
 
-Our testing consisted solely of manual test regarding inputs of various 
-types where they shouldn't be. All tests of this type did not uncover any 
+Our testing consisted primarily of manual testing regarding invalid input of various 
+types in different contexts - essentially, we checked how our program responded when
+given input of the wrong type. All tests of this type did not uncover any 
 bugs as our input validation is relatively strict.
 
 Our testing did however uncover bugs when it came to printing the tables of 
-patitent and doctor information as can be seen below. In the first image the 
-input by the user is the full english alphabet twice, this is longer than 
-the max characters allowed in a doctors first name, and last name. This 
+patient and doctor information as can be seen below. In the first image the 
+input by the user is the full english alphabet twice; this is longer than 
+the max characters allowed in a doctor's first and last name. This 
 overflow of characters is automatically consumed by the last name scanner as 
-well and even the specialty's scanner. This caused not only the incorrect last 
+well and the specialty's scanner. This caused not only the incorrect last 
 name and specialty to be saved, but also formatting errors in the table 
 printed to the screen.
 
 To resolve this, we check if the inputted string contains a `\n`newline 
 character. If the newline character is not present, then the input is 
-considered invalid and the user is prompted to try entering a string again.
+assumed to have been longer than the maximum String length, and the input
+buffer is cleared until a newline character is encountered. This ensures that
+subsequent scanners are not accidentally being handed the overflow.
 
 ![character_buffer_overflow_input.jpg](character_buffer_overflow_input.jpg)
 
