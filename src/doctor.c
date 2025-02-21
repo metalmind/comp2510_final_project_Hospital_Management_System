@@ -209,11 +209,11 @@ void printDoctorRecordDivider()
 void doctorMenu()
 {
     int sel;
+    sel = INVALID_INPUT;
 
     do
     {
         printDoctorMenu();
-
         getInput("Enter your selection: ",
                  &sel);
         routeDoctorMenu(sel);

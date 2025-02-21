@@ -161,11 +161,11 @@ int getPatientRoomNumber()
 void searchForPatientRecord()
 {
     int sel;
+    sel = INVALID_INPUT;
 
     do
     {
         printPatientMenu();
-
         getInput("Enter your selection: ",
                  &sel);
         searchCriteriaSelection(sel);

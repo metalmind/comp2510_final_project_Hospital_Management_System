@@ -10,17 +10,18 @@
 #include "../inc/patient.h"
 #include "../inc/schedule.h"
 #include "../inc/doctor.h"
-
-
-
+#include "../inc/tools.h"
 
 void menu(void)
 {
     int sel;
+    sel = INVALID_INPUT;
+
     do
     {
         printMenu();
-        sel = getSelection();
+        getInput("Enter your selection: ",
+                 &sel);
         routeSelection(sel);
     }
     while(sel != EXIT);
@@ -31,7 +32,7 @@ void printMenu(void)
     printf("\nHospital Management System\n");
     printf("%d. Exit\n", EXIT);
     printf("%d. Add Patient Record\n", ADD_PATIENT_RECORDS);
-    printf("%d. View ALl Patients\n", VIEW_ALL_PATIENTS);
+    printf("%d. View All Patients\n", VIEW_ALL_PATIENTS);
     printf("%d. Search Patient\n", SEARCH_PATIENT);
     printf("%d. Discharge Patient\n", DISCHARGE_PATIENT);
     printf("%d. Manage Doctors\n", DOCTOR_MENU);
