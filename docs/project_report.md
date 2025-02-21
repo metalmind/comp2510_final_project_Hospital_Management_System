@@ -135,6 +135,9 @@ Parallels implementation of
 [2.2.4 View All Patient Records](#224-view-all-patient-records-void-viewallpatientrecordsvoid).
 
 #### 2.4 Shift Management
+We implemented a two-dimensional array with the day of the week and the time of day
+as a composite primary key. Each cell value contains a foreign key referencing the doctor ID of
+the doctor on shift, allowing us to access the doctor struct in our display functions.
 
 #### 2.5 Input Validation
 We implemented strict checks for valid inputs across our program by creating modular
