@@ -262,11 +262,11 @@ void clearDoctorShifts(const int id)
 void scheduleMenu()
 {
     int sel;
+    sel = INVALID_INPUT;
 
     do
     {
         printScheduleMenu();
-
         getInput("Enter your selection: ",
                  &sel);
         routeScheduleMenu(sel);
