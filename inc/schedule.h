@@ -26,7 +26,30 @@
 enum daysInWeek { SUN, MON, TUE, WED, THU, FRI, SAT };
 
 enum shift { MORNING, AFTERNOON, EVENING };
+/*********Public Functions Begin************/
+/**
+ * The main entry point into the schedule menu.
+ */
+void scheduleMenu();
 
+/**
+ * Prompts for a shift and a doctor, and assigns the specified doctor
+ * to the shift.
+ */
+void assignShift();
+
+/**
+ * Prompts for a shift to clear, and clears the specified shift.
+ */
+void clearShift();
+
+/**
+ * Print the schedule of the doctors for the daysInWeek.
+ */
+void printDocWeekSchedule();
+/*********Public Functions End**************/
+
+/*********Private Functions Begin************/
 /**
  * Takes in the enum daysInWeek and sets dayOfWeekName to the string version.
  *
@@ -46,11 +69,6 @@ void getShiftNameStr(enum shift shift,
                      char* shiftName);
 
 /**
- * Print the schedule of the doctors for the daysInWeek.
- */
-void printDocWeekSchedule();
-
-/**
  * Adds a doctor to the schedule.
  *
  * @param doctor Name of the doctor to add.
@@ -60,17 +78,6 @@ void printDocWeekSchedule();
 void addDoctorToSchedule(const doctor* doctor,
                    enum daysInWeek dayOfWeek,
                    enum shift shiftToFill);
-
-/**
- * Prompts for a shift and a doctor, and assigns the specified doctor
- * to the shift.
- */
-void assignShift();
-
-/**
- * Prompts for a shift to clear, and clears the specified shift.
- */
-void clearShift();
 
 /**
  * Helper function to print the day of the week header to the screen.
@@ -124,10 +131,6 @@ void printShiftMenu();
  * @param sel The input from the user.
  */
 void routeScheduleMenu(const int sel);
-
-/**
- * The main entry point into the schedule menu.
- */
-void scheduleMenu();
+/*********Private Functions End**************/
 
 #endif //SCHEDULE_H
