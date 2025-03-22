@@ -30,6 +30,17 @@ struct doctor
     char specialty[SPECIALTY_MAX_CHAR];
 };
 
+/*********Public Functions Begin************/
+
+/**
+ * Main entry point for selecting doctor related functions.
+ */
+void doctorMenu();
+
+/*********Public Functions End**************/
+
+/*********Private Functions Begin************/
+
 /**
  * Searches for a doctorID in the array and returns its index if found;
  * otherwise, it returns ID_NOT_FOUND.
@@ -43,14 +54,6 @@ struct doctor
 int doctorIDExists(int id);
 
 /**
- * Returns the doctor record corresponding to the specified index
- * of the doctorRecords array.
- * @param index index of doctor record to retrieve
- * @return doctor record
- */
-doctor* getDoctor(int index);
-
-/**
  * Adds a new doctor to the doctorRecord array.
  */
 void addNewDoctorRecord(void);
@@ -59,6 +62,19 @@ void addNewDoctorRecord(void);
  * Fires a doctor from the hospital.
  */
 void fireDoctor(void);
+
+/**
+ * Prints all doctor records in the doctorRecord array.
+ */
+void viewAllDoctorRecords(void);
+
+/**
+ * Returns the doctor record corresponding to the specified index
+ * of the doctorRecords array.
+ * @param index index of doctor record to retrieve
+ * @return doctor record
+ */
+doctor* getDoctor(int index);
 
 /**
  * Removes the specified doctor record from the doctorRecord array,
@@ -117,10 +133,7 @@ void getDoctorName(const char* prompt,
  */
 void printDoctorRecord(int index);
 
-/**
- * Prints all doctor records in the doctorRecord array.
- */
-void viewAllDoctorRecords(void);
+
 
 /**
  * Helper function to print the doctor record header, including top and
@@ -133,10 +146,7 @@ void printDoctorRecordsHeader(void);
  */
 void printDoctorRecordDivider(void);
 
-/**
- * Main entry point for selecting doctor related functions.
- */
-void doctorMenu();
+
 
 /**
  * Prints the related doctor menu items to the screen.
@@ -148,5 +158,7 @@ void printDoctorMenu();
  * @param sel The number of the selected doctor item.
  */
 void routeDoctorMenu(const int sel);
+
+/*********Private Functions End**************/
 
 #endif //DOCTOR_H
