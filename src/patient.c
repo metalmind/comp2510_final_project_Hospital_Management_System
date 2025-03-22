@@ -10,28 +10,7 @@
 patient patientRecords[MAX_PATIENTS] = {};
 int totalPatients                    = 0;
 
-int idExists(const int id)
-{
-    for(int i = 0; i < totalPatients; i++)
-    {
-        if(patientRecords[i].patientID == id)
-        {
-            return i;
-        }
-    }
-    return ID_NOT_FOUND;
-}
-
-patient* getPatient(int index)
-{
-    if(index != ID_NOT_FOUND)
-    {
-        return &patientRecords[index];
-    }
-
-    return NULL;
-}
-
+/*********Public Functions Begin************/
 void addNewPatientRecord(void)
 {
     if(totalPatients >= MAX_PATIENTS)
@@ -71,6 +50,39 @@ void addNewPatientRecord(void)
     printf("Patient added successfully!\n");
 }
 
+void viewAllPatientRecords()
+{
+    if(totalPatients == 0)
+    {
+        printf("No patient records on file.\n");
+        return;
+    }
+
+    printPatientRecordsHeader();
+
+    for(int i = 0; i < totalPatients; i++)
+    {
+        printPatientRecord(i);
+    }
+
+    printPatientRecordDivider();
+}
+
+void searchForPatientRecord()
+{
+    int sel;
+    sel = INVALID_INPUT;
+
+    do
+    {
+        printPatientMenu();
+        getInput("Enter your selection: ",
+                 &sel);
+        searchCriteriaSelection(sel);
+    }
+    while(sel != RETURN_TO_MAIN_MENU);
+}
+
 void dischargePatient()
 {
     int index;
@@ -87,6 +99,29 @@ void dischargePatient()
     {
         printf("Patient record not found.\n");
     }
+}
+/*********Public Functions End**************/
+
+int idExists(const int id)
+{
+    for(int i = 0; i < totalPatients; i++)
+    {
+        if(patientRecords[i].patientID == id)
+        {
+            return i;
+        }
+    }
+    return ID_NOT_FOUND;
+}
+
+patient* getPatient(int index)
+{
+    if(index != ID_NOT_FOUND)
+    {
+        return &patientRecords[index];
+    }
+
+    return NULL;
 }
 
 void removePatientRecord(const int index)
@@ -156,21 +191,6 @@ int getPatientRoomNumber()
                          ROOM_NUMBER_MAX);
 
     return roomNumber;
-}
-
-void searchForPatientRecord()
-{
-    int sel;
-    sel = INVALID_INPUT;
-
-    do
-    {
-        printPatientMenu();
-        getInput("Enter your selection: ",
-                 &sel);
-        searchCriteriaSelection(sel);
-    }
-    while(sel != RETURN_TO_MAIN_MENU);
 }
 
 void printPatientMenu()
@@ -284,24 +304,6 @@ void printPatientRecord(const int index)
            "|",
            patientRecords[index].roomNumber,
            '|');
-}
-
-void viewAllPatientRecords()
-{
-    if(totalPatients == 0)
-    {
-        printf("No patient records on file.\n");
-        return;
-    }
-
-    printPatientRecordsHeader();
-
-    for(int i = 0; i < totalPatients; i++)
-    {
-        printPatientRecord(i);
-    }
-
-    printPatientRecordDivider();
 }
 
 void printPatientRecordsHeader()
