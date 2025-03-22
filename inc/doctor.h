@@ -37,6 +37,22 @@ struct doctor
  */
 void doctorMenu();
 
+/**
+ * Adds a new doctor to the doctorRecord array.
+ */
+void addNewDoctorRecord(void);
+
+/**
+ * Fires a doctor from the hospital.
+ */
+void fireDoctor(void);
+
+/**
+ * Prints all doctor records in the doctorRecord array.
+ */
+void viewAllDoctorRecords(void);
+
+
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
@@ -52,21 +68,6 @@ void doctorMenu();
  * @author Owen Wou
  */
 int doctorIDExists(int id);
-
-/**
- * Adds a new doctor to the doctorRecord array.
- */
-void addNewDoctorRecord(void);
-
-/**
- * Fires a doctor from the hospital.
- */
-void fireDoctor(void);
-
-/**
- * Prints all doctor records in the doctorRecord array.
- */
-void viewAllDoctorRecords(void);
 
 /**
  * Returns the doctor record corresponding to the specified index
@@ -133,8 +134,6 @@ void getDoctorName(const char* prompt,
  */
 void printDoctorRecord(int index);
 
-
-
 /**
  * Helper function to print the doctor record header, including top and
  * bottom dividers.
@@ -145,8 +144,6 @@ void printDoctorRecordsHeader(void);
  * Helper function that prints the crossbar for the doctor records.
  */
 void printDoctorRecordDivider(void);
-
-
 
 /**
  * Prints the related doctor menu items to the screen.
