@@ -150,8 +150,8 @@ Output report: outputReportToFile()
   - numAdmittedPatient(day)
   - numAdmittedPatient(week)
   - numAdmittedPatient(month)
-2. List of patients dischated on specific day
-3. Doctor Utilization Reporth
+2. List of patients discharged on specific day
+3. Doctor Utilization Report
 4. Room usage report
 
 ## 2.5 Error Handling
