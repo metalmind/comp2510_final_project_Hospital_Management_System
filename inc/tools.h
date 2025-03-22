@@ -23,6 +23,7 @@
 #define ENTRY_REMOVAL_OFFSET 1
 #define NEXT_ENTRY_OFFSET 1
 
+/*********Private Functions Begin************/
 /**
  * Wrapper function which prompts for valid input from the user, re-prompting
  * in case of invalid input.
@@ -159,5 +160,7 @@ void clearInputBuffer(void);
  * @param numDashes number of dashes to print
  */
 void printDashes(int numDashes);
+/*********Private Functions End**************/
+
 
 #endif //TOOLS_H

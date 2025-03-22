@@ -29,7 +29,6 @@
 #define SEARCH_BY_PATIENT_ID 1
 #define SEARCH_BY_PATIENT_NAME 2
 
-
 #define NO_RECORDS 0
 #define RECORD_FOUND 0
 
@@ -48,6 +47,35 @@ struct patient
     int roomNumber;
 };
 
+
+/*********Public Functions Begin************/
+/**
+ * Adds a new patient to the patientRecord array.
+ * @author Ayesha Anzer
+ * @author Owen Wou
+ */
+void addNewPatientRecord(void);
+
+/**
+ * Prints all patient records in the patientRecord array.
+ */
+void viewAllPatientRecords(void);
+
+/**
+ * Prompts the user to choose between two different search criteria:
+ * 1) Search by patient ID
+ * 2) Search by patient name.
+ * Then, checks if patient exists in the database and prints the requested record.
+ */
+void searchForPatientRecord(void);
+
+/**
+ * Discharges a patient from the hospital.
+ */
+void dischargePatient(void);
+/*********Public Functions End**************/
+
+/*********Private Functions Begin************/
 /**
  * Searches for a patientID in the array and returns its index if found;
  * otherwise, it returns ID_NOT_FOUND.
@@ -67,18 +95,6 @@ int idExists(int id);
  * @return patient record
  */
 patient* getPatient(int index);
-
-/**
- * Adds a new patient to the patientRecord array.
- * @author Ayesha Anzer
- * @author Owen Wou
- */
-void addNewPatientRecord(void);
-
-/**
- * Discharges a patient from the hospital.
- */
-void dischargePatient(void);
 
 /**
  * Removes the specified patient record from the patientRecord array,
@@ -145,14 +161,6 @@ int getPatientAge(void);
 int getPatientRoomNumber(void);
 
 /**
- * Prompts the user to choose between two different search criteria:
- * 1) Search by patient ID
- * 2) Search by patient name.
- * Then, checks if patient exists in the database and prints the requested record.
- */
-void searchForPatientRecord(void);
-
-/**
  * Routes to the search method associated with the selection.
  * If the selection is not available, prompts the user to try again.
  *
@@ -202,10 +210,7 @@ void searchPatientByName(void);
  */
 void printPatientRecord(int index);
 
-/**
- * Prints all patient records in the patientRecord array.
- */
-void viewAllPatientRecords(void);
+
 
 /**
  * Prints the patient menu.
@@ -222,5 +227,7 @@ void printPatientRecordsHeader();
  * Helper function that prints the crossbar for the patient records.
  */
 void printPatientRecordDivider();
+
+/*********Private Functions End**************/
 
 #endif //PATIENT_H

@@ -16,6 +16,7 @@
 #define DOCTOR_MENU 5
 #define SCHEDULE_MENU 6
 
+/*********Public Functions Begin************/
 /**
  * A text-based menu to guide user interaction.
  *
@@ -28,7 +29,9 @@
  *    6. Exit
  */
 void menu(void);
+/*********Public Functions End**************/
 
+/*********Private Functions Begin************/
 /**
  * Helper function to print the menu options to the screen.
  */
@@ -56,5 +59,6 @@ int getSelection(void);
  * @param sel an int
  */
 void routeSelection(int sel);
+/*********Private Functions End**************/
 
 #endif //MENU_H

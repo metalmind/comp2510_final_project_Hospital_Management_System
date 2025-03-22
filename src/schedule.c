@@ -9,7 +9,96 @@
 #include "../inc/tools.h"
 
 int schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
+/*********Public Functions Begin************/
+void scheduleMenu()
+{
+    int sel;
+    sel = INVALID_INPUT;
 
+    do
+    {
+        printScheduleMenu();
+        getInput("Enter your selection: ",
+                 &sel);
+        routeScheduleMenu(sel);
+    }
+    while(sel != RETURN_TO_MAIN_MENU);
+}
+
+void assignShift()
+{
+    doctor* doc;
+    int dayOfWeek;
+    int shiftToFill;
+
+    doc       = getDoctorByID();
+
+    if(doc == NULL)
+    {
+        printf("Requested doctor not found in the system.\n");
+        return;
+    }
+
+    printDayOfWeekMenu();
+    dayOfWeek = promptForInput("Enter day of week: ",
+                               "Invalid day of week! Try again.\n",
+                               SUN + MENU_NUMBERING_OFFSET,
+                               SAT + MENU_NUMBERING_OFFSET);
+    dayOfWeek -= MENU_NUMBERING_OFFSET;
+
+    printShiftMenu();
+    shiftToFill = promptForInput("Enter shift to fill: ",
+                                 "Invalid shift! Try again.\n",
+                                 MORNING + MENU_NUMBERING_OFFSET,
+                                 EVENING + MENU_NUMBERING_OFFSET);
+    shiftToFill -= MENU_NUMBERING_OFFSET;
+
+    addDoctorToSchedule(doc,
+                        dayOfWeek,
+                        shiftToFill);
+}
+
+void clearShift()
+{
+    int dayOfWeek;
+    int shiftToClear;
+
+    printDayOfWeekMenu();
+    dayOfWeek = promptForInput("Enter day of week: ",
+                               "Invalid day of week! Try again.\n",
+                               SUN + MENU_NUMBERING_OFFSET,
+                               SAT + MENU_NUMBERING_OFFSET);
+    dayOfWeek -= MENU_NUMBERING_OFFSET;
+
+    printShiftMenu();
+    shiftToClear = promptForInput("Enter shift to clear: ",
+                                 "Invalid shift! Try again.\n",
+                                 MORNING + MENU_NUMBERING_OFFSET,
+                                 EVENING + MENU_NUMBERING_OFFSET);
+    shiftToClear -= MENU_NUMBERING_OFFSET;
+
+    if(schedule[dayOfWeek][shiftToClear] != UNASSIGNED_SHIFT)
+    {
+        schedule[dayOfWeek][shiftToClear] = UNASSIGNED_SHIFT;
+        printf("Shift successfully cleared!\n");
+    }
+    else
+    {
+        printf("Shift not cleared - no doctor assigned to shift.\n");
+    }
+}
+
+void printDocWeekSchedule()
+{
+    printScheduleDivider();
+    printDayOfWeekHeader();
+    printScheduleDivider();
+    printShiftsForWeek();
+    printScheduleDivider();
+}
+/*********Public Functions End**************/
+
+/*********Private Functions Begin************/
 void getDayOfWeekNameStr(const enum daysInWeek dayOfWeek,
                          char* dayOfWeekName)
 {
@@ -72,15 +161,6 @@ void getShiftNameStr(const enum shift shift,
                    "ERROR printing shift");
             break;
     }
-}
-
-void printDocWeekSchedule()
-{
-    printScheduleDivider();
-    printDayOfWeekHeader();
-    printScheduleDivider();
-    printShiftsForWeek();
-    printScheduleDivider();
 }
 
 void printShiftsForWeek()
@@ -165,39 +245,6 @@ void printScheduleDivider()
     printf("\n");
 }
 
-void assignShift()
-{
-    doctor* doc;
-    int dayOfWeek;
-    int shiftToFill;
-
-    doc       = getDoctorByID();
-
-    if(doc == NULL)
-    {
-        printf("Requested doctor not found in the system.\n");
-        return;
-    }
-
-    printDayOfWeekMenu();
-    dayOfWeek = promptForInput("Enter day of week: ",
-                               "Invalid day of week! Try again.\n",
-                               SUN + MENU_NUMBERING_OFFSET,
-                               SAT + MENU_NUMBERING_OFFSET);
-    dayOfWeek -= MENU_NUMBERING_OFFSET;
-
-    printShiftMenu();
-    shiftToFill = promptForInput("Enter shift to fill: ",
-                                 "Invalid shift! Try again.\n",
-                                 MORNING + MENU_NUMBERING_OFFSET,
-                                 EVENING + MENU_NUMBERING_OFFSET);
-    shiftToFill -= MENU_NUMBERING_OFFSET;
-
-    addDoctorToSchedule(doc,
-                        dayOfWeek,
-                        shiftToFill);
-}
-
 void addDoctorToSchedule(const doctor* const doctor,
                          const enum daysInWeek dayOfWeek,
                          const enum shift shiftToFill)
@@ -215,36 +262,6 @@ void addDoctorToSchedule(const doctor* const doctor,
            shiftNameStr);
 }
 
-void clearShift()
-{
-    int dayOfWeek;
-    int shiftToClear;
-
-    printDayOfWeekMenu();
-    dayOfWeek = promptForInput("Enter day of week: ",
-                               "Invalid day of week! Try again.\n",
-                               SUN + MENU_NUMBERING_OFFSET,
-                               SAT + MENU_NUMBERING_OFFSET);
-    dayOfWeek -= MENU_NUMBERING_OFFSET;
-
-    printShiftMenu();
-    shiftToClear = promptForInput("Enter shift to clear: ",
-                                 "Invalid shift! Try again.\n",
-                                 MORNING + MENU_NUMBERING_OFFSET,
-                                 EVENING + MENU_NUMBERING_OFFSET);
-    shiftToClear -= MENU_NUMBERING_OFFSET;
-
-    if(schedule[dayOfWeek][shiftToClear] != UNASSIGNED_SHIFT)
-    {
-        schedule[dayOfWeek][shiftToClear] = UNASSIGNED_SHIFT;
-        printf("Shift successfully cleared!\n");
-    }
-    else
-    {
-        printf("Shift not cleared - no doctor assigned to shift.\n");
-    }
-}
-
 void clearDoctorShifts(const int id)
 {
     for(int i = 0; i < DAYS_IN_WEEK; i++)
@@ -257,21 +274,6 @@ void clearDoctorShifts(const int id)
             }
         }
     }
-}
-
-void scheduleMenu()
-{
-    int sel;
-    sel = INVALID_INPUT;
-
-    do
-    {
-        printScheduleMenu();
-        getInput("Enter your selection: ",
-                 &sel);
-        routeScheduleMenu(sel);
-    }
-    while(sel != RETURN_TO_MAIN_MENU);
 }
 
 void printScheduleMenu()
@@ -330,3 +332,4 @@ void routeScheduleMenu(const int sel)
             printf("Invalid input! Try again.\n");
     }
 }
+/*********Private Functions End**************/

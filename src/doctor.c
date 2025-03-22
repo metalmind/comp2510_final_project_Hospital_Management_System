@@ -7,26 +7,21 @@
 doctor doctorRecords[MAX_DOCTORS] = {};
 int totalDoctors                  = 0;
 
-int doctorIDExists(const int id)
-{
-    for(int i = 0; i < totalDoctors; i++)
-    {
-        if(doctorRecords[i].doctorID == id)
-        {
-            return i;
-        }
-    }
-    return DOC_ID_NOT_FOUND;
-}
 
-doctor* getDoctor(const int index)
+/*********Public Functions Begin************/
+void doctorMenu()
 {
-    if(index != DOC_ID_NOT_FOUND)
-    {
-        return &doctorRecords[index];
-    }
+    int sel;
+    sel = INVALID_INPUT;
 
-    return NULL;
+    do
+    {
+        printDoctorMenu();
+        getInput("Enter your selection: ",
+                 &sel);
+        routeDoctorMenu(sel);
+    }
+    while(sel != RETURN_TO_MAIN_MENU);
 }
 
 void addNewDoctorRecord(void)
@@ -83,6 +78,50 @@ void fireDoctor()
     {
         printf("Doctor record not found.\n");
     }
+}
+
+void viewAllDoctorRecords()
+{
+    if(totalDoctors == 0)
+    {
+        printf("No doctor records on file.\n");
+        return;
+    }
+
+    printDoctorRecordsHeader();
+
+    for(int i = 0; i < totalDoctors; i++)
+    {
+        printDoctorRecord(i);
+    }
+
+    printDoctorRecordDivider();
+}
+
+/*********Public Functions End**************/
+
+/*********Private Functions Begin************/
+
+int doctorIDExists(const int id)
+{
+    for(int i = 0; i < totalDoctors; i++)
+    {
+        if(doctorRecords[i].doctorID == id)
+        {
+            return i;
+        }
+    }
+    return DOC_ID_NOT_FOUND;
+}
+
+doctor* getDoctor(const int index)
+{
+    if(index != DOC_ID_NOT_FOUND)
+    {
+        return &doctorRecords[index];
+    }
+
+    return NULL;
 }
 
 void removeDoctorRecord(const int index)
@@ -156,24 +195,6 @@ void printDoctorRecord(const int index)
            '|');
 }
 
-void viewAllDoctorRecords()
-{
-    if(totalDoctors == 0)
-    {
-        printf("No doctor records on file.\n");
-        return;
-    }
-
-    printDoctorRecordsHeader();
-
-    for(int i = 0; i < totalDoctors; i++)
-    {
-        printDoctorRecord(i);
-    }
-
-    printDoctorRecordDivider();
-}
-
 void printDoctorRecordsHeader()
 {
     printDoctorRecordDivider();
@@ -206,20 +227,6 @@ void printDoctorRecordDivider()
     printf("\n");
 }
 
-void doctorMenu()
-{
-    int sel;
-    sel = INVALID_INPUT;
-
-    do
-    {
-        printDoctorMenu();
-        getInput("Enter your selection: ",
-                 &sel);
-        routeDoctorMenu(sel);
-    }
-    while(sel != RETURN_TO_MAIN_MENU);
-}
 
 void printDoctorMenu()
 {
@@ -249,3 +256,5 @@ void routeDoctorMenu(const int sel)
             printf("Invalid input! Try again.\n");
     }
 }
+
+/*********Private Functions End**************/

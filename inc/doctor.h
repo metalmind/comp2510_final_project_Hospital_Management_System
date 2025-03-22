@@ -30,6 +30,33 @@ struct doctor
     char specialty[SPECIALTY_MAX_CHAR];
 };
 
+/*********Public Functions Begin************/
+
+/**
+ * Main entry point for selecting doctor related functions.
+ */
+void doctorMenu();
+
+/**
+ * Adds a new doctor to the doctorRecord array.
+ */
+void addNewDoctorRecord(void);
+
+/**
+ * Fires a doctor from the hospital.
+ */
+void fireDoctor(void);
+
+/**
+ * Prints all doctor records in the doctorRecord array.
+ */
+void viewAllDoctorRecords(void);
+
+
+/*********Public Functions End**************/
+
+/*********Private Functions Begin************/
+
 /**
  * Searches for a doctorID in the array and returns its index if found;
  * otherwise, it returns ID_NOT_FOUND.
@@ -49,16 +76,6 @@ int doctorIDExists(int id);
  * @return doctor record
  */
 doctor* getDoctor(int index);
-
-/**
- * Adds a new doctor to the doctorRecord array.
- */
-void addNewDoctorRecord(void);
-
-/**
- * Fires a doctor from the hospital.
- */
-void fireDoctor(void);
 
 /**
  * Removes the specified doctor record from the doctorRecord array,
@@ -118,11 +135,6 @@ void getDoctorName(const char* prompt,
 void printDoctorRecord(int index);
 
 /**
- * Prints all doctor records in the doctorRecord array.
- */
-void viewAllDoctorRecords(void);
-
-/**
  * Helper function to print the doctor record header, including top and
  * bottom dividers.
  */
@@ -134,11 +146,6 @@ void printDoctorRecordsHeader(void);
 void printDoctorRecordDivider(void);
 
 /**
- * Main entry point for selecting doctor related functions.
- */
-void doctorMenu();
-
-/**
  * Prints the related doctor menu items to the screen.
  */
 void printDoctorMenu();
@@ -148,5 +155,7 @@ void printDoctorMenu();
  * @param sel The number of the selected doctor item.
  */
 void routeDoctorMenu(const int sel);
+
+/*********Private Functions End**************/
 
 #endif //DOCTOR_H

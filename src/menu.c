@@ -12,6 +12,7 @@
 #include "../inc/doctor.h"
 #include "../inc/tools.h"
 
+/*********Public Functions Begin************/
 void menu(void)
 {
     int sel;
@@ -26,7 +27,9 @@ void menu(void)
     }
     while(sel != EXIT);
 }
+/*********Public Functions End**************/
 
+/*********Private Functions Begin************/
 void printMenu(void)
 {
     printf("\nHospital Management System\n");
@@ -80,3 +83,4 @@ void routeSelection(const int sel)
             printf("Invalid choice! Try again.\n");
     }
 }
+/*********Private Functions End**************/

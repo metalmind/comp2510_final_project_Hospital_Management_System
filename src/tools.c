@@ -8,7 +8,7 @@
 #include "../inc/tools.h"
 
 #include "../inc/patient.h"
-
+/*********Private Functions Begin************/
 int promptForInput(const char* const prompt,
                    const char* const errorMessage,
                    const int lowerBound,
@@ -247,3 +247,4 @@ void printDashes(const int numDashes)
         printf("%c", '-');
     }
 }
+/*********Private Functions End**************/
