@@ -102,6 +102,7 @@ void dischargePatient()
 }
 /*********Public Functions End**************/
 
+/*********Private Functions Begin************/
 int idExists(const int id)
 {
     for(int i = 0; i < totalPatients; i++)
@@ -341,3 +342,4 @@ void printPatientRecordDivider()
     printf("+");
     printf("\n");
 }
+/*********Private Functions End************/
