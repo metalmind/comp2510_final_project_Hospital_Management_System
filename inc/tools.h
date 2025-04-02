@@ -23,6 +23,14 @@
 #define ENTRY_REMOVAL_OFFSET 1
 #define NEXT_ENTRY_OFFSET 1
 
+typedef struct node Node;
+
+struct node
+{
+    void* record;
+    Node* next;
+};
+
 /*********Private Functions Begin************/
 /**
  * Wrapper function which prompts for valid input from the user, re-prompting
@@ -46,7 +54,7 @@ int promptForInput(const char* prompt,
  * @param prompt prompt message
  * @param errorMessage error message
  * @param duplicateErrorMessage error message for duplicate input
- * @param isUniqueInput
+ * @param isUniqueInput function that returns true if input is unique, otherwise false
  * @param lowerBound lower bound of valid range
  * @param upperBound upper bound of valid range
  * @return valid unique input

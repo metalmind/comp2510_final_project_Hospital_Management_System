@@ -5,8 +5,7 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 
-#include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 #include "patient.h"
 #include "tools.h"
 
@@ -40,13 +39,12 @@ typedef struct patient patient;
 
 struct patient
 {
-    int patientID;
+    int  patientID;
     char name[FULL_NAME_MAX_CHAR];
-    int age;
+    int  age;
     char diagnosis[DIAGNOSIS_MAX_CHAR];
-    int roomNumber;
+    int  roomNumber;
 };
-
 
 /*********Public Functions Begin************/
 /**
@@ -76,33 +74,42 @@ void dischargePatient(void);
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
-/**
- * Searches for a patientID in the array and returns its index if found;
- * otherwise, it returns ID_NOT_FOUND.
- *
- * @param id The ID we want to check for existence
- * @return id index if found, otherwise ID_NOT_FOUND
- *
- * @author Ayesha Anzer
- * @author Owen Wou
- */
-int idExists(int id);
 
 /**
- * Returns the patient record corresponding to the specified index
- * of the patientRecords array.
- * @param index index of patient record to retrieve
+ * Stores the patient record in the list in sorted order.
+ * @param newPatient patient to add to list
+ */
+void addPatientToList(const patient* newPatient);
+
+/**
+ * Finds the insertion point for the patient record in the sorted list.
+ * @param id patient id
+ * @param previous previous record
+ * @param current current record
+ */
+void findSortedPosition(int    id,
+                        Node** previous,
+                        Node** current);
+
+/**
+ * Returns the patient record corresponding to the specified patient ID.
+ * @param id id of patient record to retrieve
  * @return patient record
  */
-patient* getPatient(int index);
+patient* getPatient(int id);
 
 /**
- * Removes the specified patient record from the patientRecord array,
- * shifting remaining patient records by NEXT_ENTRY_OFFSET to fill the
- * gap.
- * @param index index of patient record to be removed
+ * Returns whether a patient with the specified ID already exists in the system.
+ * @param id id to check if unique
+ * @return true if patient ID is unique, otherwise false
  */
-void removePatientRecord(int index);
+int isUniquePatientId(int id);
+
+/**
+ * Removes the specified patient record from the patientRecord linked list.
+ * @param patientRecord patient record to be removed
+ */
+void removePatientRecord(const patient* patientRecord);
 
 /**
  * Prompts user for patient ID, with checks to ensure patient ID is valid
@@ -136,7 +143,7 @@ int getPatientID(void);
  * @param name char array to assign name
  */
 void getPatientName(const char* prompt,
-                    char* name);
+                    char*       name);
 
 /**
  * Prompts user for patient age, with checks to ensure patient age is valid
@@ -177,19 +184,19 @@ void searchCriteriaSelection(int sel);
  * If requested patient record is found, prints its details. Otherwise,
  * prints that record was not found.
  *
- * @param index index of requested patient record in the patientRecord array
+ * @param patientRecord the requested patient record
  */
-void handlePatientSearchResult(int index);
+void handlePatientSearchResult(const patient* patientRecord);
 
 /**
  * If the requested patient record is found, prints its details.
  * If multiple matching records are found, prints details of each.
  * Otherwise, prints that record was not found.
- * @param indexes indexes of records matching the provided String input
+ * @param patientsFound patient record matching the provided String input
  * @param numRecordsFound number of matching records found
  */
-void handleMultiplePatientSearchResults(const int* indexes,
-                                        int numRecordsFound);
+void handleMultiplePatientSearchResults(const patient** patientsFound,
+                                        int             numRecordsFound);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
@@ -206,11 +213,9 @@ void searchPatientByName(void);
 /**
  * Prints the patient record corresponding to the specified index of the
  * patient record array.
- * @param index corresponding index of patient record array
+ * @param patient patient record to print
  */
-void printPatientRecord(int index);
-
-
+void printPatientRecord(patient* patient);
 
 /**
  * Prints the patient menu.

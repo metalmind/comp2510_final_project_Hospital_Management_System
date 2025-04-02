@@ -7,23 +7,24 @@
 #include "../inc/patient.h"
 #include "../inc/tools.h"
 
-patient patientRecords[MAX_PATIENTS] = {};
-int totalPatients                    = 0;
+Node* patientRecordsStart     = NULL;
+Node* dischargedPatientsStart = NULL;
+int   totalPatients           = 0;
 
 /*********Public Functions Begin************/
 void addNewPatientRecord(void)
 {
-    if(totalPatients >= MAX_PATIENTS)
-    {
-        printf("The hospital is full! Cannot take any more patients.\n");
-        return;
-    }
+    // if(totalPatients >= MAX_PATIENTS)
+    // {
+    //     printf("The hospital is full! Cannot take any more patients.\n");
+    //     return;
+    // }
 
-    int id;
+    int  id;
     char name[FULL_NAME_MAX_CHAR];
-    int age;
+    int  age;
     char diagnosis[DIAGNOSIS_MAX_CHAR];
-    int roomNumber;
+    int  roomNumber;
 
     id = getUniquePatientID();
 
@@ -38,16 +39,26 @@ void addNewPatientRecord(void)
 
     roomNumber = getPatientRoomNumber();
 
-    patientRecords[totalPatients].patientID = id;
-    strcpy(patientRecords[totalPatients].name,
-           name);
-    patientRecords[totalPatients].age = age;
-    strcpy(patientRecords[totalPatients].diagnosis,
-           diagnosis);
-    patientRecords[totalPatients].roomNumber = roomNumber;
-    totalPatients++;
+    patient* newPatient;
+    newPatient = (patient *) malloc(sizeof(patient));
 
-    printf("Patient added successfully!\n");
+    // if space available
+    if(newPatient != NULL)
+    {
+        newPatient->patientID = id;
+        strcpy(newPatient->name,
+               name);
+        newPatient->age = age;
+        strcpy(newPatient->diagnosis,
+               diagnosis);
+        newPatient->roomNumber = roomNumber;
+    }
+    else
+    {
+        printf("Could not add new patient - not enough memory!\n");
+    }
+
+    addPatientToList(newPatient);
 }
 
 void viewAllPatientRecords()
@@ -60,9 +71,11 @@ void viewAllPatientRecords()
 
     printPatientRecordsHeader();
 
-    for(int i = 0; i < totalPatients; i++)
+    for(Node* node = patientRecordsStart; node != NULL; node = node->next)
     {
-        printPatientRecord(i);
+        patient* patientRecord;
+        patientRecord = node->record;
+        printPatientRecord(patientRecord);
     }
 
     printPatientRecordDivider();
@@ -85,51 +98,144 @@ void searchForPatientRecord()
 
 void dischargePatient()
 {
-    int index;
-    int id;
+    int      id;
+    patient* patientRecord;
 
-    id    = getPatientID();
-    index = idExists(id);
+    id            = getPatientID();
+    patientRecord = getPatient(id);
 
-    if(index != ID_NOT_FOUND)
+    if(patientRecord != NULL)
     {
-        removePatientRecord(index);
+        removePatientRecord(patientRecord);
     }
     else
     {
         printf("Patient record not found.\n");
     }
 }
+
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
-int idExists(const int id)
+void addPatientToList(const patient* const newPatient)
 {
-    for(int i = 0; i < totalPatients; i++)
+    int   id;
+    Node* newNode;
+
+    id      = newPatient->patientID;
+    newNode = (Node *) malloc(sizeof(Node));
+
+    if(newNode == NULL)
     {
-        if(patientRecords[i].patientID == id)
-        {
-            return i;
-        }
+        printf("Could not add patient - not enough memory!\n");
+        return;
     }
-    return ID_NOT_FOUND;
+
+    newNode->record = newPatient; // assign patient pointer to node
+    newNode->next   = NULL;
+
+    Node* previous;
+    Node* current;
+
+    findSortedPosition(id,
+                       &previous,
+                       &current);
+
+    // insert new node at beginning of list
+    if(previous == NULL)
+    {
+        newNode->next       = patientRecordsStart;
+        patientRecordsStart = newNode;
+    }
+    // insert new node between previous and current
+    else
+    {
+        previous->next = newNode;
+        newNode->next  = current;
+    }
+
+    totalPatients++;
+    printf("Patient added successfully!\n");
 }
 
-patient* getPatient(int index)
+void findSortedPosition(int    id,
+                        Node** previous,
+                        Node** current)
 {
-    if(index != ID_NOT_FOUND)
+    *previous = NULL;
+    *current  = patientRecordsStart;
+
+    // loop to find sorted position in list
+    while(*current != NULL)
     {
-        return &patientRecords[index];
+        patient* thisPatient;
+        thisPatient = (*current)->record;
+
+        // if id is larger than current node, keep traversing the list
+        if(id > thisPatient->patientID)
+        {
+            *previous = *current;
+            *current  = (*current)->next;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+
+patient* getPatient(const int id)
+{
+    for(Node* node = patientRecordsStart; node != NULL; node = node->next)
+    {
+        patient* patientRecord;
+        patientRecord = node->record;
+
+        if(patientRecord->patientID == id)
+        {
+            return patientRecord;
+        }
     }
 
     return NULL;
 }
 
-void removePatientRecord(const int index)
+int isUniquePatientId(const int id)
 {
-    for(int i = index; i < totalPatients - ENTRY_REMOVAL_OFFSET; i++)
+    if(getPatient(id) == NULL)
     {
-        patientRecords[i] = patientRecords[i + NEXT_ENTRY_OFFSET];
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+void removePatientRecord(const patient* const patientRecord)
+{
+    Node* previous;
+    previous = NULL;
+
+    for(Node* node = patientRecordsStart; node != NULL; node = node->next)
+    {
+        patient* thisPatient;
+        thisPatient = node->record;
+
+        if(patientRecord == thisPatient)
+        {
+            if(previous == NULL)
+            {
+                // if the record to remove is the head, point head to next element
+                patientRecordsStart = patientRecordsStart->next;
+            }
+            else
+            {
+                // set the previous record's next node reference to the node
+                // following this node
+                previous->next = node->next;
+            }
+        }
+
+        previous = node;
     }
 
     printf("Patient successfully discharged - record removed.\n");
@@ -143,7 +249,7 @@ int getUniquePatientID()
     id = promptForUniqueInput("Enter patient ID: ",
                               "Invalid patient ID! Please enter a positive integer.\n",
                               "Duplicate patient ID! Please enter a unique ID.\n",
-                              &idExists,
+                              &isUniquePatientId,
                               ID_MIN_VALUE,
                               ID_MAX_VALUE);
 
@@ -187,9 +293,9 @@ int getPatientRoomNumber()
     int roomNumber;
 
     roomNumber = promptForInput("Enter patient room number: ",
-                         "Invalid room number! Please enter a positive integer.\n",
-                         ROOM_NUMBER_MIN,
-                         ROOM_NUMBER_MAX);
+                                "Invalid room number! Please enter a positive integer.\n",
+                                ROOM_NUMBER_MIN,
+                                ROOM_NUMBER_MAX);
 
     return roomNumber;
 }
@@ -199,7 +305,6 @@ void printPatientMenu()
     printf("\n%d. Return to Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Search by Patient ID\n", SEARCH_BY_PATIENT_ID);
     printf("%d. Search by Patient Name\n", SEARCH_BY_PATIENT_NAME);
-
 }
 
 void searchCriteriaSelection(const int sel)
@@ -220,12 +325,12 @@ void searchCriteriaSelection(const int sel)
     }
 }
 
-void handlePatientSearchResult(const int index)
+void handlePatientSearchResult(const patient* const patientRecord)
 {
-    if(index != INVALID_INPUT)
+    if(patientRecord != NULL)
     {
         printPatientRecordsHeader();
-        printPatientRecord(index);
+        printPatientRecord(patientRecord);
         printPatientRecordDivider();
     }
     else
@@ -234,8 +339,8 @@ void handlePatientSearchResult(const int index)
     }
 }
 
-void handleMultiplePatientSearchResults(const int* const indexes,
-                                        const int numRecordsFound)
+void handleMultiplePatientSearchResults(const patient** const patientsFound,
+                                        const int             numRecordsFound)
 {
     if(numRecordsFound != NO_RECORDS)
     {
@@ -243,7 +348,7 @@ void handleMultiplePatientSearchResults(const int* const indexes,
 
         for(int i = 0; i < numRecordsFound; i++)
         {
-            printPatientRecord(indexes[i]);
+            printPatientRecord(*(patientsFound + i));
         }
 
         printPatientRecordDivider();
@@ -252,24 +357,27 @@ void handleMultiplePatientSearchResults(const int* const indexes,
     {
         printf("Patient record not found.\n");
     }
+
+    free(patientsFound);
 }
 
 void searchPatientByID()
 {
-    int index;
-    int id;
+    int      id;
+    patient* patientRecord;
 
-    id    = getPatientID();
-    index = idExists(id);
+    id            = getPatientID();
+    patientRecord = getPatient(id);
 
-    handlePatientSearchResult(index);
+    handlePatientSearchResult(patientRecord);
 }
 
 void searchPatientByName()
 {
-    int indexes[MAX_PATIENTS];
-    int numRecordsFound;
+    patient** patientsFound;
+    int       numRecordsFound;
 
+    patientsFound   = NULL;
     numRecordsFound = NO_RECORDS;
 
     char name[FULL_NAME_MAX_CHAR];
@@ -278,32 +386,39 @@ void searchPatientByName()
                    name,
                    FULL_NAME_MAX_CHAR);
 
-    for(int i = 0; i < totalPatients; i++)
+    for(Node* node = patientRecordsStart; node != NULL; node = node->next)
     {
-        if(strcmp(patientRecords[i].name,
-                  name) == RECORD_FOUND)
+        patient* thisPatient;
+        thisPatient = node->record;
+
+        if(strcmp(thisPatient->name, name) == RECORD_FOUND)
         {
-            indexes[numRecordsFound] = i;
+            patientsFound = realloc(patientsFound,
+                                    (numRecordsFound + 1) * sizeof(patient *));
+            patientsFound[numRecordsFound] = thisPatient;
             numRecordsFound++;
+
+            printf("Name Found: %s\n", thisPatient->name);
         }
     }
 
-    handleMultiplePatientSearchResults(indexes, numRecordsFound);
+    handleMultiplePatientSearchResults(patientsFound,
+                                       numRecordsFound);
 }
 
-void printPatientRecord(const int index)
+void printPatientRecord(patient* patientRecord)
 {
     printf("%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-28s%-2s%-16d%c\n",
            "|",
-           patientRecords[index].patientID,
+           patientRecord->patientID,
            "|",
-           patientRecords[index].name,
+           patientRecord->name,
            "|",
-           patientRecords[index].age,
+           patientRecord->age,
            "|",
-           patientRecords[index].diagnosis,
+           patientRecord->diagnosis,
            "|",
-           patientRecords[index].roomNumber,
+           patientRecord->roomNumber,
            '|');
 }
 
@@ -312,17 +427,17 @@ void printPatientRecordsHeader()
     printPatientRecordDivider();
 
     printf("%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-28s%-2s%-16s%c\n",
-       "|",
-       "ID",
-       "|",
-       "Name",
-       "|",
-       "Age",
-       "|",
-       "Diagnosis",
-       "|",
-       "Room Number",
-       '|');
+           "|",
+           "ID",
+           "|",
+           "Name",
+           "|",
+           "Age",
+           "|",
+           "Diagnosis",
+           "|",
+           "Room Number",
+           '|');
 
     printPatientRecordDivider();
 }
@@ -342,4 +457,5 @@ void printPatientRecordDivider()
     printf("+");
     printf("\n");
 }
+
 /*********Private Functions End************/

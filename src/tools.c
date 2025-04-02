@@ -6,8 +6,8 @@
 #include <string.h>
 #include <ctype.h>
 #include "../inc/tools.h"
-
 #include "../inc/patient.h"
+
 /*********Private Functions Begin************/
 int promptForInput(const char* const prompt,
                    const char* const errorMessage,
@@ -60,7 +60,7 @@ int promptForUniqueInput(const char* const prompt,
 
         numItemsRead = getInput(prompt,
                                 &input);
-        unique = isUniqueInput(input) == INVALID_INPUT;
+        unique = isUniqueInput(input);
 
         valid = validateData(numItemsRead,
                              input,
