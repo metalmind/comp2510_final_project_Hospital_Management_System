@@ -291,12 +291,8 @@ int getUniquePatientID()
 int getPatientID()
 {
     int   id;
-    char* prompt;
 
-    sprintf(prompt, "Enter patient ID (next available is %d): ",
-            getNextAvailPatientID());
-
-    id = promptForInput(prompt,
+    id = promptForInput("Enter patient ID: ",
                         "Invalid patient ID! Please enter a positive integer.\n",
                         ID_MIN_VALUE,
                         ID_MAX_VALUE);
