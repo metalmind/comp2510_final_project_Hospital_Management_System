@@ -5,10 +5,12 @@
 #ifndef PATIENT_H
 #define PATIENT_H
 
-#include <stdlib.h>
+#include <time.h>
+
 #include "patient.h"
 #include "tools.h"
 
+#define PROMPT_MAX_CHAR 50
 #define FULL_NAME_MAX_CHAR 25
 #define DIAGNOSIS_MAX_CHAR 25
 
@@ -18,7 +20,7 @@
 #define MAX_AGE_YEARS 150
 
 #define ID_MIN_VALUE 1
-#define ID_MAX_VALUE 50
+#define ID_MAX_VALUE 100
 #define ID_NOT_FOUND (-1)
 
 #define ROOM_NUMBER_MIN 1
@@ -39,11 +41,13 @@ typedef struct patient patient;
 
 struct patient
 {
-    int  patientID;
-    char name[FULL_NAME_MAX_CHAR];
-    int  age;
-    char diagnosis[DIAGNOSIS_MAX_CHAR];
-    int  roomNumber;
+    int    patientID;
+    char   name[FULL_NAME_MAX_CHAR];
+    int    age;
+    char   diagnosis[DIAGNOSIS_MAX_CHAR];
+    int    roomNumber;
+    time_t admissionDate;
+    time_t dischargeDate;
 };
 
 /*********Public Functions Begin************/
@@ -80,6 +84,13 @@ void dischargePatient(void);
  * @param newPatient patient to add to list
  */
 void addPatientToList(const patient* newPatient);
+
+
+/**
+ * Stores the patient record in the discharged patient list.
+ * @param dischargedPatient patient to discharge
+ */
+void addPatientToDischargedList(const patient* dischargedPatient);
 
 /**
  * Finds the insertion point for the patient record in the sorted list.
@@ -133,6 +144,12 @@ int getUniquePatientID(void);
  * @return patient ID
  */
 int getPatientID(void);
+
+/**
+ * Returns the next available patient ID.
+ * @return next available patient ID
+ */
+int getNextAvailPatientID();
 
 /**
  * Prompts user for patient name, with checks to ensure patient name is valid

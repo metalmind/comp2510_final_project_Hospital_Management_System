@@ -5,11 +5,15 @@
 #include <stdio.h>
 #include <string.h>
 #include "../inc/patient.h"
+
+#include <stdlib.h>
+
 #include "../inc/tools.h"
 
 Node* patientRecordsStart     = NULL;
 Node* dischargedPatientsStart = NULL;
 int   totalPatients           = 0;
+int   dischargedPatients      = 0;
 
 /*********Public Functions Begin************/
 void addNewPatientRecord(void)
@@ -43,20 +47,20 @@ void addNewPatientRecord(void)
     newPatient = (patient *) malloc(sizeof(patient));
 
     // if space available
-    if(newPatient != NULL)
-    {
-        newPatient->patientID = id;
-        strcpy(newPatient->name,
-               name);
-        newPatient->age = age;
-        strcpy(newPatient->diagnosis,
-               diagnosis);
-        newPatient->roomNumber = roomNumber;
-    }
-    else
+    if(newPatient == NULL)
     {
         printf("Could not add new patient - not enough memory!\n");
+        return;
     }
+
+    newPatient->patientID = id;
+    strcpy(newPatient->name,
+           name);
+    newPatient->age = age;
+    strcpy(newPatient->diagnosis,
+           diagnosis);
+    newPatient->roomNumber = roomNumber;
+    newPatient->admissionDate = time(NULL);
 
     addPatientToList(newPatient);
 }
@@ -107,6 +111,7 @@ void dischargePatient()
     if(patientRecord != NULL)
     {
         removePatientRecord(patientRecord);
+        addPatientToDischargedList(patientRecord);
     }
     else
     {
@@ -184,6 +189,24 @@ void findSortedPosition(int    id,
     }
 }
 
+void addPatientToDischargedList(const patient* const dischargedPatient)
+{
+    Node* newNode;
+    newNode = (Node *) malloc(sizeof(Node));
+
+    if(newNode == NULL)
+    {
+        printf("Could not log discharged patient - not enough memory!\n");
+        return;
+    }
+
+    newNode->record         = dischargedPatient;       // assign patient pointer to node
+    newNode->next           = dischargedPatientsStart; // add to start of list
+    dischargedPatientsStart = newNode;                 // move pointer to start
+
+    dischargedPatients++;
+}
+
 patient* getPatient(const int id)
 {
     for(Node* node = patientRecordsStart; node != NULL; node = node->next)
@@ -233,20 +256,30 @@ void removePatientRecord(const patient* const patientRecord)
                 // following this node
                 previous->next = node->next;
             }
+
+            free(node);
+            thisPatient->dischargeDate = time(NULL);
+            totalPatients--;
+
+            printf("Patient successfully discharged - record removed.\n");
+
+            return;
         }
 
         previous = node;
     }
-
-    printf("Patient successfully discharged - record removed.\n");
-    totalPatients--;
 }
 
 int getUniquePatientID()
 {
     int id;
 
-    id = promptForUniqueInput("Enter patient ID: ",
+    char prompt[PROMPT_MAX_CHAR];
+
+    sprintf(prompt, "Enter patient ID (next available is %d): ",
+            getNextAvailPatientID());
+
+    id = promptForUniqueInput(prompt,
                               "Invalid patient ID! Please enter a positive integer.\n",
                               "Duplicate patient ID! Please enter a unique ID.\n",
                               &isUniquePatientId,
@@ -259,8 +292,12 @@ int getUniquePatientID()
 int getPatientID()
 {
     int id;
+    char* prompt;
 
-    id = promptForInput("Enter patient ID: ",
+    sprintf(prompt, "Enter patient ID (next available is %d): ",
+            getNextAvailPatientID());
+
+    id = promptForInput(prompt,
                         "Invalid patient ID! Please enter a positive integer.\n",
                         ID_MIN_VALUE,
                         ID_MAX_VALUE);
@@ -268,6 +305,18 @@ int getPatientID()
     return id;
 }
 
+int getNextAvailPatientID()
+{
+    for(int i = ID_MIN_VALUE; i <= ID_MAX_VALUE; i++)
+    {
+        if(getPatient(i) == NULL)
+        {
+            return i;
+        }
+    }
+
+    return ID_NOT_FOUND;
+}
 void getPatientName(const char* prompt,
                     char* const name)
 {
@@ -408,7 +457,11 @@ void searchPatientByName()
 
 void printPatientRecord(patient* patientRecord)
 {
-    printf("%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-28s%-2s%-16d%c\n",
+    char date[DATE_MAX_CHARS];
+    dateFormat(patientRecord->admissionDate,
+               date);
+
+    printf("%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-28s%-2s%-16d%-2s%-28s%c\n",
            "|",
            patientRecord->patientID,
            "|",
@@ -419,6 +472,8 @@ void printPatientRecord(patient* patientRecord)
            patientRecord->diagnosis,
            "|",
            patientRecord->roomNumber,
+           "|",
+           date,
            '|');
 }
 
@@ -426,7 +481,7 @@ void printPatientRecordsHeader()
 {
     printPatientRecordDivider();
 
-    printf("%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-28s%-2s%-16s%c\n",
+    printf("%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-28s%-2s%-16s%-2s%-28s%c\n",
            "|",
            "ID",
            "|",
@@ -437,6 +492,8 @@ void printPatientRecordsHeader()
            "Diagnosis",
            "|",
            "Room Number",
+           "|",
+           "Admission Date",
            '|');
 
     printPatientRecordDivider();
@@ -454,6 +511,8 @@ void printPatientRecordDivider()
     printDashes(STRING_FIELD_SPACING);
     printf("+");
     printDashes(ROOM_NUM_FIELD_SPACING);
+    printf("+");
+    printDashes(STRING_FIELD_SPACING);
     printf("+");
     printf("\n");
 }

@@ -16,12 +16,15 @@
 
 #define READ_SUCCESS 1
 
+#define DATE_MAX_CHARS 20
 #define TERMINAL_CHAR 0
 
 #define EMPTY_STRING 0
 
 #define ENTRY_REMOVAL_OFFSET 1
 #define NEXT_ENTRY_OFFSET 1
+
+#include <time.h>
 
 typedef struct node Node;
 
@@ -168,6 +171,14 @@ void clearInputBuffer(void);
  * @param numDashes number of dashes to print
  */
 void printDashes(int numDashes);
+
+/**
+ * Returns the date formatted as YYYY-MM-DD HH:MM:SS.
+ * @param date date to format
+ * @param formattedDate formatted date
+ */
+void dateFormat(time_t date,
+                char* formattedDate);
 /*********Private Functions End**************/
 
 
