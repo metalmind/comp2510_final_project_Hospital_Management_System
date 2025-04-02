@@ -46,7 +46,6 @@ void addNewPatientRecord(void)
     patient* newPatient;
     newPatient = (patient *) malloc(sizeof(patient));
 
-    // if space available
     if(newPatient == NULL)
     {
         printf("Could not add new patient - not enough memory!\n");
@@ -59,7 +58,7 @@ void addNewPatientRecord(void)
     newPatient->age = age;
     strcpy(newPatient->diagnosis,
            diagnosis);
-    newPatient->roomNumber = roomNumber;
+    newPatient->roomNumber    = roomNumber;
     newPatient->admissionDate = time(NULL);
 
     addPatientToList(newPatient);
@@ -142,9 +141,9 @@ void addPatientToList(const patient* const newPatient)
     Node* previous;
     Node* current;
 
-    findSortedPosition(id,
-                       &previous,
-                       &current);
+    findPatientSortedPosition(id,
+                              &previous,
+                              &current);
 
     // insert new node at beginning of list
     if(previous == NULL)
@@ -163,9 +162,9 @@ void addPatientToList(const patient* const newPatient)
     printf("Patient added successfully!\n");
 }
 
-void findSortedPosition(int    id,
-                        Node** previous,
-                        Node** current)
+void findPatientSortedPosition(int    id,
+                               Node** previous,
+                               Node** current)
 {
     *previous = NULL;
     *current  = patientRecordsStart;
@@ -291,7 +290,7 @@ int getUniquePatientID()
 
 int getPatientID()
 {
-    int id;
+    int   id;
     char* prompt;
 
     sprintf(prompt, "Enter patient ID (next available is %d): ",
@@ -317,6 +316,7 @@ int getNextAvailPatientID()
 
     return ID_NOT_FOUND;
 }
+
 void getPatientName(const char* prompt,
                     char* const name)
 {

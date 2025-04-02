@@ -7,7 +7,7 @@
 #define MAX_DOCTORS 10
 
 #define DOC_ID_MIN_VALUE 1
-#define DOC_ID_MAX_VALUE 10
+#define DOC_ID_MAX_VALUE 50
 #define DOC_ID_NOT_FOUND (-1)
 
 #define INT_FIELD_SPACING 9
@@ -18,6 +18,7 @@
 #define ADD_NEW_DOCTOR 1
 #define FIRE_DOCTOR 2
 #define VIEW_ALL_DOCTOR_RECORDS 3
+#include "tools.h"
 
 
 typedef struct doctor doctor;
@@ -56,34 +57,42 @@ void viewAllDoctorRecords(void);
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
-
 /**
- * Searches for a doctorID in the array and returns its index if found;
- * otherwise, it returns ID_NOT_FOUND.
- *
- * @param id The ID we want to check for existence
- * @return id index if found, otherwise ID_NOT_FOUND
- *
- * @author Ayesha Anzer
- * @author Owen Wou
+ * Stores the doctor record in the list in sorted order.
+ * @param newDoctor doctor to add to list
  */
-int doctorIDExists(int id);
+void addDoctorToList(const doctor* newDoctor);
+
 
 /**
- * Returns the doctor record corresponding to the specified index
- * of the doctorRecords array.
- * @param index index of doctor record to retrieve
+ * Finds the insertion point for the doctor record in the sorted list.
+ * @param id doctor id
+ * @param previous previous record
+ * @param current current record
+ */
+void findDoctorSortedPosition(int    id,
+                              Node** previous,
+                              Node** current);
+
+/**
+ * Returns the doctor record corresponding to the specified doctor ID.
+ * @param id id of doctor record to retrieve
  * @return doctor record
  */
-doctor* getDoctor(int index);
+doctor* getDoctor(int id);
 
 /**
- * Removes the specified doctor record from the doctorRecord array,
- * shifting remaining doctor records by NEXT_ENTRY_OFFSET to fill the
- * gap.
- * @param index index of doctor record to be removed
+ * Returns whether a doctor with the specified ID already exists in the system.
+ * @param id id to check if unique
+ * @return true if doctor ID is unique, otherwise false
  */
-void removeDoctorRecord(int index);
+int isDoctorPatientId(int id);
+
+/**
+ * Removes the specified doctor record from the doctorRecord linked list.
+ * @param doctorRecord doctor record to be removed
+ */
+void removeDoctorRecord(const doctor* doctorRecord);
 
 /**
  * Prompts user for doctor ID, with checks to ensure doctor ID is valid
@@ -109,12 +118,18 @@ int getUniqueDoctorID(void);
 int getDoctorID(void);
 
 /**
- * Helper method to search the doctorRecord array for the doctor record corresponding
+ * Helper method to search the doctorRecord list for the doctor record corresponding
  * to the specified ID.
  *
  * @return doctor record corresponding to the specified ID
  */
 doctor* getDoctorByID();
+
+/**
+ * Returns the next available doctor ID.
+ * @return next available doctor ID
+ */
+int getNextAvailDocID();
 
 /**
  * Prompts user for doctor name, with checks to ensure doctor name is valid
@@ -128,11 +143,10 @@ void getDoctorName(const char* prompt,
                    char* name);
 
 /**
- * Prints the doctor record corresponding to the specified index of the
- * doctor record array.
- * @param index index of doctor record
+ * Prints the doctor record.
+ * @param doctor doctor record to print
  */
-void printDoctorRecord(int index);
+void printDoctorRecord(doctor* doctor);
 
 /**
  * Helper function to print the doctor record header, including top and
@@ -154,7 +168,7 @@ void printDoctorMenu();
  * Routes to the function selected.
  * @param sel The number of the selected doctor item.
  */
-void routeDoctorMenu(const int sel);
+void routeDoctorMenu(int sel);
 
 /*********Private Functions End**************/
 

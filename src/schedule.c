@@ -28,10 +28,10 @@ void scheduleMenu()
 void assignShift()
 {
     doctor* doc;
-    int dayOfWeek;
-    int shiftToFill;
+    int     dayOfWeek;
+    int     shiftToFill;
 
-    doc       = getDoctorByID();
+    doc = getDoctorByID();
 
     if(doc == NULL)
     {
@@ -72,9 +72,9 @@ void clearShift()
 
     printShiftMenu();
     shiftToClear = promptForInput("Enter shift to clear: ",
-                                 "Invalid shift! Try again.\n",
-                                 MORNING + MENU_NUMBERING_OFFSET,
-                                 EVENING + MENU_NUMBERING_OFFSET);
+                                  "Invalid shift! Try again.\n",
+                                  MORNING + MENU_NUMBERING_OFFSET,
+                                  EVENING + MENU_NUMBERING_OFFSET);
     shiftToClear -= MENU_NUMBERING_OFFSET;
 
     if(schedule[dayOfWeek][shiftToClear] != UNASSIGNED_SHIFT)
@@ -96,11 +96,12 @@ void printDocWeekSchedule()
     printShiftsForWeek();
     printScheduleDivider();
 }
+
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
 void getDayOfWeekNameStr(const enum daysInWeek dayOfWeek,
-                         char* dayOfWeekName)
+                         char*                 dayOfWeekName)
 {
     switch(dayOfWeek)
     {
@@ -140,7 +141,7 @@ void getDayOfWeekNameStr(const enum daysInWeek dayOfWeek,
 }
 
 void getShiftNameStr(const enum shift shift,
-                     char* shiftName)
+                     char*            shiftName)
 {
     switch(shift)
     {
@@ -192,14 +193,14 @@ void printShiftsForWeek()
 }
 
 void getDoctorOnShift(enum daysInWeek dayOfWeek,
-                      enum shift shift,
-                      char* doctorName)
+                      enum shift      shift,
+                      char*           doctorName)
 {
-    int index;
+    int     id;
     doctor* doc;
 
-    index = doctorIDExists(schedule[dayOfWeek][shift]);
-    doc   = getDoctor(index);
+    id  = schedule[dayOfWeek][shift];
+    doc = getDoctor(id);
 
     if(doc == NULL)
     {
@@ -209,7 +210,7 @@ void getDoctorOnShift(enum daysInWeek dayOfWeek,
     else
     {
         strcpy(doctorName, "Dr. ");
-        strcat(doctorName,  doc -> lastName);
+        strcat(doctorName, doc -> lastName);
     }
 }
 
@@ -245,11 +246,11 @@ void printScheduleDivider()
     printf("\n");
 }
 
-void addDoctorToSchedule(const doctor* const doctor,
+void addDoctorToSchedule(const doctor* const   doctor,
                          const enum daysInWeek dayOfWeek,
-                         const enum shift shiftToFill)
+                         const enum shift      shiftToFill)
 {
-    schedule[dayOfWeek][shiftToFill] = doctor -> doctorID;
+    schedule[dayOfWeek][shiftToFill] = doctor->doctorID;
     const char dayOfWeekStr[MAX_CHAR_SHIFT];
     const char shiftNameStr[MAX_CHAR_SHIFT];
 
@@ -257,7 +258,7 @@ void addDoctorToSchedule(const doctor* const doctor,
     getShiftNameStr(shiftToFill, shiftNameStr);
 
     printf("Successfully assigned Dr. %s to the %s %s shift!\n",
-           doctor -> lastName,
+           doctor->lastName,
            dayOfWeekStr,
            shiftNameStr);
 }
@@ -332,4 +333,5 @@ void routeScheduleMenu(const int sel)
             printf("Invalid input! Try again.\n");
     }
 }
+
 /*********Private Functions End**************/

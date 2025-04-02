@@ -10,7 +10,6 @@
 #include "patient.h"
 #include "tools.h"
 
-#define PROMPT_MAX_CHAR 50
 #define FULL_NAME_MAX_CHAR 25
 #define DIAGNOSIS_MAX_CHAR 25
 
@@ -98,9 +97,9 @@ void addPatientToDischargedList(const patient* dischargedPatient);
  * @param previous previous record
  * @param current current record
  */
-void findSortedPosition(int    id,
-                        Node** previous,
-                        Node** current);
+void findPatientSortedPosition(int    id,
+                               Node** previous,
+                               Node** current);
 
 /**
  * Returns the patient record corresponding to the specified patient ID.
@@ -228,8 +227,7 @@ void searchPatientByID(void);
 void searchPatientByName(void);
 
 /**
- * Prints the patient record corresponding to the specified index of the
- * patient record array.
+ * Prints the patient record.
  * @param patient patient record to print
  */
 void printPatientRecord(patient* patient);

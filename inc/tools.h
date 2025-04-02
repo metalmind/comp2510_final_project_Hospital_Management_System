@@ -16,6 +16,7 @@
 
 #define READ_SUCCESS 1
 
+#define PROMPT_MAX_CHAR 50
 #define DATE_MAX_CHARS 20
 #define TERMINAL_CHAR 0
 
