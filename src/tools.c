@@ -6,13 +6,13 @@
 #include <string.h>
 #include <ctype.h>
 #include "../inc/tools.h"
-
 #include "../inc/patient.h"
+
 /*********Private Functions Begin************/
 int promptForInput(const char* const prompt,
                    const char* const errorMessage,
-                   const int lowerBound,
-                   const int upperBound)
+                   const int         lowerBound,
+                   const int         upperBound)
 {
     int input;
     int valid;
@@ -41,9 +41,9 @@ int promptForInput(const char* const prompt,
 int promptForUniqueInput(const char* const prompt,
                          const char* const errorMessage,
                          const char* const duplicateErrorMessage,
-                         int(*isUniqueInput)(int),
-                         const int lowerBound,
-                         const int upperBound)
+                         int (*            isUniqueInput)(int),
+                         const int         lowerBound,
+                         const int         upperBound)
 {
     int input;
     int valid;
@@ -60,7 +60,7 @@ int promptForUniqueInput(const char* const prompt,
 
         numItemsRead = getInput(prompt,
                                 &input);
-        unique = isUniqueInput(input) == INVALID_INPUT;
+        unique = isUniqueInput(input);
 
         valid = validateData(numItemsRead,
                              input,
@@ -79,8 +79,8 @@ int promptForUniqueInput(const char* const prompt,
 }
 
 void promptForNameStr(const char* const prompt,
-                      char* const input,
-                      const int maxChars)
+                      char* const       input,
+                      const int         maxChars)
 {
     int valid;
 
@@ -102,7 +102,7 @@ void promptForNameStr(const char* const prompt,
 }
 
 int getInput(const char* const prompt,
-             int* const input)
+             int* const        input)
 {
     int numItemsRead;
 
@@ -115,17 +115,17 @@ int getInput(const char* const prompt,
     return numItemsRead;
 }
 
-int validateData(const int numItemsRead,
-                 const int input,
-                 const int lowerBound,
-                 const int upperBound,
+int validateData(const int         numItemsRead,
+                 const int         input,
+                 const int         lowerBound,
+                 const int         upperBound,
                  const char* const errorMessage)
 {
     int valid = FALSE;
 
     valid = validateInputType(numItemsRead) && validateNum(input,
-                     lowerBound,
-                     upperBound);
+                                                           lowerBound,
+                                                           upperBound);
 
     if(!valid)
     {
@@ -178,9 +178,9 @@ int validateName(const char* const name)
         return FALSE;
     }
 
-    for (size_t i = 0; i < nameLength; i++)
+    for(size_t i = 0; i < nameLength; i++)
     {
-        if (!(isalpha(name[i]) || name[i] == ' '))
+        if(!(isalpha(name[i]) || name[i] == ' '))
         {
             return FALSE;
         }
@@ -190,11 +190,11 @@ int validateName(const char* const name)
 }
 
 void getStringInput(const char* const prompt,
-                    char* const input,
-                    const int maxChar)
+                    char* const       input,
+                    const int         maxChar)
 {
     size_t length;
-    int exceedMaxChar;
+    int    exceedMaxChar;
 
     printf("%s", prompt);
     fgets(input,
@@ -247,4 +247,15 @@ void printDashes(const int numDashes)
         printf("%c", '-');
     }
 }
+
+void dateFormat(const time_t date,
+                char*        formattedDate)
+{
+    time_t now;
+
+    now = time(NULL);
+
+    strftime(formattedDate, DATE_MAX_CHARS, "%Y-%m-%d %H:%M:%S", localtime(&now));
+}
+
 /*********Private Functions End**************/

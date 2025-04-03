@@ -16,12 +16,24 @@
 
 #define READ_SUCCESS 1
 
+#define PROMPT_MAX_CHAR 50
+#define DATE_MAX_CHARS 20
 #define TERMINAL_CHAR 0
 
 #define EMPTY_STRING 0
 
 #define ENTRY_REMOVAL_OFFSET 1
 #define NEXT_ENTRY_OFFSET 1
+
+#include <time.h>
+
+typedef struct node Node;
+
+struct node
+{
+    void* record;
+    Node* next;
+};
 
 /*********Private Functions Begin************/
 /**
@@ -46,7 +58,7 @@ int promptForInput(const char* prompt,
  * @param prompt prompt message
  * @param errorMessage error message
  * @param duplicateErrorMessage error message for duplicate input
- * @param isUniqueInput
+ * @param isUniqueInput function that returns true if input is unique, otherwise false
  * @param lowerBound lower bound of valid range
  * @param upperBound upper bound of valid range
  * @return valid unique input
@@ -160,6 +172,14 @@ void clearInputBuffer(void);
  * @param numDashes number of dashes to print
  */
 void printDashes(int numDashes);
+
+/**
+ * Returns the date formatted as YYYY-MM-DD HH:MM:SS.
+ * @param date date to format
+ * @param formattedDate formatted date
+ */
+void dateFormat(time_t date,
+                char* formattedDate);
 /*********Private Functions End**************/
 
 
