@@ -31,6 +31,7 @@
 #define YEAR_INDEX 0
 #define MONTH_INDEX 1
 #define DAY_INDEX 2
+#define MAX_ELEM_Y_M_D 3
 #define DEFAULT_VALUE_ZERO 0
 
 #include <time.h>

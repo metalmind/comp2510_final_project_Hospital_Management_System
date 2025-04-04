@@ -255,7 +255,7 @@ void dateFormat(const time_t date,
 }
 
 time_t strToTime(char *str) {
-    int date[3];
+    int date[MAX_ELEM_Y_M_D];
     int dateIndex = 0;
     time_t time;
 
@@ -269,9 +269,9 @@ time_t strToTime(char *str) {
 
     struct tm timeStruct;
 
-    timeStruct.tm_year = date[0] - TM_YEAR_OFFSET;
-    timeStruct.tm_mon = date[1];
-    timeStruct.tm_mday = date[2];
+    timeStruct.tm_year = date[YEAR_INDEX] - TM_YEAR_OFFSET;
+    timeStruct.tm_mon = date[MONTH_INDEX];
+    timeStruct.tm_mday = date[DAY_INDEX];
     timeStruct.tm_hour = DEFAULT_VALUE_ZERO;
     timeStruct.tm_min = DEFAULT_VALUE_ZERO;
     timeStruct.tm_sec = DEFAULT_VALUE_ZERO;
