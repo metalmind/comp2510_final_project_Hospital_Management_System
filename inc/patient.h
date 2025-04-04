@@ -266,11 +266,11 @@ void printPatientRecordDivider();
 
 /**
  * Helper function that addes a new entry to the linked list.
- * @param id
- * @param name
- * @param age
- * @param diagnosis
- * @param roomNumber
+ * @param id Patient ID
+ * @param name Patient Name
+ * @param age Patient Age
+ * @param diagnosis Patient Diagnosis
+ * @param roomNumber Room Number
  */
 void createNewPatientEntry(const int id, const char name[25], const int age, const char diagnosis[25], const int roomNumber, const time_t admissionDate);
 /*********Private Functions End**************/
