@@ -15,6 +15,7 @@ Node* dischargedPatientsStart = NULL;
 int   totalPatients           = 0;
 int   dischargedPatients      = 0;
 
+
 /*********Public Functions Begin************/
 void addNewPatientRecord(void)
 {
@@ -43,25 +44,7 @@ void addNewPatientRecord(void)
 
     roomNumber = getPatientRoomNumber();
 
-    patient* newPatient;
-    newPatient = (patient *) malloc(sizeof(patient));
-
-    if(newPatient == NULL)
-    {
-        printf("Could not add new patient - not enough memory!\n");
-        return;
-    }
-
-    newPatient->patientID = id;
-    strcpy(newPatient->name,
-           name);
-    newPatient->age = age;
-    strcpy(newPatient->diagnosis,
-           diagnosis);
-    newPatient->roomNumber    = roomNumber;
-    newPatient->admissionDate = time(NULL);
-
-    addPatientToList(newPatient);
+    createNewPatientEntry(id, name, age, diagnosis, roomNumber, time(NULL));
 }
 
 void viewAllPatientRecords()
@@ -121,6 +104,33 @@ void dischargePatient()
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
+void createNewPatientEntry(const int    id,
+                           const char   name[25],
+                           const int    age,
+                           const char   diagnosis[25],
+                           const int    roomNumber,
+                           const time_t admissionDate)
+{
+    patient* newPatient;
+    newPatient = (patient *) malloc(sizeof(patient));
+
+    if(newPatient == NULL)
+    {
+        printf("Could not add new patient - not enough memory!\n");
+    }
+
+    newPatient->patientID = id;
+    strcpy(newPatient->name,
+           name);
+    newPatient->age = age;
+    strcpy(newPatient->diagnosis,
+           diagnosis);
+    newPatient->roomNumber    = roomNumber;
+    newPatient->admissionDate = admissionDate;
+
+    addPatientToList(newPatient);
+}
+
 void addPatientToList(const patient* const newPatient)
 {
     int   id;
@@ -290,7 +300,7 @@ int getUniquePatientID()
 
 int getPatientID()
 {
-    int   id;
+    int id;
 
     id = promptForInput("Enter patient ID: ",
                         "Invalid patient ID! Please enter a positive integer.\n",
@@ -457,7 +467,7 @@ void printPatientRecord(patient* patientRecord)
     dateFormat(patientRecord->admissionDate,
                date);
 
-    printf("%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-28s%-2s%-16d%-2s%-28s%c\n",
+    printf("%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-20s%c\n",
            "|",
            patientRecord->patientID,
            "|",
@@ -477,7 +487,7 @@ void printPatientRecordsHeader()
 {
     printPatientRecordDivider();
 
-    printf("%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-28s%-2s%-16s%-2s%-28s%c\n",
+    printf("%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-20s%c\n",
            "|",
            "ID",
            "|",
@@ -487,7 +497,7 @@ void printPatientRecordsHeader()
            "|",
            "Diagnosis",
            "|",
-           "Room Number",
+           "Room #",
            "|",
            "Admission Date",
            '|');
@@ -506,11 +516,73 @@ void printPatientRecordDivider()
     printf("+");
     printDashes(STRING_FIELD_SPACING);
     printf("+");
-    printDashes(ROOM_NUM_FIELD_SPACING);
+    printDashes(INT_FIELD_SPACING);
     printf("+");
-    printDashes(STRING_FIELD_SPACING);
+    printDashes(DATE_FIELD_SPACING);
     printf("+");
     printf("\n");
+}
+
+void readPatientRecords()
+{
+    FILE* fPtr;
+
+    if((fPtr = fopen("../res/patientRecords.txt", "r")) == NULL)
+    {
+        puts("File could not be opened.");
+    }
+    else
+    {
+        int    id;
+        char   name[FULL_NAME_MAX_CHAR];
+        int    age;
+        char   diagnosis[DIAGNOSIS_MAX_CHAR];
+        int    roomNumber;
+        time_t admissionTime;
+
+        char patientData[NUM_PATIENT_FIELDS][DIAGNOSIS_MAX_CHAR];
+        char buffer[BUFFER_SIZE];
+
+        while(fgets(buffer, sizeof(buffer), fPtr) != NULL)
+        {
+            int patientDataIndex = 0;
+            char* tokenPtr   = strtok(buffer, " ");
+            while(tokenPtr != NULL)
+            {
+                strcpy(patientData[patientDataIndex], tokenPtr);
+                // printf("%s\n", patientData[patientDataIndex]);
+                tokenPtr = strtok(NULL, " ");
+                patientDataIndex++;
+            }
+
+            if(feof(fPtr))
+            {
+                printf("\nEnd of file reached.\n");
+            }
+            else if(ferror(fPtr))
+            {
+                printf("\nAn error occurred.\n");
+            }
+
+            id = atoi(patientData[ID_INDEX]);
+            if(isUniquePatientId(id))
+            {
+                sanitizeStr(patientData[NAME_INDEX], '#', ' ');
+                strcpy(name, patientData[NAME_INDEX]);
+
+                age = atoi(patientData[AGE_INDEX]);
+
+                sanitizeStr(patientData[DIAGNOSIS_INDEX], '#', ' ');
+                strcpy(diagnosis, patientData[DIAGNOSIS_INDEX]);
+
+                roomNumber    = atoi(patientData[ROOM_NUMBER_INDEX]);
+                admissionTime = strToTime(patientData[ADMIT_TIME_INDEX]);
+
+                createNewPatientEntry(id, name, age, diagnosis, roomNumber, admissionTime);
+            }
+        }
+    }
+    viewAllPatientRecords();
 }
 
 /*********Private Functions End************/
