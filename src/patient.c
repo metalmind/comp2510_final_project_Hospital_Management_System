@@ -472,18 +472,17 @@ void readPatientRecords() {
         time_t admissionTime;
 
         char patientData[NUM_PATIENT_FIELDS][DIAGNOSIS_MAX_CHAR];
-        int patientDateIndex = 0;
-
         char buffer[BUFFER_SIZE];
 
         while (fgets(buffer, sizeof(buffer), fPtr) != NULL) {
-            patientDateIndex = 0;
+            int patientDataIndex;
+            patientDataIndex = 0;
             char *tokenPtr = strtok(buffer, " ");
             while (tokenPtr != NULL) {
-                strcpy(patientData[patientDateIndex], tokenPtr);
-                printf("%s\n", patientData[patientDateIndex]);
+                strcpy(patientData[patientDataIndex], tokenPtr);
+                // printf("%s\n", patientData[patientDataIndex]);
                 tokenPtr = strtok(NULL, " ");
-                patientDateIndex++;
+                patientDataIndex++;
             }
 
             if (feof(fPtr)) {
