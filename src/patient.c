@@ -493,17 +493,20 @@ void readPatientRecords() {
             }
 
                 id = atoi(patientData[ID_INDEX]);
-                sanitizeStr(patientData[NAME_INDEX],  '#', ' ');
-                strcpy(name, patientData[NAME_INDEX]);
+                if (isUniquePatientId(id)) {
+                    sanitizeStr(patientData[NAME_INDEX],  '#', ' ');
+                    strcpy(name, patientData[NAME_INDEX]);
 
-                age = atoi(patientData[AGE_INDEX]);
+                    age = atoi(patientData[AGE_INDEX]);
 
-                sanitizeStr(patientData[DIAGNOSIS_INDEX],  '#', ' ');
-                strcpy(diagnosis, patientData[DIAGNOSIS_INDEX]);
+                    sanitizeStr(patientData[DIAGNOSIS_INDEX],  '#', ' ');
+                    strcpy(diagnosis, patientData[DIAGNOSIS_INDEX]);
 
-                roomNumber = atoi(patientData[ROOM_NUMBER_INDEX]);
-                admissionTime = strToTime(patientData[ADMIT_TIME_INDEX]);
-                createNewPatientEntry(id, name, age, diagnosis, roomNumber, admissionTime);
+                    roomNumber = atoi(patientData[ROOM_NUMBER_INDEX]);
+                    admissionTime = strToTime(patientData[ADMIT_TIME_INDEX]);
+
+                    createNewPatientEntry(id, name, age, diagnosis, roomNumber, admissionTime);
+                }
         }
 
 
