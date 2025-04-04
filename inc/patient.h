@@ -36,6 +36,17 @@
 #define STRING_FIELD_SPACING 29
 #define ROOM_NUM_FIELD_SPACING 17
 
+#define ID_INDEX 0
+#define NAME_INDEX 1
+#define AGE_INDEX 2
+#define DIAGNOSIS_INDEX 3
+#define ROOM_NUMBER_INDEX 4
+#define ADMIT_TIME_INDEX 5
+#define NUM_PATIENT_FIELDS 6
+
+#define BUFFER_SIZE 400
+
+
 typedef struct patient patient;
 
 struct patient
@@ -74,6 +85,11 @@ void searchForPatientRecord(void);
  * Discharges a patient from the hospital.
  */
 void dischargePatient(void);
+
+/**
+ * Read the patient record file and load it into memory.
+ */
+void readPatientRecords();
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
@@ -248,6 +264,15 @@ void printPatientRecordsHeader();
  */
 void printPatientRecordDivider();
 
+/**
+ * Helper function that addes a new entry to the linked list.
+ * @param id
+ * @param name
+ * @param age
+ * @param diagnosis
+ * @param roomNumber
+ */
+void createNewPatientEntry(const int id, const char name[25], const int age, const char diagnosis[25], const int roomNumber, const time_t admissionDate);
 /*********Private Functions End**************/
 
 #endif //PATIENT_H

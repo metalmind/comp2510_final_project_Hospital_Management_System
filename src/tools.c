@@ -251,11 +251,46 @@ void printDashes(const int numDashes)
 void dateFormat(const time_t date,
                 char*        formattedDate)
 {
-    time_t now;
-
-    now = time(NULL);
-
-    strftime(formattedDate, DATE_MAX_CHARS, "%Y-%m-%d %H:%M:%S", localtime(&now));
+    strftime(formattedDate, DATE_MAX_CHARS, "%Y-%m-%d", localtime(&date));
 }
+
+time_t strToTime(char *str) {
+    int date[3];
+    int dateIndex = 0;
+    time_t time;
+
+    char *tokenPtr = strtok(str, "-");
+    while (tokenPtr != NULL) {
+        date[dateIndex] = atoi(tokenPtr);
+        printf("%d\n", date[dateIndex]);
+        tokenPtr = strtok(NULL, "-");
+        dateIndex++;
+    }
+
+    struct tm timeStruct;
+
+    timeStruct.tm_year = date[0] - TM_YEAR_OFFSET;
+    timeStruct.tm_mon = date[1];
+    timeStruct.tm_mday = date[2];
+    timeStruct.tm_hour = DEFAULT_VALUE_ZERO;
+    timeStruct.tm_min = DEFAULT_VALUE_ZERO;
+    timeStruct.tm_sec = DEFAULT_VALUE_ZERO;
+    timeStruct.tm_isdst = DEFAULT_VALUE_ZERO;
+
+    time = mktime(&timeStruct);
+
+    return time;
+}
+
+void sanitizeStr(char * str, char dirtyChar, char cleanChar) {
+    int index = 0;
+    while (str[index] != '\0') {
+        if (str[index] == dirtyChar) {
+            str[index] = cleanChar;
+        }
+        index++;
+    }
+}
+
 
 /*********Private Functions End**************/
