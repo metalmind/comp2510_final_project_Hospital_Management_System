@@ -15,26 +15,7 @@ Node *dischargedPatientsStart = NULL;
 int totalPatients = 0;
 int dischargedPatients = 0;
 
-void createNewPatientEntry(const int id, const char name[25], const int age, const char diagnosis[25],
-                           const int roomNumber, const time_t admissionDate) {
-    patient *newPatient;
-    newPatient = (patient *) malloc(sizeof(patient));
 
-    if (newPatient == NULL) {
-        printf("Could not add new patient - not enough memory!\n");
-    }
-
-    newPatient->patientID = id;
-    strcpy(newPatient->name,
-           name);
-    newPatient->age = age;
-    strcpy(newPatient->diagnosis,
-           diagnosis);
-    newPatient->roomNumber = roomNumber;
-    newPatient->admissionDate = admissionDate;
-
-    addPatientToList(newPatient);
-}
 
 /*********Public Functions Begin************/
 void addNewPatientRecord(void) {
@@ -113,6 +94,27 @@ void dischargePatient() {
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
+void createNewPatientEntry(const int id, const char name[25], const int age, const char diagnosis[25],
+                           const int roomNumber, const time_t admissionDate) {
+    patient *newPatient;
+    newPatient = (patient *) malloc(sizeof(patient));
+
+    if (newPatient == NULL) {
+        printf("Could not add new patient - not enough memory!\n");
+    }
+
+    newPatient->patientID = id;
+    strcpy(newPatient->name,
+           name);
+    newPatient->age = age;
+    strcpy(newPatient->diagnosis,
+           diagnosis);
+    newPatient->roomNumber = roomNumber;
+    newPatient->admissionDate = admissionDate;
+
+    addPatientToList(newPatient);
+}
+
 void addPatientToList(const patient *const newPatient) {
     int id;
     Node *newNode;
