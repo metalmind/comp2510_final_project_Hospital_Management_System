@@ -256,13 +256,15 @@ void dateFormat(const time_t date,
 
 time_t strToTime(char *str) {
     int date[MAX_ELEM_Y_M_D];
-    int dateIndex = 0;
+    int dateIndex;
     time_t time;
+
+    dateIndex = 0;
 
     char *tokenPtr = strtok(str, "-");
     while (tokenPtr != NULL) {
         date[dateIndex] = atoi(tokenPtr);
-        printf("%d\n", date[dateIndex]);
+        // printf("%d\n", date[dateIndex]);
         tokenPtr = strtok(NULL, "-");
         dateIndex++;
     }
@@ -282,7 +284,7 @@ time_t strToTime(char *str) {
     return time;
 }
 
-void sanitizeStr(char * str, char dirtyChar, char cleanChar) {
+void sanitizeStr(char* str, char dirtyChar, char cleanChar) {
     int index = 0;
     while (str[index] != '\0') {
         if (str[index] == dirtyChar) {
