@@ -90,6 +90,8 @@ void dischargePatient(void);
  * Read the patient record file and load it into memory.
  */
 void readPatientRecords();
+
+void saveAllPatientRecord();
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
@@ -273,6 +275,9 @@ void printPatientRecordDivider();
  * @param roomNumber Room Number
  */
 void createNewPatientEntry(const int id, const char name[25], const int age, const char diagnosis[25], const int roomNumber, const time_t admissionDate);
+
+void writePatientRecord(const patient* p);
+
 /*********Private Functions End**************/
 
 #endif //PATIENT_H

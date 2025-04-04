@@ -14,8 +14,9 @@
 #define SEARCH_PATIENT 3
 #define DISCHARGE_PATIENT 4
 #define DOCTOR_MENU 5
-#define LOAD_PATIENT_RECORDS 6
-#define SCHEDULE_MENU 7
+#define SAVE_ALL_PATIENT_RECORDS 6
+#define LOAD_PATIENT_RECORDS 7
+#define SCHEDULE_MENU 8
 
 /*********Public Functions Begin************/
 /**
