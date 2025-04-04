@@ -9,6 +9,8 @@
 #ifndef TOOLS_H
 #define TOOLS_H
 
+#include<stdlib.h>
+
 #define TRUE 1
 #define FALSE 0
 
@@ -24,6 +26,13 @@
 
 #define ENTRY_REMOVAL_OFFSET 1
 #define NEXT_ENTRY_OFFSET 1
+
+#define TM_YEAR_OFFSET 1900
+#define YEAR_INDEX 0
+#define MONTH_INDEX 1
+#define DAY_INDEX 2
+#define MAX_ELEM_Y_M_D 3
+#define DEFAULT_VALUE_ZERO 0
 
 #include <time.h>
 
@@ -180,6 +189,22 @@ void printDashes(int numDashes);
  */
 void dateFormat(time_t date,
                 char* formattedDate);
+
+/**
+ * Helper function to convert string to time.
+ * @param str
+ * @return
+ */
+time_t strToTime(char*
+    str);
+
+/**
+ * Swaps characters out of the string.
+ * @param str String to clean.
+ * @param dirtyChar 'Bad' character remove.
+ * @param cleanChar 'Clean' character to insert.
+ */
+void sanitizeStr(char * str,  char dirtyChar, char cleanChar);
 /*********Private Functions End**************/
 
 

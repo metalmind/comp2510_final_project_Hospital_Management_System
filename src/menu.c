@@ -39,6 +39,7 @@ void printMenu(void)
     printf("%d. Search Patient\n", SEARCH_PATIENT);
     printf("%d. Discharge Patient\n", DISCHARGE_PATIENT);
     printf("%d. Manage Doctors\n", DOCTOR_MENU);
+    printf("%d. Load Patient Records\n", LOAD_PATIENT_RECORDS);
     printf("%d. Manage Schedule\n", SCHEDULE_MENU);
 }
 
@@ -75,6 +76,9 @@ void routeSelection(const int sel)
             break;
         case SCHEDULE_MENU:
             scheduleMenu();
+            break;
+        case LOAD_PATIENT_RECORDS:
+            readPatientRecords();
             break;
         case EXIT:
             printf("Exiting...\n");
