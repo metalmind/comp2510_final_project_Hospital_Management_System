@@ -28,6 +28,7 @@
 #define NEXT_ENTRY_OFFSET 1
 
 #define TM_YEAR_OFFSET 1900
+#define TM_MONTH_OFFSET 1
 #define YEAR_INDEX 0
 #define MONTH_INDEX 1
 #define DAY_INDEX 2
@@ -237,6 +238,12 @@ void dateFormat(time_t date,
  * @return
  */
 time_t strToTime(char* str);
+
+/**
+ * Helper function to get the current date with zero-initialized time values.
+ * @return midnight of the current date
+ */
+time_t getCurrentDate();
 
 /**
  * Swaps characters out of the string.

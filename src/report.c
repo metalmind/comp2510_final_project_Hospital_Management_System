@@ -35,7 +35,7 @@ void printDischargedPatientsReport()
 
     if(getDateInput(dateStr, &year, &month, &day) != READ_SUCCESS)
     {
-        printf("Invalid date!");
+        printf("Invalid date!\n");
         return;
     }
 

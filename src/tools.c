@@ -371,7 +371,7 @@ time_t strToTime(char* str)
     struct tm timeStruct;
 
     timeStruct.tm_year  = date[YEAR_INDEX] - TM_YEAR_OFFSET;
-    timeStruct.tm_mon   = date[MONTH_INDEX];
+    timeStruct.tm_mon   = date[MONTH_INDEX] - TM_MONTH_OFFSET;
     timeStruct.tm_mday  = date[DAY_INDEX];
     timeStruct.tm_hour  = DEFAULT_VALUE_ZERO;
     timeStruct.tm_min   = DEFAULT_VALUE_ZERO;
@@ -381,6 +381,26 @@ time_t strToTime(char* str)
     time = mktime(&timeStruct);
 
     return time;
+}
+
+time_t getCurrentDate()
+{
+    time_t today;
+
+    time_t currentTime = time(NULL);
+
+    struct tm* timeStruct = localtime(&currentTime);
+
+    // zero initialize time
+    timeStruct->tm_mon = 3;
+    timeStruct->tm_hour  = DEFAULT_VALUE_ZERO;
+    timeStruct->tm_min   = DEFAULT_VALUE_ZERO;
+    timeStruct->tm_sec   = DEFAULT_VALUE_ZERO;
+    timeStruct->tm_isdst = DEFAULT_VALUE_ZERO;
+
+    today = mktime(timeStruct);
+
+    return today;
 }
 
 void sanitizeStr(char* str,

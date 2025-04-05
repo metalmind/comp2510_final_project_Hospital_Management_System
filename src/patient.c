@@ -371,7 +371,9 @@ void removePatientRecord(const patient* const patientRecord)
             }
 
             free(node);
-            thisPatient->dischargeDate = time(NULL);
+
+            time_t today = getCurrentDate();
+            thisPatient->dischargeDate = today;
             totalPatients--;
 
             printf("Patient successfully discharged - record removed.\n");
