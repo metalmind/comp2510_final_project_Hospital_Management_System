@@ -46,8 +46,8 @@
 
 #define BUFFER_SIZE 400
 
-#define patientRecordFilePath "../res/patientRecords.txt"
-#define dischargedPatientFilePath "../res/dischargedPatientRecords.txt"
+#define PATIENT_RECORD_FILE_PATH "../res/patientRecords.txt"
+#define DISCHARGED_PATIENT_FILE_PATH "../res/dischargedPatientRecords.txt"
 
 extern Node* patientRecordsStart;
 extern Node* dischargedPatientsStart;
@@ -116,6 +116,8 @@ void saveAllDischargedPatientRecord();
  * @param newPatient patient to add to list
  */
 void addPatientToList(const patient* newPatient);
+
+void addPatientToDischargedList(const patient* dischargedPatient);
 
 
 /**
@@ -295,6 +297,13 @@ void createNewPatientEntry(int id,
                            const char diagnosis[25],
                            int roomNumber,
                            time_t admissionDate);
+
+void createNewDischargedPatientEntry(const int id,
+                           const char name[25],
+                           const int age,
+                           const char diagnosis[25],
+                           const int roomNumber,
+                           const time_t admissionDate);
 
 /**
  * Saves the given linkedlist at the given file.

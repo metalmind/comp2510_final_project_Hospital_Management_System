@@ -129,12 +129,12 @@ int getTotalPatients()
 
 void saveAllPatientRecord()
 {
-    savePatientRecordToFile(patientRecordsStart, patientRecordFilePath);
+    savePatientRecordToFile(patientRecordsStart, PATIENT_RECORD_FILE_PATH);
 }
 
 void saveAllDischargedPatientRecord()
 {
-    savePatientRecordToFile(dischargedPatientsStart, dischargedPatientFilePath);
+    savePatientRecordToFile(dischargedPatientsStart, DISCHARGED_PATIENT_FILE_PATH);
 }
 
 /*********Public Functions End**************/
@@ -166,6 +166,34 @@ void createNewPatientEntry(const int id,
     newPatient->admissionDate = admissionDate;
 
     addPatientToList(newPatient);
+}
+
+void createNewDischargedPatientEntry(const int id,
+                           const char name[25],
+                           const int age,
+                           const char diagnosis[25],
+                           const int roomNumber,
+                           const time_t admissionDate)
+{
+    patient* newPatient;
+    newPatient = (patient*)malloc(sizeof(patient));
+
+    if(newPatient == NULL)
+    {
+        printf("Could not add new patient - not enough memory!\n");
+        return;
+    }
+
+    newPatient->patientID = id;
+    strcpy(newPatient->name,
+           name);
+    newPatient->age = age;
+    strcpy(newPatient->diagnosis,
+           diagnosis);
+    newPatient->roomNumber = roomNumber;
+    newPatient->admissionDate = admissionDate;
+
+    addPatientToDischargedList(newPatient);
 }
 
 void addPatientToList(const patient* const newPatient)
@@ -209,6 +237,47 @@ void addPatientToList(const patient* const newPatient)
     printf("Patient added successfully!\n");
 }
 
+void addPatientToDischargedList(const patient* const newPatient)
+{
+    int id;
+    Node* newNode;
+
+    id = newPatient->patientID;
+    newNode = (Node*)malloc(sizeof(Node));
+
+    if(newNode == NULL)
+    {
+        printf("Could not add patient - not enough memory!\n");
+        return;
+    }
+
+    newNode->record = newPatient; // assign patient pointer to node
+    newNode->next = NULL;
+
+    Node* previous;
+    Node* current;
+
+    findPatientSortedPosition(id,
+                              &previous,
+                              &current);
+
+    // insert new node at beginning of list
+    if(previous == NULL)
+    {
+        newNode->next = dischargedPatientsStart;
+        dischargedPatientsStart = newNode;
+    }
+    // insert new node between previous and current
+    else
+    {
+        previous->next = newNode;
+        newNode->next = current;
+    }
+
+    dischargedPatients++;
+    printf("Patient added successfully!\n");
+}
+
 void findPatientSortedPosition(int id,
                                Node** previous,
                                Node** current)
@@ -233,24 +302,6 @@ void findPatientSortedPosition(int id,
             break;
         }
     }
-}
-
-void addPatientToDischargedList(const patient* const dischargedPatient)
-{
-    Node* newNode;
-    newNode = (Node*)malloc(sizeof(Node));
-
-    if(newNode == NULL)
-    {
-        printf("Could not log discharged patient - not enough memory!\n");
-        return;
-    }
-
-    newNode->record = dischargedPatient; // assign patient pointer to node
-    newNode->next = dischargedPatientsStart; // add to start of list
-    dischargedPatientsStart = newNode; // move pointer to start
-
-    dischargedPatients++;
 }
 
 patient* getPatient(const int id)
@@ -562,12 +613,12 @@ void printPatientRecordDivider()
 
 void readPatientRecords()
 {
-    readPatientFile(patientRecordFilePath);
+    readPatientFile(PATIENT_RECORD_FILE_PATH);
 }
 
 void readDischargedPatientRecords()
 {
-    readPatientFile(dischargedPatientFilePath);
+    readPatientFile(DISCHARGED_PATIENT_FILE_PATH);
 }
 
 void readPatientFile(const char* filePathStr)
@@ -617,12 +668,31 @@ void readPatientFile(const char* filePathStr)
 
                 admissionTime = strToTime(patientData[ADMIT_TIME_INDEX]);
 
-                createNewPatientEntry(id,
+
+                if(filePathStr == PATIENT_RECORD_FILE_PATH)
+                {
+                    createNewPatientEntry(id,
                                       name,
                                       age,
                                       diagnosis,
                                       roomNumber,
                                       admissionTime);
+                }
+                else if(filePathStr == DISCHARGED_PATIENT_FILE_PATH)
+                {
+                    puts("reading discharge");
+                    createNewDischargedPatientEntry(id,
+                                      name,
+                                      age,
+                                      diagnosis,
+                                      roomNumber,
+                                      admissionTime);
+                }
+                else
+                {
+                    printf("Invalid file path");
+                }
+
             }
 
             if(feof(fPtr))
@@ -633,6 +703,7 @@ void readPatientFile(const char* filePathStr)
             {
                 printf("\nAn error occurred.\n");
             }
+
         }
     }
     fclose(fPtr);
