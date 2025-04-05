@@ -57,8 +57,8 @@ struct node
  */
 int promptForInput(const char* prompt,
                    const char* errorMessage,
-                   int lowerBound,
-                   int upperBound);
+                   int         lowerBound,
+                   int         upperBound);
 
 /**
  * Wrapper function which prompts for valid and unique input from the user,
@@ -75,9 +75,9 @@ int promptForInput(const char* prompt,
 int promptForUniqueInput(const char* prompt,
                          const char* errorMessage,
                          const char* duplicateErrorMessage,
-                         int(*isUniqueInput)(int),
-                         int lowerBound,
-                         int upperBound);
+                         int (*      isUniqueInput)(int),
+                         int         lowerBound,
+                         int         upperBound);
 
 /**
  * Wrapper function which prompts for a valid name String from the user,
@@ -87,8 +87,8 @@ int promptForUniqueInput(const char* prompt,
  * @param maxChars maximum allowed characters
  */
 void promptForNameStr(const char* prompt,
-                      char* input,
-                      int maxChars);
+                      char*       input,
+                      int         maxChars);
 
 /**
  * Wrapper function for scanf() which takes a prompt message to print and
@@ -100,7 +100,7 @@ void promptForNameStr(const char* prompt,
  * @return number of items successfully read
  */
 int getInput(const char* prompt,
-             int* input);
+             int*        input);
 
 /**
  * Validates whether input value is of valid type (i.e., has been successfully read
@@ -113,10 +113,10 @@ int getInput(const char* prompt,
  * @param errorMessage error message to print should data be invalid
  * @return TRUE is data value is valid, otherwise FALSE
  */
-int validateData(int numItemsRead,
-                 int input,
-                 int lowerBound,
-                 int upperBound,
+int validateData(int         numItemsRead,
+                 int         input,
+                 int         lowerBound,
+                 int         upperBound,
                  const char* errorMessage);
 
 /**
@@ -160,8 +160,8 @@ int validateName(const char* name);
  * @return
  */
 void getStringInput(const char* prompt,
-                    char* input,
-                    int maxChar);
+                    char*       input,
+                    int         maxChar);
 
 /**
  * Checks whether a given string is blank - i.e., is empty or consists
@@ -188,7 +188,7 @@ void printDashes(int numDashes);
  * @param formattedDate formatted date
  */
 void dateFormat(time_t date,
-                char* formattedDate);
+                char*  formattedDate);
 
 /**
  * Helper function to convert string to time.
@@ -204,7 +204,9 @@ time_t strToTime(char*
  * @param dirtyChar 'Bad' character remove.
  * @param cleanChar 'Clean' character to insert.
  */
-void sanitizeStr(char * str,  char dirtyChar, char cleanChar);
+void sanitizeStr(char* str,
+                 char  dirtyChar,
+                 char  cleanChar);
 /*********Private Functions End**************/
 
 

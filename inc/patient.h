@@ -34,7 +34,7 @@
 
 #define INT_FIELD_SPACING 9
 #define STRING_FIELD_SPACING 29
-#define ROOM_NUM_FIELD_SPACING 17
+#define DATE_FIELD_SPACING 21
 
 #define ID_INDEX 0
 #define NAME_INDEX 1
@@ -45,7 +45,6 @@
 #define NUM_PATIENT_FIELDS 7
 
 #define BUFFER_SIZE 400
-
 
 typedef struct patient patient;
 
@@ -267,7 +266,7 @@ void printPatientRecordsHeader();
 void printPatientRecordDivider();
 
 /**
- * Helper function that addes a new entry to the linked list.
+ * Helper function that adds a new entry to the linked list.
  * @param id Patient ID
  * @param name Patient Name
  * @param age Patient Age

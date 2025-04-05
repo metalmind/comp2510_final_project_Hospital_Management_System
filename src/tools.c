@@ -251,18 +251,23 @@ void printDashes(const int numDashes)
 void dateFormat(const time_t date,
                 char*        formattedDate)
 {
-    strftime(formattedDate, DATE_MAX_CHARS, "%Y-%m-%d", localtime(&date));
+    strftime(formattedDate,
+             DATE_MAX_CHARS,
+             "%Y-%m-%d",
+             localtime(&date));
 }
 
-time_t strToTime(char *str) {
-    int date[MAX_ELEM_Y_M_D];
-    int dateIndex;
+time_t strToTime(char* str)
+{
+    int    date[MAX_ELEM_Y_M_D];
+    int    dateIndex;
     time_t time;
 
     dateIndex = 0;
 
-    char *tokenPtr = strtok(str, "-");
-    while (tokenPtr != NULL) {
+    char* tokenPtr = strtok(str, "-");
+    while(tokenPtr != NULL)
+    {
         date[dateIndex] = atoi(tokenPtr);
         // printf("%d\n", date[dateIndex]);
         tokenPtr = strtok(NULL, "-");
@@ -271,12 +276,12 @@ time_t strToTime(char *str) {
 
     struct tm timeStruct;
 
-    timeStruct.tm_year = date[YEAR_INDEX] - TM_YEAR_OFFSET;
-    timeStruct.tm_mon = date[MONTH_INDEX];
-    timeStruct.tm_mday = date[DAY_INDEX];
-    timeStruct.tm_hour = DEFAULT_VALUE_ZERO;
-    timeStruct.tm_min = DEFAULT_VALUE_ZERO;
-    timeStruct.tm_sec = DEFAULT_VALUE_ZERO;
+    timeStruct.tm_year  = date[YEAR_INDEX] - TM_YEAR_OFFSET;
+    timeStruct.tm_mon   = date[MONTH_INDEX];
+    timeStruct.tm_mday  = date[DAY_INDEX];
+    timeStruct.tm_hour  = DEFAULT_VALUE_ZERO;
+    timeStruct.tm_min   = DEFAULT_VALUE_ZERO;
+    timeStruct.tm_sec   = DEFAULT_VALUE_ZERO;
     timeStruct.tm_isdst = DEFAULT_VALUE_ZERO;
 
     time = mktime(&timeStruct);
@@ -284,10 +289,15 @@ time_t strToTime(char *str) {
     return time;
 }
 
-void sanitizeStr(char* str, char dirtyChar, char cleanChar) {
+void sanitizeStr(char* str,
+                 char  dirtyChar,
+                 char  cleanChar)
+{
     int index = 0;
-    while (str[index] != '\0') {
-        if (str[index] == dirtyChar) {
+    while(str[index] != '\0')
+    {
+        if(str[index] == dirtyChar)
+        {
             str[index] = cleanChar;
         }
         index++;
