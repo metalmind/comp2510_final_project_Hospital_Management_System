@@ -547,7 +547,6 @@ void readPatientRecords()
             while (tokenPtr != NULL)
             {
                 strcpy(patientData[patientDataIndex], tokenPtr);
-                // printf("%s\n", patientData[patientDataIndex]);
                 tokenPtr = strtok(NULL, " ");
                 patientDataIndex++;
             }
@@ -579,6 +578,7 @@ void readPatientRecords()
             }
         }
     }
+    fclose(fPtr);
     viewAllPatientRecords();
 }
 
@@ -590,63 +590,72 @@ void writePatientRecord(const patient* p)
     {
         puts("File could not be opened.");
     }
-
-    int error;
-    char pStr[400];
-    char pIDStr[25];
-    char pNameStr[FULL_NAME_MAX_CHAR];
-    char pAgeStr[3];
-    char pDiagnosisStr[DIAGNOSIS_MAX_CHAR];
-    char pRoomNumStr[3];
-
-    itoa(p->patientID, pIDStr, 10);
-    itoa(p->age, pAgeStr, 10);
-    itoa(p->roomNumber, pRoomNumStr, 10);
-    strcpy(pNameStr, p->name);
-    strcpy(pDiagnosisStr, p->diagnosis);
-    sanitizeStr(pNameStr, ' ', '#');
-    sanitizeStr(pDiagnosisStr, ' ', '#');
-
-    strcat(pStr, pAgeStr);
-    strcat(pStr, " ");
-    strcat(pStr, pNameStr);
-    strcat(pStr, " ");
-    strcat(pStr, pAgeStr);
-    strcat(pStr, " ");
-    strcat(pStr, pDiagnosisStr);
-    strcat(pStr, " ");
-    strcat(pStr, pRoomNumStr);
-    strcat(pStr, " ");
-    strcat(pStr, ctime(p->admissionDate));
-    strcat(pStr, " ");
-    strcat(pStr, ctime(p->dischargeDate));
-    strcat(pStr, "\n");
-
-    error = fprintf(fPtr, pStr);
-    fclose(fPtr);
-
-    if (error < 1 )
-    {
-        puts("Error writing to file.");
-    }
     else
     {
-        puts("Patient sucessfully saved.");
+        puts("Preparine file...");
+        int error;
+        char pStr[400];
+        char pIDStr[25];
+        char pNameStr[FULL_NAME_MAX_CHAR];
+        char pAgeStr[3];
+        char pDiagnosisStr[DIAGNOSIS_MAX_CHAR];
+        char pRoomNumStr[3];
+        char admissTime[DATE_MAX_CHARS];
+        char dischargeTime[DATE_MAX_CHARS];
+
+        puts("Preparing values...");
+        itoa(p->patientID, pIDStr, 10);
+        itoa(p->age, pAgeStr, 10);
+        itoa(p->roomNumber, pRoomNumStr, 10);
+        strcpy(pNameStr, p->name);
+        strcpy(pDiagnosisStr, p->diagnosis);
+        sanitizeStr(pNameStr, ' ', '#');
+        sanitizeStr(pDiagnosisStr, ' ', '#');
+
+        dateFormat(p->admissionDate, admissTime);
+        dateFormat(p->dischargeDate, dischargeTime);
+
+        puts("Creating string...");
+        strcat(pStr, pIDStr);
+        strcat(pStr, " ");
+        strcat(pStr, pNameStr);
+        strcat(pStr, " ");
+        strcat(pStr, pAgeStr);
+        strcat(pStr, " ");
+        strcat(pStr, pDiagnosisStr);
+        strcat(pStr, " ");
+        strcat(pStr, pRoomNumStr);
+        strcat(pStr, " ");
+        strcat(pStr, admissTime);
+        strcat(pStr, " ");
+        strcat(pStr, dischargeTime);
+        strcat(pStr, "\n");
+        puts("Getting file ready...");
+        error = fprintf(fPtr, pStr);
+        puts(pStr);
+        if (error < 1)
+        {
+            puts("Error writing to file.");
+        }
+        else
+        {
+            puts("Patient sucessfully saved.");
+        }
     }
+    fclose(fPtr);
 }
 
 void saveAllPatientRecord()
 {
     int patientID = 1;
-    patient *patient;
+    patient* patient;
 
     patient = getPatient(patientID);
 
-    while (patient != NULL)
+    for(int patientID = 1; getPatient(patientID) != NULL; patientID++)
     {
         patient = getPatient(patientID);
         writePatientRecord(patient);
-        patientID++;
     }
 }
 
