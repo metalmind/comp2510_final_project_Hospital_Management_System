@@ -42,7 +42,7 @@
 #define DIAGNOSIS_INDEX 3
 #define ROOM_NUMBER_INDEX 4
 #define ADMIT_TIME_INDEX 5
-#define NUM_PATIENT_FIELDS 6
+#define NUM_PATIENT_FIELDS 7
 
 #define BUFFER_SIZE 400
 
@@ -89,6 +89,8 @@ void dischargePatient(void);
  * Read the patient record file and load it into memory.
  */
 void readPatientRecords();
+
+void saveAllPatientRecord();
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
@@ -271,12 +273,10 @@ void printPatientRecordDivider();
  * @param diagnosis Patient Diagnosis
  * @param roomNumber Room Number
  */
-void createNewPatientEntry(int        id,
-                           const char name[25],
-                           int        age,
-                           const char diagnosis[25],
-                           int        roomNumber,
-                           time_t     admissionDate);
+void createNewPatientEntry(const int id, const char name[25], const int age, const char diagnosis[25], const int roomNumber, const time_t admissionDate);
+
+void writePatientRecord(const patient* p);
+
 /*********Private Functions End**************/
 
 #endif //PATIENT_H

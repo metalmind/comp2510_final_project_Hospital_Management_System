@@ -10,11 +10,10 @@
 
 #include "../inc/tools.h"
 
-Node* patientRecordsStart     = NULL;
+Node* patientRecordsStart = NULL;
 Node* dischargedPatientsStart = NULL;
-int   totalPatients           = 0;
-int   dischargedPatients      = 0;
-
+int totalPatients = 0;
+int dischargedPatients = 0;
 
 /*********Public Functions Begin************/
 void addNewPatientRecord(void)
@@ -79,12 +78,13 @@ void searchForPatientRecord()
                  &sel);
         searchCriteriaSelection(sel);
     }
+
     while(sel != RETURN_TO_MAIN_MENU);
 }
 
 void dischargePatient()
 {
-    int      id;
+    int id;
     patient* patientRecord;
 
     id            = getPatientID();
@@ -156,9 +156,9 @@ void addPatientToList(const patient* const newPatient)
                               &current);
 
     // insert new node at beginning of list
-    if(previous == NULL)
+    if (previous == NULL)
     {
-        newNode->next       = patientRecordsStart;
+        newNode->next = patientRecordsStart;
         patientRecordsStart = newNode;
     }
     // insert new node between previous and current
@@ -366,17 +366,17 @@ void searchCriteriaSelection(const int sel)
 {
     switch(sel)
     {
-        case SEARCH_BY_PATIENT_ID:
-            searchPatientByID();
-            break;
-        case SEARCH_BY_PATIENT_NAME:
-            searchPatientByName();
-            break;
-        case RETURN_TO_MAIN_MENU:
-            printf("Returning to menu...\n");
-            break;
-        default:
-            printf("Invalid input! Try again.\n");
+    case SEARCH_BY_PATIENT_ID:
+        searchPatientByID();
+        break;
+    case SEARCH_BY_PATIENT_NAME:
+        searchPatientByName();
+        break;
+    case RETURN_TO_MAIN_MENU:
+        printf("Returning to menu...\n");
+        break;
+    default:
+        printf("Invalid input! Try again.\n");
     }
 }
 
@@ -449,7 +449,7 @@ void searchPatientByName()
         if(strcmp(thisPatient->name, name) == RECORD_FOUND)
         {
             patientsFound = realloc(patientsFound,
-                                    (numRecordsFound + 1) * sizeof(patient *));
+                                    (numRecordsFound + 1) * sizeof(patient*));
             patientsFound[numRecordsFound] = thisPatient;
             numRecordsFound++;
 
@@ -545,12 +545,12 @@ void readPatientRecords()
 
         while(fgets(buffer, sizeof(buffer), fPtr) != NULL)
         {
-            int patientDataIndex = 0;
-            char* tokenPtr   = strtok(buffer, " ");
-            while(tokenPtr != NULL)
+            int patientDataIndex;
+            patientDataIndex = 0;
+            char* tokenPtr = strtok(buffer, " ");
+            while (tokenPtr != NULL)
             {
                 strcpy(patientData[patientDataIndex], tokenPtr);
-                // printf("%s\n", patientData[patientDataIndex]);
                 tokenPtr = strtok(NULL, " ");
                 patientDataIndex++;
             }
@@ -576,13 +576,92 @@ void readPatientRecords()
                 strcpy(diagnosis, patientData[DIAGNOSIS_INDEX]);
 
                 roomNumber    = atoi(patientData[ROOM_NUMBER_INDEX]);
+              
                 admissionTime = strToTime(patientData[ADMIT_TIME_INDEX]);
 
                 createNewPatientEntry(id, name, age, diagnosis, roomNumber, admissionTime);
             }
         }
     }
+    fclose(fPtr);
     viewAllPatientRecords();
+}
+
+void writePatientRecord(const patient* p)
+{
+    FILE* fPtr;
+
+    if ((fPtr = fopen("../res/patientRecords.txt", "w")) == NULL)
+    {
+        puts("File could not be opened.");
+    }
+    else
+    {
+        puts("Preparine file...");
+        int error;
+        char pStr[400];
+        char pIDStr[25];
+        char pNameStr[FULL_NAME_MAX_CHAR];
+        char pAgeStr[3];
+        char pDiagnosisStr[DIAGNOSIS_MAX_CHAR];
+        char pRoomNumStr[3];
+        char admissTime[DATE_MAX_CHARS];
+        char dischargeTime[DATE_MAX_CHARS];
+
+        puts("Preparing values...");
+        itoa(p->patientID, pIDStr, 10);
+        itoa(p->age, pAgeStr, 10);
+        itoa(p->roomNumber, pRoomNumStr, 10);
+        strcpy(pNameStr, p->name);
+        strcpy(pDiagnosisStr, p->diagnosis);
+        sanitizeStr(pNameStr, ' ', '#');
+        sanitizeStr(pDiagnosisStr, ' ', '#');
+
+        dateFormat(p->admissionDate, admissTime);
+        dateFormat(p->dischargeDate, dischargeTime);
+
+        puts("Creating string...");
+        strcat(pStr, pIDStr);
+        strcat(pStr, " ");
+        strcat(pStr, pNameStr);
+        strcat(pStr, " ");
+        strcat(pStr, pAgeStr);
+        strcat(pStr, " ");
+        strcat(pStr, pDiagnosisStr);
+        strcat(pStr, " ");
+        strcat(pStr, pRoomNumStr);
+        strcat(pStr, " ");
+        strcat(pStr, admissTime);
+        strcat(pStr, " ");
+        strcat(pStr, dischargeTime);
+        strcat(pStr, "\n");
+        puts("Getting file ready...");
+        error = fprintf(fPtr, pStr);
+        puts(pStr);
+        if (error < 1)
+        {
+            puts("Error writing to file.");
+        }
+        else
+        {
+            puts("Patient sucessfully saved.");
+        }
+    }
+    fclose(fPtr);
+}
+
+void saveAllPatientRecord()
+{
+    int patientID = 1;
+    patient* patient;
+
+    patient = getPatient(patientID);
+
+    for(int patientID = 1; getPatient(patientID) != NULL; patientID++)
+    {
+        patient = getPatient(patientID);
+        writePatientRecord(patient);
+    }
 }
 
 /*********Private Functions End************/
