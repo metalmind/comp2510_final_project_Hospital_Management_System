@@ -25,6 +25,30 @@ void generateReport()
     while(sel != RETURN_TO_MAIN_MENU);
 }
 
+void printDischargedPatientsReport()
+{
+    char report[MAX_REPORT_LEN]  = {0};
+    char dateStr[DATE_MAX_CHARS] = {0};
+    int  year                    = 0;
+    int  month                   = 0;
+    int  day                     = 0;
+
+    if(getDateInput(dateStr, &year, &month, &day) != READ_SUCCESS)
+    {
+        printf("Invalid date!");
+        return;
+    }
+
+    generateDischargedPatientsReport(dateStr,
+                                     report);
+
+    printf("%s",
+       report);
+
+    promptSaveReport(report,
+                     "../res/dischargeReport.txt");
+}
+
 void printDoctorUtilReport()
 {
     char report[MAX_REPORT_LEN] = {0};
@@ -58,7 +82,7 @@ void printRoomUsageReport()
 
 /*********Private Functions Begin**********/
 
-void promptSaveReport(char* const report,
+void promptSaveReport(char* const       report,
                       const char* const fileName)
 {
     while(TRUE)
@@ -81,7 +105,7 @@ void promptSaveReport(char* const report,
     }
 }
 
-void writeReportToFile(char* const report,
+void writeReportToFile(char* const       report,
                        const char* const fileName)
 {
     printf("\nReport saved!\n");
@@ -111,6 +135,48 @@ int generateHeader(char* report,
                        dateGenerated);
 
     return length;
+}
+
+void generateAdmittedPatientsReport()
+{
+}
+
+void generateDischargedPatientsReport(const char* const dateStr,
+                                      char* const       report)
+{
+    char dateStrCopy[DATE_MAX_CHARS] = {0};
+    time_t date;
+    int    length;
+    int dischargedCount;
+
+    strcpy(dateStrCopy, dateStr);
+    date   = strToTime(dateStrCopy);
+    length = 0;
+    dischargedCount = 0;
+
+    length += generateHeader(report,
+                             MAX_REPORT_LEN,
+                             "DISCHARGED PATIENTS REPORT");
+
+    for(Node* node = dischargedPatientsStart; node != NULL; node = node->next)
+    {
+        patient* patientRecord;
+        patientRecord = node->record;
+
+        if(patientRecord->dischargeDate == date)
+        {
+            printPatientRecord(patientRecord);
+            dischargedCount++;
+        }
+    }
+
+    if(dischargedCount == 0)
+    {
+        length += snprintf(report + length,
+                           MAX_REPORT_LEN - length,
+                           "There were no patients discharged on %s.\n",
+                           dateStr);
+    }
 }
 
 void generateDoctorUtilReport(const int   schedule[DAYS_IN_WEEK][NUM_SHIFTS],
@@ -183,7 +249,7 @@ void generateRoomUsageReport(char* const report)
 
     length += snprintf(report + length,
                        MAX_REPORT_LEN - length,
-                       "%-8s%-2s%-28s\n%s\n",
+                       "%-8s%-2s%s\n%s\n",
                        "ROOM #",
                        "|",
                        "Number of Occupants",
@@ -201,7 +267,7 @@ void generateRoomUsageReport(char* const report)
     {
         length += snprintf(report + length,
                            MAX_REPORT_LEN - length,
-                           "%-8d%-2s%-28d\n",
+                           "%-8d%-2s%d\n",
                            i + INDEX_OFFSET,
                            "|",
                            roomReferences[i]);
@@ -215,6 +281,7 @@ void routeReportMenu(const int sel)
         case ADMITTED_PATIENTS_REPORT:
             break;
         case DISCHARGED_PATIENTS_REPORT:
+            printDischargedPatientsReport();
             break;
         case DOCTOR_UTILIZATION_REPORT:
             printDoctorUtilReport();

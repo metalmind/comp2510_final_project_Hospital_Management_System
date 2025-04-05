@@ -19,6 +19,11 @@
 void generateReport();
 
 /**
+ * Prints the discharged patients report.
+ */
+void printDischargedPatientsReport();
+
+/**
  * Prints the doctor utilization report.
  */
 void printDoctorUtilReport();
@@ -55,6 +60,14 @@ void writeReportToFile(char* report,
 int generateHeader(char* report,
                    int   reportLength,
                    char* reportTitle);
+
+/**
+ * Generates the discharged patients report for a given date.
+ * @param dateStr date as a string
+ * @param report report string
+ */
+void generateDischargedPatientsReport(const char* dateStr,
+                                      char* report);
 
 /**
  * Generates the doctor utilization report.

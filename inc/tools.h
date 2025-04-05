@@ -19,7 +19,7 @@
 #define READ_SUCCESS 1
 
 #define PROMPT_MAX_CHAR 50
-#define DATE_MAX_CHARS 20
+#define DATE_MAX_CHARS 11
 #define TERMINAL_CHAR 0
 
 #define EMPTY_STRING 0
@@ -103,6 +103,19 @@ int getInput(const char* prompt,
              int*        input);
 
 /**
+ * Wrapper function for getStringInput() which parses and validates a date string.
+ * @param dateStr date string
+ * @param year year int
+ * @param month month int
+ * @param day day int
+ * @return true is valid date read, otherwise false
+ */
+int getDateInput(char* dateStr,
+                 int*  year,
+                 int*  month,
+                 int*  day);
+
+/**
  * Validates whether input value is of valid type (i.e., has been successfully read
  * and assigned) and within range.
  *
@@ -151,6 +164,24 @@ int validateNum(int num,
 int validateName(const char* name);
 
 /**
+ * Validates whether the date is valid.
+ * @param year year to validate
+ * @param month month to validate
+ * @param day day to validate
+ * @return true if valid date, otherwise false
+ */
+int validateDate(int year,
+                 int month,
+                 int day);
+
+/**
+ * Checks to see if a given year is a leap year.
+ * @param year year to check
+ * @return true if leap year, otherwise false
+ */
+int isLeapYear(int year);
+
+/**
  * Wrapper function for getchar() which takes a prompt message to print and
  * a char pointer to which to assign the input.
  *
@@ -158,7 +189,7 @@ int validateName(const char* name);
  * @param input char pointer to assign input
  */
 void getCharInput(const char* prompt,
-                  char* input);
+                  char*       input);
 
 /**
  * Wrapper function for fgets() which takes a prompt message to print and
@@ -205,8 +236,7 @@ void dateFormat(time_t date,
  * @param str
  * @return
  */
-time_t strToTime(char*
-    str);
+time_t strToTime(char* str);
 
 /**
  * Swaps characters out of the string.
