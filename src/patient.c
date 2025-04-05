@@ -85,7 +85,7 @@ void viewAllDischargedPatientRecords()
         printDischargedPatientRecord(dischargedPatientRecord);
     }
 
-    printPatientRecordDivider();
+    printDischargedPatientRecordDivider();
 }
 
 void searchForPatientRecord()
@@ -173,7 +173,8 @@ void createNewDischargedPatientEntry(const int id,
                            const int age,
                            const char diagnosis[25],
                            const int roomNumber,
-                           const time_t admissionDate)
+                           const time_t admissionDate,
+                           const time_t dischargeDate)
 {
     patient* newPatient;
     newPatient = (patient*)malloc(sizeof(patient));
@@ -192,6 +193,7 @@ void createNewDischargedPatientEntry(const int id,
            diagnosis);
     newPatient->roomNumber = roomNumber;
     newPatient->admissionDate = admissionDate;
+    newPatient->dischargeDate = dischargeDate;
 
     addPatientToDischargedList(newPatient);
 }
@@ -726,6 +728,7 @@ void readPatientFile(const char* filePathStr)
         char diagnosis[DIAGNOSIS_MAX_CHAR];
         int roomNumber;
         time_t admissionTime;
+        time_t dischargeTime;
 
         char patientData[NUM_PATIENT_FIELDS][DIAGNOSIS_MAX_CHAR];
         char buffer[BUFFER_SIZE];
@@ -757,6 +760,8 @@ void readPatientFile(const char* filePathStr)
 
                 admissionTime = strToTime(patientData[ADMIT_TIME_INDEX]);
 
+                dischargeTime = strToTime(patientData[DISCHARGE_TIME_INDEX]);
+
 
                 if(filePathStr == PATIENT_RECORD_FILE_PATH)
                 {
@@ -774,7 +779,8 @@ void readPatientFile(const char* filePathStr)
                                       age,
                                       diagnosis,
                                       roomNumber,
-                                      admissionTime);
+                                      admissionTime,
+                                      dischargeTime);
                 }
                 else
                 {

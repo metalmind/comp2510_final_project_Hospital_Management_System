@@ -42,7 +42,8 @@
 #define DIAGNOSIS_INDEX 3
 #define ROOM_NUMBER_INDEX 4
 #define ADMIT_TIME_INDEX 5
-#define NUM_PATIENT_FIELDS 7
+#define DISCHARGE_TIME_INDEX 6
+#define NUM_PATIENT_FIELDS 8
 
 #define BUFFER_SIZE 400
 
@@ -305,7 +306,8 @@ void createNewDischargedPatientEntry(const int id,
                            const int age,
                            const char diagnosis[25],
                            const int roomNumber,
-                           const time_t admissionDate);
+                           const time_t admissionDate,
+                           const time_t dischargeDate);
 
 /**
  * Saves the given linkedlist at the given file.
