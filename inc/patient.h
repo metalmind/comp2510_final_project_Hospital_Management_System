@@ -90,6 +90,12 @@ void dischargePatient(void);
  */
 void readPatientRecords();
 
+/**
+ * Returns the total number of patients in the hospital.
+ * @return total patients
+ */
+int getTotalPatients();
+
 void saveAllPatientRecord();
 /*********Public Functions End**************/
 
@@ -273,10 +279,12 @@ void printPatientRecordDivider();
  * @param diagnosis Patient Diagnosis
  * @param roomNumber Room Number
  */
-void createNewPatientEntry(const int id, const char name[25], const int age, const char diagnosis[25], const int roomNumber, const time_t admissionDate);
-
-void writePatientRecord(const patient* p);
-
+void createNewPatientEntry(int        id,
+                           const char name[25],
+                           int        age,
+                           const char diagnosis[25],
+                           int        roomNumber,
+                           time_t     admissionDate);
 /*********Private Functions End**************/
 
 #endif //PATIENT_H
