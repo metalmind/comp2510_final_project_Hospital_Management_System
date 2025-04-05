@@ -12,10 +12,11 @@ int   totalDoctors       = 0;
 void doctorMenu()
 {
     int sel;
-    sel = INVALID_INPUT;
 
     do
     {
+        sel = INVALID_INPUT;
+
         printDoctorMenu();
         getInput("Enter your selection: ",
                  &sel);
@@ -106,6 +107,11 @@ void viewAllDoctorRecords()
     }
 
     printDoctorRecordDivider();
+}
+
+int getTotalDoctors()
+{
+    return totalDoctors;
 }
 
 /*********Public Functions End**************/
@@ -246,7 +252,7 @@ int getUniqueDoctorID()
 
     char prompt[PROMPT_MAX_CHAR];
 
-    sprintf(prompt, "Enter patient ID (next available is %d): ",
+    sprintf(prompt, "Enter doctor ID (next available is %d): ",
             getNextAvailDocID());
 
     id = promptForUniqueInput(prompt,
@@ -376,6 +382,18 @@ void routeDoctorMenu(const int sel)
             break;
         default:
             printf("Invalid input! Try again.\n");
+    }
+}
+
+void freeDoctorMemory()
+{
+    while (doctorRecordsStart != NULL)
+    {
+        Node* temp = doctorRecordsStart;
+        doctorRecordsStart = doctorRecordsStart->next;
+
+        free(temp->record);
+        free(temp);
     }
 }
 

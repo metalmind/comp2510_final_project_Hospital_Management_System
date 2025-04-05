@@ -3,6 +3,7 @@
 
 #define NAME_MAX_CHAR 12
 #define SPECIALTY_MAX_CHAR 25
+#define DOCTOR_TITLE_CHARS 4
 
 #define MAX_DOCTORS 10
 
@@ -53,6 +54,11 @@ void fireDoctor(void);
  */
 void viewAllDoctorRecords(void);
 
+/**
+ * Returns the total number of doctors in the hospital.
+ * @return total doctors
+ */
+int getTotalDoctors();
 
 /*********Public Functions End**************/
 
@@ -169,6 +175,11 @@ void printDoctorMenu();
  * @param sel The number of the selected doctor item.
  */
 void routeDoctorMenu(int sel);
+
+/**
+ * Free all memory associated with doctor records.
+ */
+void freeDoctorMemory();
 
 /*********Private Functions End**************/
 

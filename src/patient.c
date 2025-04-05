@@ -69,10 +69,10 @@ void viewAllPatientRecords()
 void searchForPatientRecord()
 {
     int sel;
-    sel = INVALID_INPUT;
 
     do
     {
+        sel = INVALID_INPUT;
         printPatientMenu();
         getInput("Enter your selection: ",
                  &sel);
@@ -673,6 +673,18 @@ void saveAllPatientRecord()
         patient* patient;
         patient = node->record;
         writePatientRecord(patient);
+    }
+}
+
+void freePatientMemory()
+{
+    while(patientRecordsStart != NULL)
+    {
+        Node* temp = patientRecordsStart;
+        patientRecordsStart = patientRecordsStart->next;
+
+        free(temp->record);
+        free(temp);
     }
 }
 

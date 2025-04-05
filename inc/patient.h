@@ -285,6 +285,11 @@ void createNewPatientEntry(int        id,
                            const char diagnosis[25],
                            int        roomNumber,
                            time_t     admissionDate);
+
+/**
+ * Free all memory associated with patient records.
+ */
+void freePatientMemory();
 /*********Private Functions End**************/
 
 #endif //PATIENT_H

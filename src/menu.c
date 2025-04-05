@@ -16,16 +16,17 @@
 void menu(void)
 {
     int sel;
-    sel = INVALID_INPUT;
 
     do
     {
+        sel = INVALID_INPUT;
+
         printMenu();
         getInput("Enter your selection: ",
                  &sel);
         routeSelection(sel);
     }
-    while (sel != EXIT);
+    while(sel != EXIT);
 }
 
 /*********Public Functions End**************/
@@ -59,37 +60,37 @@ int getSelection(void)
 
 void routeSelection(const int sel)
 {
-    switch (sel)
+    switch(sel)
     {
-    case ADD_PATIENT_RECORDS:
-        addNewPatientRecord();
-        break;
-    case VIEW_ALL_PATIENTS:
-        viewAllPatientRecords();
-        break;
-    case SEARCH_PATIENT:
-        searchForPatientRecord();
-        break;
-    case DISCHARGE_PATIENT:
-        dischargePatient();
-        break;
-    case DOCTOR_MENU:
-        doctorMenu();
-        break;
-    case SCHEDULE_MENU:
-        scheduleMenu();
-        break;
-    case SAVE_ALL_PATIENT_RECORDS:
-        saveAllPatientRecord();
-        break;
-    case LOAD_PATIENT_RECORDS:
-        readPatientRecords();
-        break;
-    case EXIT:
-        printf("Exiting...\n");
-        break;
-    default:
-        printf("Invalid choice! Try again.\n");
+        case ADD_PATIENT_RECORDS:
+            addNewPatientRecord();
+            break;
+        case VIEW_ALL_PATIENTS:
+            viewAllPatientRecords();
+            break;
+        case SEARCH_PATIENT:
+            searchForPatientRecord();
+            break;
+        case DISCHARGE_PATIENT:
+            dischargePatient();
+            break;
+        case DOCTOR_MENU:
+            doctorMenu();
+            break;
+        case SAVE_ALL_PATIENT_RECORDS:
+            saveAllPatientRecord();
+            break;
+        case LOAD_PATIENT_RECORDS:
+            readPatientRecords();
+            break;
+        case SCHEDULE_MENU:
+            scheduleMenu();
+            break;
+        case EXIT:
+            printf("Exiting...\n");
+            break;
+        default:
+            printf("Invalid choice! Try again.\n");
     }
 }
 
