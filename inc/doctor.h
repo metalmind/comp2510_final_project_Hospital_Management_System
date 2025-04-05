@@ -21,6 +21,7 @@
 #define VIEW_ALL_DOCTOR_RECORDS 3
 #include "tools.h"
 
+extern Node* doctorRecordsStart;
 
 typedef struct doctor doctor;
 

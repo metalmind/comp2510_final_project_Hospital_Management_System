@@ -189,6 +189,20 @@ int validateName(const char* const name)
     return TRUE;
 }
 
+void getCharInput(const char* const prompt,
+                  char* const input)
+{
+    char sel;
+
+    printf("%s", prompt);
+    sel = getchar();
+    sel = tolower(sel);
+
+    *input = sel;
+
+    clearInputBuffer();
+}
+
 void getStringInput(const char* const prompt,
                     char* const       input,
                     const int         maxChar)

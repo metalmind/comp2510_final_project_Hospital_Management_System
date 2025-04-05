@@ -127,6 +127,12 @@ void printDayOfWeekMenu();
 void printShiftMenu();
 
 /**
+ * Returns a copy of the schedule.
+ * @param scheduleCopy schedule copy
+ */
+void getSchedule(int scheduleCopy[DAYS_IN_WEEK][NUM_SHIFTS]);
+
+/**
  * Helper function to call the selected function from the menu.
  * @param sel The input from the user.
  */

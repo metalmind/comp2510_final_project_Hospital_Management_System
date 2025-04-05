@@ -647,7 +647,7 @@ void writePatientRecord(const patient* p)
         strcat(pStr, "\n");
         puts("Getting file ready...");
         error = fprintf(fPtr, "%s", pStr);
-        puts(pStr);
+        // puts(pStr);
         if (error < 1)
         {
             puts("Error writing to file.");

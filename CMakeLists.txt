@@ -12,4 +12,6 @@ add_executable(Assignment src/main.c
                src/schedule.c
                inc/schedule.h
                inc/doctor.h
-               src/doctor.c)
+               src/doctor.c
+               src/report.c
+               inc/report.h)

@@ -6,6 +6,7 @@
 #include <string.h>
 #include "../inc/schedule.h"
 #include "../inc/doctor.h"
+#include "../inc/report.h"
 #include "../inc/tools.h"
 
 int schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
@@ -13,10 +14,10 @@ int schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
 void scheduleMenu()
 {
     int sel;
-    sel = INVALID_INPUT;
 
     do
     {
+        sel = INVALID_INPUT;
         printScheduleMenu();
         getInput("Enter your selection: ",
                  &sel);
@@ -95,6 +96,18 @@ void printDocWeekSchedule()
     printScheduleDivider();
     printShiftsForWeek();
     printScheduleDivider();
+}
+
+void getSchedule(int scheduleCopy[DAYS_IN_WEEK][NUM_SHIFTS])
+{
+    // shallow copy
+    for(int i = 0; i < DAYS_IN_WEEK; i++)
+    {
+        for(int j = 0; j < NUM_SHIFTS; j++)
+        {
+            scheduleCopy[i][j] = schedule[i][j];
+        }
+    }
 }
 
 /*********Public Functions End**************/

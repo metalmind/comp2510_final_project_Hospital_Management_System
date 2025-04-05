@@ -151,6 +151,16 @@ int validateNum(int num,
 int validateName(const char* name);
 
 /**
+ * Wrapper function for getchar() which takes a prompt message to print and
+ * a char pointer to which to assign the input.
+ *
+ * @param prompt propmpt message
+ * @param input char pointer to assign input
+ */
+void getCharInput(const char* prompt,
+                  char* input);
+
+/**
  * Wrapper function for fgets() which takes a prompt message to print and
  * a char array to which to assign the input.
  *

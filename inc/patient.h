@@ -23,7 +23,7 @@
 #define ID_NOT_FOUND (-1)
 
 #define ROOM_NUMBER_MIN 1
-#define ROOM_NUMBER_MAX 100
+#define ROOM_NUMBER_MAX 20
 
 #define RETURN_TO_MAIN_MENU 0
 #define SEARCH_BY_PATIENT_ID 1
@@ -45,6 +45,8 @@
 #define NUM_PATIENT_FIELDS 7
 
 #define BUFFER_SIZE 400
+
+extern Node* patientRecordsStart;
 
 typedef struct patient patient;
 
