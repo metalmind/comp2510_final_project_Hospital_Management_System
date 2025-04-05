@@ -143,6 +143,8 @@ void findPatientSortedPosition(int id,
  */
 patient* getPatient(int id);
 
+patient* getDischargedPatient(int id);
+
 /**
  * Returns whether a patient with the specified ID already exists in the system.
  * @param id id to check if unique

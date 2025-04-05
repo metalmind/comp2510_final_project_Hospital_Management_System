@@ -320,9 +320,25 @@ patient* getPatient(const int id)
     return NULL;
 }
 
+patient* getDischargedPatient(const int id)
+{
+    for(Node* node = dischargedPatientsStart; node != NULL; node = node->next)
+    {
+        patient* patientRecord;
+        patientRecord = node->record;
+
+        if(patientRecord->patientID == id)
+        {
+            return patientRecord;
+        }
+    }
+
+    return NULL;
+}
+
 int isUniquePatientId(const int id)
 {
-    if(getPatient(id) == NULL)
+    if(getPatient(id) == NULL && getDischargedPatient(id) == NULL)
     {
         return TRUE;
     }
@@ -402,7 +418,7 @@ int getNextAvailPatientID()
 {
     for(int i = ID_MIN_VALUE; i <= ID_MAX_VALUE; i++)
     {
-        if(getPatient(i) == NULL)
+        if(getPatient(i) == NULL && getDischargedPatient(i) == NULL)
         {
             return i;
         }
@@ -680,7 +696,6 @@ void readPatientFile(const char* filePathStr)
                 }
                 else if(filePathStr == DISCHARGED_PATIENT_FILE_PATH)
                 {
-                    puts("reading discharge");
                     createNewDischargedPatientEntry(id,
                                       name,
                                       age,
