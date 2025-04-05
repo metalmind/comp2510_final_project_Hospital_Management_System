@@ -718,7 +718,7 @@ void readPatientFile(const char* filePathStr)
 
     if((fPtr = fopen(filePathStr, "r")) == NULL)
     {
-        puts("File could not be opened.");
+        printf("File could not be opened %s", filePathStr);
     }
     else
     {

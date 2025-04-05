@@ -18,8 +18,10 @@ void menu(void)
 {
     readPatientRecords();
     readDischargedPatientRecords();
+    readDoctorRecords();
     viewAllPatientRecords();
     viewAllDischargedPatientRecords();
+    viewAllDoctorRecords();
 
     int sel;
 
@@ -97,6 +99,7 @@ void printSaveMenu(void)
     printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Save All Patient Records\n", SAVE_ALL_PATIENT_RECORDS);
     printf("%d. Load Patient Records\n", LOAD_PATIENT_RECORDS);
+    printf("%d. Save Doctor Records\n", SAVE_ALL_DOCTOR_RECORDS);
 }
 
 int getSelection(void)
@@ -175,6 +178,12 @@ void routeSaveSelection(const int sel)
     case LOAD_PATIENT_RECORDS:
         readPatientRecords();
         readDischargedPatientRecords();
+        break;
+    case SAVE_ALL_DOCTOR_RECORDS:
+        saveAllDoctorRecord();
+        break;
+    case LOAD_ALL_DOCTOR_RECORDS:
+        readDoctorRecords();
         break;
     default:
         puts("Invalid choice! Try again.");

@@ -25,6 +25,8 @@
 // Save/Load Constants
 #define SAVE_ALL_PATIENT_RECORDS 1
 #define LOAD_PATIENT_RECORDS 2
+#define SAVE_ALL_DOCTOR_RECORDS 3
+#define LOAD_ALL_DOCTOR_RECORDS 4
 
 /*********Public Functions Begin************/
 /**
