@@ -36,13 +36,15 @@ void printRoomUsageReport();
  * Asks the user whether they would like to save a copy of the generated report.
  * @param report report to save
  */
-void promptSaveReport(char* report);
+void promptSaveReport(char*       report,
+                      const char* fileName);
 
 /**
  * Writes the report to a file.
  * @param report report to save
  */
-void writeReportToFile(char* report);
+void writeReportToFile(char* report,
+                       const char* fileName);
 
 /**
  * Generates a report header.
@@ -51,8 +53,8 @@ void writeReportToFile(char* report);
  * @param reportTitle report title
  */
 int generateHeader(char* report,
-                    int   reportLength,
-                    char* reportTitle);
+                   int   reportLength,
+                   char* reportTitle);
 
 /**
  * Generates the doctor utilization report.
@@ -60,7 +62,7 @@ int generateHeader(char* report,
  * @param report report string
  */
 void generateDoctorUtilReport(const int schedule[DAYS_IN_WEEK][NUM_SHIFTS],
-                              char* report);
+                              char*     report);
 
 /**
  * Generates the room usage report.

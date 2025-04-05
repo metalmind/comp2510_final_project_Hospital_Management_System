@@ -37,7 +37,8 @@ void printDoctorUtilReport()
     printf("%s",
            report);
 
-    promptSaveReport(report);
+    promptSaveReport(report,
+                     "../res/doctorUtilReport.txt");
 }
 
 void printRoomUsageReport()
@@ -49,14 +50,16 @@ void printRoomUsageReport()
     printf("%s",
            report);
 
-    promptSaveReport(report);
+    promptSaveReport(report,
+                     "../res/roomUsageReport.txt");
 }
 
 /*********Public Functions End**************/
 
 /*********Private Functions Begin**********/
 
-void promptSaveReport(char* const report)
+void promptSaveReport(char* const report,
+                      const char* const fileName)
 {
     while(TRUE)
     {
@@ -67,7 +70,8 @@ void promptSaveReport(char* const report)
         switch(sel)
         {
             case 'y':
-                writeReportToFile(report);
+                writeReportToFile(report,
+                                  fileName);
                 return;
             case 'n':
                 return;
@@ -77,7 +81,8 @@ void promptSaveReport(char* const report)
     }
 }
 
-void writeReportToFile(char* const report)
+void writeReportToFile(char* const report,
+                       const char* const fileName)
 {
     printf("\nReport saved!\n");
 }
