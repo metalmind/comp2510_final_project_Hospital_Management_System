@@ -292,7 +292,8 @@ void clearDoctorShifts(const int id)
 
 void printScheduleMenu()
 {
-    printf("\n%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
+    printf("\nSchedule Menu\n");
+    printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Assign Doctor to Shift\n", ASSIGN_DOC_TO_SHIFT);
     printf("%d. Clear Shift\n", CLEAR_SHIFT);
     printf("%d. View Week Schedule\n", VIEW_WEEK_SCHEDULE);

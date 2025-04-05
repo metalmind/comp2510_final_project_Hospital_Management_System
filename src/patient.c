@@ -275,7 +275,7 @@ void addPatientToDischargedList(const patient* const newPatient)
     }
 
     dischargedPatients++;
-    printf("Patient added successfully!\n");
+    printf("Patient discharged successfully!\n");
 }
 
 void findPatientSortedPosition(int id,

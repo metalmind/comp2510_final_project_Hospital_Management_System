@@ -358,7 +358,8 @@ void printDoctorRecordDivider()
 
 void printDoctorMenu()
 {
-    printf("\n%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
+    printf("\nDoctor Menu\n");
+    printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Add New Doctor\n", ADD_NEW_DOCTOR);
     printf("%d. Fire Doctor\n", FIRE_DOCTOR);
     printf("%d. View All Doctor Records\n", VIEW_ALL_DOCTOR_RECORDS);

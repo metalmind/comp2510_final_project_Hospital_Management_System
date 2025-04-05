@@ -84,7 +84,7 @@ void printMenu(void)
 void printPatientMenu()
 {
     printf("\nPatient Menu\n");
-    printf("\n%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
+    printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Add Patient Record\n", ADD_PATIENT_RECORDS);
     printf("%d. Discharge Patient\n", DISCHARGE_PATIENT);
     printf("%d. View All Patients\n", VIEW_ALL_PATIENTS);
@@ -94,7 +94,7 @@ void printPatientMenu()
 void printSaveMenu(void)
 {
     printf("\nSave Menu\n");
-    printf("\n%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
+    printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Save All Patient Records\n", SAVE_ALL_PATIENT_RECORDS);
     printf("%d. Load Patient Records\n", LOAD_PATIENT_RECORDS);
 }

@@ -43,7 +43,7 @@ void printDischargedPatientsReport()
                                      report);
 
     printf("%s",
-       report);
+           report);
 
     promptSaveReport(report,
                      "../res/dischargeReport.txt");
@@ -144,19 +144,33 @@ void generateAdmittedPatientsReport()
 void generateDischargedPatientsReport(const char* const dateStr,
                                       char* const       report)
 {
-    char dateStrCopy[DATE_MAX_CHARS] = {0};
+    char   dateStrCopy[DATE_MAX_CHARS] = {0};
     time_t date;
     int    length;
-    int dischargedCount;
+    int    dischargedCount;
 
     strcpy(dateStrCopy, dateStr);
-    date   = strToTime(dateStrCopy);
-    length = 0;
+    date            = strToTime(dateStrCopy);
+    length          = 0;
     dischargedCount = 0;
 
     length += generateHeader(report,
                              MAX_REPORT_LEN,
                              "DISCHARGED PATIENTS REPORT");
+
+    length += snprintf(report + length,
+                   MAX_REPORT_LEN - length,
+                   "%-5s%-2s%-18s%-2s%-6s%-2s%-28s%-2s%s\n%s\n",
+                   "ID",
+                   "|",
+                   "Name",
+                   "|",
+                   "Age",
+                   "|",
+                   "Diagnosis",
+                   "|",
+                   "Discharge Date",
+                   "-------------------------------------------------------------------------------------");
 
     for(Node* node = dischargedPatientsStart; node != NULL; node = node->next)
     {
@@ -165,7 +179,18 @@ void generateDischargedPatientsReport(const char* const dateStr,
 
         if(patientRecord->dischargeDate == date)
         {
-            printPatientRecord(patientRecord);
+            length += snprintf(report + length,
+                               MAX_REPORT_LEN - length,
+                               "%-5d%-2s%-18s%-2s%-6d%-2s%-28s%-2s%s\n",
+                               patientRecord->patientID,
+                               "|",
+                               patientRecord->name,
+                               "|",
+                               patientRecord->age,
+                               "|",
+                               patientRecord->diagnosis,
+                               "|",
+                               dateStr);
             dischargedCount++;
         }
     }
@@ -299,7 +324,8 @@ void routeReportMenu(const int sel)
 
 void printReportMenu()
 {
-    printf("\n%d. Return to Menu\n", RETURN_TO_MAIN_MENU);
+    printf("\nReport Menu\n");
+    printf("%d. Return to Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Patients Admitted per Period\n", ADMITTED_PATIENTS_REPORT);
     printf("%d. List of Discharged Patients\n", DISCHARGED_PATIENTS_REPORT);
     printf("%d. Doctor Utilization Report\n", DOCTOR_UTILIZATION_REPORT);
