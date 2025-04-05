@@ -325,6 +325,12 @@ void printPatientSearchMenu();
 void readPatientRecords();
 
 void readDischargedPatientRecords();
+
+void printDischargedPatientRecordsHeader();
+
+void printDischargedPatientRecordDivider();
+
+void printDischargedPatientRecord(patient* patientRecord);
 /*********Private Functions End**************/
 
 #endif //PATIENT_H

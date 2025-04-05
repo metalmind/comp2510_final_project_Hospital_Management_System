@@ -76,13 +76,13 @@ void viewAllDischargedPatientRecords()
         return;
     }
 
-    printPatientRecordsHeader();
+    printDischargedPatientRecordsHeader();
 
     for(Node* node = dischargedPatientsStart; node != NULL; node = node->next)
     {
         patient* dischargedPatientRecord;
         dischargedPatientRecord = node->record;
-        printPatientRecord(dischargedPatientRecord);
+        printDischargedPatientRecord(dischargedPatientRecord);
     }
 
     printPatientRecordDivider();
@@ -589,6 +589,33 @@ void printPatientRecord(patient* patientRecord)
            '|');
 }
 
+void printDischargedPatientRecord(patient* patientRecord)
+{
+    char admissTime[DATE_MAX_CHARS] = {0};
+    char dischargeTime[DATE_MAX_CHARS] = {0};
+
+    dateFormat(patientRecord->admissionDate, admissTime);
+    dateFormat(patientRecord->dischargeDate, dischargeTime);
+
+    printf("%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-28s%-2s%-8d%-2s%-20s%-2s%-20s%c\n",
+           "|",
+           patientRecord->patientID,
+           "|",
+           patientRecord->name,
+           "|",
+           patientRecord->age,
+           "|",
+           patientRecord->diagnosis,
+           "|",
+           patientRecord->roomNumber,
+           "|",
+           admissTime,
+           "|",
+           dischargeTime,
+           '|');
+}
+
+
 void printPatientRecordsHeader()
 {
     printPatientRecordDivider();
@@ -611,6 +638,30 @@ void printPatientRecordsHeader()
     printPatientRecordDivider();
 }
 
+void printDischargedPatientRecordsHeader()
+{
+    printDischargedPatientRecordDivider();
+
+    printf("%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-28s%-2s%-8s%-2s%-20s%-2s%-20s%c\n",
+           "|",
+           "ID",
+           "|",
+           "Name",
+           "|",
+           "Age",
+           "|",
+           "Diagnosis",
+           "|",
+           "Room #",
+           "|",
+           "Admission Date",
+           "|",
+           "Discharge Date",
+           '|');
+
+    printDischargedPatientRecordDivider();
+}
+
 void printPatientRecordDivider()
 {
     printf("+");
@@ -623,6 +674,26 @@ void printPatientRecordDivider()
     printDashes(STRING_FIELD_SPACING);
     printf("+");
     printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(DATE_FIELD_SPACING);
+    printf("+");
+    printf("\n");
+}
+
+void printDischargedPatientRecordDivider()
+{
+    printf("+");
+    printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(STRING_FIELD_SPACING);
+    printf("+");
+    printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(STRING_FIELD_SPACING);
+    printf("+");
+    printDashes(INT_FIELD_SPACING);
+    printf("+");
+    printDashes(DATE_FIELD_SPACING);
     printf("+");
     printDashes(DATE_FIELD_SPACING);
     printf("+");
