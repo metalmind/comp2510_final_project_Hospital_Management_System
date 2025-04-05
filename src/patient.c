@@ -10,10 +10,10 @@
 
 #include "../inc/tools.h"
 
-Node* patientRecordsStart     = NULL;
+Node* patientRecordsStart = NULL;
 Node* dischargedPatientsStart = NULL;
-int   totalPatients           = 0;
-int   dischargedPatients      = 0;
+int totalPatients = 0;
+int dischargedPatients = 0;
 
 /*********Public Functions Begin************/
 void addNewPatientRecord(void)
@@ -24,11 +24,11 @@ void addNewPatientRecord(void)
     //     return;
     // }
 
-    int  id;
+    int id;
     char name[FULL_NAME_MAX_CHAR];
-    int  age;
+    int age;
     char diagnosis[DIAGNOSIS_MAX_CHAR];
-    int  roomNumber;
+    int roomNumber;
 
     id = getUniquePatientID();
 
@@ -48,6 +48,7 @@ void addNewPatientRecord(void)
 
 void viewAllPatientRecords()
 {
+    printf("\nActive Patients\n");
     if(totalPatients == 0)
     {
         printf("No patient records on file.\n");
@@ -66,6 +67,27 @@ void viewAllPatientRecords()
     printPatientRecordDivider();
 }
 
+void viewAllDischargedPatientRecords()
+{
+    printf("\nDischarged Patients\n");
+    if(dischargedPatients == 0)
+    {
+        printf("No discharged patient records on file.\n");
+        return;
+    }
+
+    printPatientRecordsHeader();
+
+    for(Node* node = dischargedPatientsStart; node != NULL; node = node->next)
+    {
+        patient* dischargedPatientRecord;
+        dischargedPatientRecord = node->record;
+        printPatientRecord(dischargedPatientRecord);
+    }
+
+    printPatientRecordDivider();
+}
+
 void searchForPatientRecord()
 {
     int sel;
@@ -73,7 +95,7 @@ void searchForPatientRecord()
     do
     {
         sel = INVALID_INPUT;
-        printPatientMenu();
+        printPatientSearchMenu();
         getInput("Enter your selection: ",
                  &sel);
         searchCriteriaSelection(sel);
@@ -83,10 +105,10 @@ void searchForPatientRecord()
 
 void dischargePatient()
 {
-    int      id;
+    int id;
     patient* patientRecord;
 
-    id            = getPatientID();
+    id = getPatientID();
     patientRecord = getPatient(id);
 
     if(patientRecord != NULL)
@@ -105,18 +127,28 @@ int getTotalPatients()
     return totalPatients;
 }
 
+void saveAllPatientRecord()
+{
+    savePatientRecordToFile(patientRecordsStart, patientRecordFilePath);
+}
+
+void saveAllDischargedPatientRecord()
+{
+    savePatientRecordToFile(dischargedPatientsStart, dischargedPatientFilePath);
+}
+
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
-void createNewPatientEntry(const int    id,
-                           const char   name[25],
-                           const int    age,
-                           const char   diagnosis[25],
-                           const int    roomNumber,
+void createNewPatientEntry(const int id,
+                           const char name[25],
+                           const int age,
+                           const char diagnosis[25],
+                           const int roomNumber,
                            const time_t admissionDate)
 {
     patient* newPatient;
-    newPatient = (patient *) malloc(sizeof(patient));
+    newPatient = (patient*)malloc(sizeof(patient));
 
     if(newPatient == NULL)
     {
@@ -130,7 +162,7 @@ void createNewPatientEntry(const int    id,
     newPatient->age = age;
     strcpy(newPatient->diagnosis,
            diagnosis);
-    newPatient->roomNumber    = roomNumber;
+    newPatient->roomNumber = roomNumber;
     newPatient->admissionDate = admissionDate;
 
     addPatientToList(newPatient);
@@ -138,11 +170,11 @@ void createNewPatientEntry(const int    id,
 
 void addPatientToList(const patient* const newPatient)
 {
-    int   id;
+    int id;
     Node* newNode;
 
-    id      = newPatient->patientID;
-    newNode = (Node *) malloc(sizeof(Node));
+    id = newPatient->patientID;
+    newNode = (Node*)malloc(sizeof(Node));
 
     if(newNode == NULL)
     {
@@ -151,7 +183,7 @@ void addPatientToList(const patient* const newPatient)
     }
 
     newNode->record = newPatient; // assign patient pointer to node
-    newNode->next   = NULL;
+    newNode->next = NULL;
 
     Node* previous;
     Node* current;
@@ -163,26 +195,26 @@ void addPatientToList(const patient* const newPatient)
     // insert new node at beginning of list
     if(previous == NULL)
     {
-        newNode->next       = patientRecordsStart;
+        newNode->next = patientRecordsStart;
         patientRecordsStart = newNode;
     }
     // insert new node between previous and current
     else
     {
         previous->next = newNode;
-        newNode->next  = current;
+        newNode->next = current;
     }
 
     totalPatients++;
     printf("Patient added successfully!\n");
 }
 
-void findPatientSortedPosition(int    id,
+void findPatientSortedPosition(int id,
                                Node** previous,
                                Node** current)
 {
     *previous = NULL;
-    *current  = patientRecordsStart;
+    *current = patientRecordsStart;
 
     // loop to find sorted position in list
     while(*current != NULL)
@@ -194,7 +226,7 @@ void findPatientSortedPosition(int    id,
         if(id > thisPatient->patientID)
         {
             *previous = *current;
-            *current  = (*current)->next;
+            *current = (*current)->next;
         }
         else
         {
@@ -206,7 +238,7 @@ void findPatientSortedPosition(int    id,
 void addPatientToDischargedList(const patient* const dischargedPatient)
 {
     Node* newNode;
-    newNode = (Node *) malloc(sizeof(Node));
+    newNode = (Node*)malloc(sizeof(Node));
 
     if(newNode == NULL)
     {
@@ -214,9 +246,9 @@ void addPatientToDischargedList(const patient* const dischargedPatient)
         return;
     }
 
-    newNode->record         = dischargedPatient;       // assign patient pointer to node
-    newNode->next           = dischargedPatientsStart; // add to start of list
-    dischargedPatientsStart = newNode;                 // move pointer to start
+    newNode->record = dischargedPatient; // assign patient pointer to node
+    newNode->next = dischargedPatientsStart; // add to start of list
+    dischargedPatientsStart = newNode; // move pointer to start
 
     dischargedPatients++;
 }
@@ -360,7 +392,7 @@ int getPatientRoomNumber()
     return roomNumber;
 }
 
-void printPatientMenu()
+void printPatientSearchMenu()
 {
     printf("\n%d. Return to Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Search by Patient ID\n", SEARCH_BY_PATIENT_ID);
@@ -371,17 +403,17 @@ void searchCriteriaSelection(const int sel)
 {
     switch(sel)
     {
-        case SEARCH_BY_PATIENT_ID:
-            searchPatientByID();
-            break;
-        case SEARCH_BY_PATIENT_NAME:
-            searchPatientByName();
-            break;
-        case RETURN_TO_MAIN_MENU:
-            printf("Returning to menu...\n");
-            break;
-        default:
-            printf("Invalid input! Try again.\n");
+    case SEARCH_BY_PATIENT_ID:
+        searchPatientByID();
+        break;
+    case SEARCH_BY_PATIENT_NAME:
+        searchPatientByName();
+        break;
+    case RETURN_TO_MAIN_MENU:
+        printf("Returning to menu...\n");
+        break;
+    default:
+        printf("Invalid input! Try again.\n");
     }
 }
 
@@ -400,7 +432,7 @@ void handlePatientSearchResult(const patient* const patientRecord)
 }
 
 void handleMultiplePatientSearchResults(const patient** const patientsFound,
-                                        const int             numRecordsFound)
+                                        const int numRecordsFound)
 {
     if(numRecordsFound != NO_RECORDS)
     {
@@ -423,10 +455,10 @@ void handleMultiplePatientSearchResults(const patient** const patientsFound,
 
 void searchPatientByID()
 {
-    int      id;
+    int id;
     patient* patientRecord;
 
-    id            = getPatientID();
+    id = getPatientID();
     patientRecord = getPatient(id);
 
     handlePatientSearchResult(patientRecord);
@@ -435,9 +467,9 @@ void searchPatientByID()
 void searchPatientByName()
 {
     patient** patientsFound;
-    int       numRecordsFound;
+    int numRecordsFound;
 
-    patientsFound   = NULL;
+    patientsFound = NULL;
     numRecordsFound = NO_RECORDS;
 
     char name[FULL_NAME_MAX_CHAR];
@@ -530,19 +562,29 @@ void printPatientRecordDivider()
 
 void readPatientRecords()
 {
+    readPatientFile(patientRecordFilePath);
+}
+
+void readDischargedPatientRecords()
+{
+    readPatientFile(dischargedPatientFilePath);
+}
+
+void readPatientFile(const char* filePathStr)
+{
     FILE* fPtr;
 
-    if((fPtr = fopen("../res/patientRecords.txt", "r")) == NULL)
+    if((fPtr = fopen(filePathStr, "r")) == NULL)
     {
         puts("File could not be opened.");
     }
     else
     {
-        int    id;
-        char   name[FULL_NAME_MAX_CHAR];
-        int    age;
-        char   diagnosis[DIAGNOSIS_MAX_CHAR];
-        int    roomNumber;
+        int id;
+        char name[FULL_NAME_MAX_CHAR];
+        int age;
+        char diagnosis[DIAGNOSIS_MAX_CHAR];
+        int roomNumber;
         time_t admissionTime;
 
         char patientData[NUM_PATIENT_FIELDS][DIAGNOSIS_MAX_CHAR];
@@ -553,7 +595,7 @@ void readPatientRecords()
             int patientDataIndex;
             patientDataIndex = 0;
             char* tokenPtr = strtok(buffer, " ");
-            while (tokenPtr != NULL)
+            while(tokenPtr != NULL)
             {
                 strcpy(patientData[patientDataIndex], tokenPtr);
                 tokenPtr = strtok(NULL, " ");
@@ -571,7 +613,7 @@ void readPatientRecords()
                 sanitizeStr(patientData[DIAGNOSIS_INDEX], '#', ' ');
                 strcpy(diagnosis, patientData[DIAGNOSIS_INDEX]);
 
-                roomNumber    = atoi(patientData[ROOM_NUMBER_INDEX]);
+                roomNumber = atoi(patientData[ROOM_NUMBER_INDEX]);
 
                 admissionTime = strToTime(patientData[ADMIT_TIME_INDEX]);
 
@@ -594,14 +636,13 @@ void readPatientRecords()
         }
     }
     fclose(fPtr);
-    viewAllPatientRecords();
 }
 
-void writePatientRecord(const patient* p)
+void writePatientRecord(const patient* p, const char* filePathStr)
 {
     FILE* fPtr;
 
-    if ((fPtr = fopen("../res/patientRecords.txt", "a")) == NULL)
+    if((fPtr = fopen(filePathStr, "a")) == NULL)
     {
         puts("\nFile could not be opened.");
     }
@@ -648,7 +689,7 @@ void writePatientRecord(const patient* p)
         puts("Getting file ready...");
         error = fprintf(fPtr, "%s", pStr);
         // puts(pStr);
-        if (error < 1)
+        if(error < 1)
         {
             puts("Error writing to file.");
         }
@@ -660,19 +701,19 @@ void writePatientRecord(const patient* p)
     fclose(fPtr);
 }
 
-void saveAllPatientRecord()
+void savePatientRecordToFile(const Node* startOfLinkedList, const char* filePathStr)
 {
-    if(remove("../res/patientRecords.txt") != 0)
+    if(remove(filePathStr) != 0)
     {
-        puts("Error overwriting file.");
-        return;
+        fopen(filePathStr, "w");
+        printf("File created: %s\n", filePathStr);
     }
 
-    for(Node* node = patientRecordsStart; node != NULL; node = node->next)
+    for(Node* node = startOfLinkedList; node != NULL; node = node->next)
     {
         patient* patient;
         patient = node->record;
-        writePatientRecord(patient);
+        writePatientRecord(patient, filePathStr);
     }
 }
 
@@ -686,6 +727,16 @@ void freePatientMemory()
         free(temp->record);
         free(temp);
     }
+
+    while(dischargedPatientsStart != NULL)
+    {
+        Node* temp = dischargedPatientsStart;
+        dischargedPatientsStart = dischargedPatientsStart->next;
+
+        free(temp->record);
+        free(temp);
+    }
 }
+
 
 /*********Private Functions End************/

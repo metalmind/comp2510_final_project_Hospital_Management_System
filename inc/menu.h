@@ -8,18 +8,21 @@
 #ifndef MENU_H
 #define MENU_H
 
+// Main menu Constants
 #define EXIT 0
-#define ADD_PATIENT_RECORDS 1
-#define VIEW_ALL_PATIENTS 2
-#define SEARCH_PATIENT 3
-#define DISCHARGE_PATIENT 4
-#define DOCTOR_MENU 5
-#define SAVE_ALL_PATIENT_RECORDS 6
-#define LOAD_PATIENT_RECORDS 7
-#define SCHEDULE_MENU 6
-#define GENERATE_REPORT 7
-#define SAVE_LOAD_DATA 8
+#define PATIENT_MENU 1
+#define DOCTOR_MENU 2
+#define SCHEDULE_MENU 3
+#define GENERATE_REPORT 4
+#define SAVE_LOAD_DATA 5
 
+// Patient menu
+#define ADD_PATIENT_RECORDS 1
+#define DISCHARGE_PATIENT 2
+#define VIEW_ALL_PATIENTS 3
+#define SEARCH_PATIENT 4
+
+// Save/Load Constants
 #define SAVE_ALL_PATIENT_RECORDS 1
 #define LOAD_PATIENT_RECORDS 2
 
@@ -38,6 +41,8 @@
 void menu(void);
 
 void saveMenu(void);
+
+void patientMenu(void);
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
@@ -80,6 +85,10 @@ void routeSelection(int sel);
  * @param sel an int
  */
 void routeSaveSelection(int sel);
+
+void routePatientMenuSelection(const int sel);
+
+void printPatientMenu();
 /*********Private Functions End**************/
 
 #endif //MENU_H

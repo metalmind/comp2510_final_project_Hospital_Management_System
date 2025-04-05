@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <sys/syslimits.h>
+#include <limits.h>
 
 /*********Public Functions Begin************/
 
