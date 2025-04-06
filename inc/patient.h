@@ -103,10 +103,19 @@ void readPatientFile(const char* filePathStr);
  */
 int getTotalPatients();
 
+/**
+ * Saves all active patient entries to the file at PATIENT_RECORD_FILE_PATH.
+ */
 void saveAllPatientRecord();
 
+/**
+ * Prints the table for all the discharged patients.
+ */
 void viewAllDischargedPatientRecords();
 
+/**
+ * Saves all discharged patient entries to the file at PATIENT_RECORD_FILE_PATH.
+ */
 void saveAllDischargedPatientRecord();
 /*********Public Functions End**************/
 
@@ -118,6 +127,10 @@ void saveAllDischargedPatientRecord();
  */
 void addPatientToList(const patient* newPatient);
 
+/**
+ * Moves a patient from the active patients to the discharged patient list.
+ * @param dischargedPatient Patient to add discharged list
+ */
 void addPatientToDischargedList(const patient* dischargedPatient);
 
 
@@ -144,6 +157,11 @@ void findPatientSortedPosition(int id,
  */
 patient* getPatient(int id);
 
+/**
+ * Returns the patient record corresponding to the specified  discharged patient ID.
+ * @param id id of patient record to retrieve
+ * @return patient record
+ */
 patient* getDischargedPatient(int id);
 
 /**
@@ -301,6 +319,16 @@ void createNewPatientEntry(int id,
                            int roomNumber,
                            time_t admissionDate);
 
+/**
+ * Helper function that adds a new entry to the discharged patient linked list.
+ * @param id Patient ID
+ * @param name Patient Name
+ * @param age Patient Age
+ * @param diagnosis Patient Diagnosis
+ * @param roomNumber Room Number
+ * @param admissionDate The date the patient was admitted to the hospital
+ * @param dischargeDate The date the patient was discharged from the hospital
+ */
 void createNewDischargedPatientEntry(const int id,
                            const char name[25],
                            const int age,
@@ -322,16 +350,35 @@ void savePatientRecordToFile(const Node* startOfLinkedList, const char* filePath
  */
 void freePatientMemory();
 
+/**
+ * Prints the search patients sub menu to the screen.
+ */
 void printPatientSearchMenu();
 
+/**
+ * Reads the patient record from the file at PATIENT_RECORD_FILE_PATH and saves them to memory.
+ */
 void readPatientRecords();
 
+/**
+ * Reads the patient record from the file at DISCHARGED_RECORD_FILE_PATH and saves them to memory.
+ */
 void readDischargedPatientRecords();
 
+/**
+ * Prints the header for the discharged patients table.
+ */
 void printDischargedPatientRecordsHeader();
 
+/**
+ * Prints the divider for the discharged patients table
+ */
 void printDischargedPatientRecordDivider();
 
+/**
+ * Prints out a single entry with the given patient record.
+ * @param patientRecord The patient record to print
+ */
 void printDischargedPatientRecord(patient* patientRecord);
 /*********Private Functions End**************/
 
