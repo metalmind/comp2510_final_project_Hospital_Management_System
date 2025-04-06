@@ -6,6 +6,7 @@
 #include <string.h>
 #include "../inc/schedule.h"
 #include "../inc/doctor.h"
+#include "../inc/report.h"
 #include "../inc/tools.h"
 
 int schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
@@ -13,10 +14,10 @@ int schedule[DAYS_IN_WEEK][NUM_SHIFTS] = {};
 void scheduleMenu()
 {
     int sel;
-    sel = INVALID_INPUT;
 
     do
     {
+        sel = INVALID_INPUT;
         printScheduleMenu();
         getInput("Enter your selection: ",
                  &sel);
@@ -90,11 +91,24 @@ void clearShift()
 
 void printDocWeekSchedule()
 {
+    printf("\nWeekly Schedule\n");
     printScheduleDivider();
     printDayOfWeekHeader();
     printScheduleDivider();
     printShiftsForWeek();
     printScheduleDivider();
+}
+
+void getSchedule(int scheduleCopy[DAYS_IN_WEEK][NUM_SHIFTS])
+{
+    // shallow copy
+    for(int i = 0; i < DAYS_IN_WEEK; i++)
+    {
+        for(int j = 0; j < NUM_SHIFTS; j++)
+        {
+            scheduleCopy[i][j] = schedule[i][j];
+        }
+    }
 }
 
 /*********Public Functions End**************/
@@ -279,7 +293,8 @@ void clearDoctorShifts(const int id)
 
 void printScheduleMenu()
 {
-    printf("\n%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
+    printf("\nSchedule Menu\n");
+    printf("%d. Return to Main Menu\n", RETURN_TO_MAIN_MENU);
     printf("%d. Assign Doctor to Shift\n", ASSIGN_DOC_TO_SHIFT);
     printf("%d. Clear Shift\n", CLEAR_SHIFT);
     printf("%d. View Week Schedule\n", VIEW_WEEK_SCHEDULE);
@@ -332,6 +347,116 @@ void routeScheduleMenu(const int sel)
         default:
             printf("Invalid input! Try again.\n");
     }
+}
+
+void saveAllScheduleRecord()
+{
+    fopen(SCHEDULE_RECORD_FILE_PATH, "w");
+    for(int dayOfWeek = SUN; dayOfWeek < DAYS_IN_WEEK; dayOfWeek++)
+    {
+        writeScheduleRecord(schedule[dayOfWeek], SCHEDULE_RECORD_FILE_PATH);
+    }
+
+}
+
+void writeScheduleRecord(const int shift[],
+                       const char* filePathStr)
+{
+    FILE* fPtr;
+
+    if((fPtr = fopen(filePathStr, "a")) == NULL)
+    {
+        printf("File could not be opened %s\n", filePathStr);
+    }
+    else
+    {
+        puts("\nPreparing file...");
+        int error;
+        char sStr[DAYS_IN_WEEK] = {0};
+        char morningStr[2] = {0};
+        char afternoonStr[2] = {0};
+        char eveningStr[2] = {0};
+
+        puts("Preparing values...");
+        snprintf(morningStr, sizeof(morningStr), "%d", shift[MORNING]);
+        snprintf(afternoonStr, sizeof(morningStr), "%d", shift[AFTERNOON]);
+        snprintf(eveningStr, sizeof(morningStr), "%d", shift[EVENING]);
+
+        puts("Creating string...");
+        strcat(sStr, morningStr);
+        strcat(sStr, " ");
+        strcat(sStr, afternoonStr);
+        strcat(sStr, " ");
+        strcat(sStr, eveningStr);
+        strcat(sStr, "\n");
+        puts("Getting file ready...");
+        error = fprintf(fPtr, "%s", sStr);
+        if(error < 1)
+        {
+            puts("Error writing to file.");
+        }
+        else
+        {
+            puts("Schedule Day successfully saved.");
+        }
+    }
+    fclose(fPtr);
+}
+
+void readScheduleRecords()
+{
+    readScheduleFile(SCHEDULE_RECORD_FILE_PATH);
+}
+
+void readScheduleFile(const char* filePathStr)
+{
+    FILE* fPtr;
+
+    if(filePathStr != SCHEDULE_RECORD_FILE_PATH)
+    {
+        printf("Invalid schedule file path %s", filePathStr);
+        return;
+    }
+
+    if((fPtr = fopen(filePathStr, "r")) == NULL)
+    {
+        printf("File could not be opened %s\n", filePathStr);
+    }
+    else
+    {
+
+        char morningStr[2] = {0};
+        char afternoonStr[2] = {0};
+        char eveningStr[2] = {0};
+
+        char buffer[BUFFER_SIZE];
+        int dayOfWeek;
+        dayOfWeek = SUN;
+
+        while(fgets(buffer, sizeof(buffer), fPtr) != NULL)
+        {
+            int currentShift;
+            currentShift = MORNING;
+            char* tokenPtr = strtok(buffer, " ");
+            while(tokenPtr != NULL)
+            {
+                schedule[dayOfWeek][currentShift] = atoi(tokenPtr);
+                tokenPtr = strtok(NULL, " ");
+                currentShift++;
+            }
+            dayOfWeek++;
+
+            if(feof(fPtr))
+            {
+                printf("\nEnd of file reached.\n");
+            }
+            else if(ferror(fPtr))
+            {
+                printf("\nAn error occurred.\n");
+            }
+        }
+    }
+    fclose(fPtr);
 }
 
 /*********Private Functions End**************/

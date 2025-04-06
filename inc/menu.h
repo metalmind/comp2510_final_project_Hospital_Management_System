@@ -8,15 +8,31 @@
 #ifndef MENU_H
 #define MENU_H
 
+// Main menu Constants
 #define EXIT 0
+#define PATIENT_MENU 1
+#define DOCTOR_MENU 2
+#define SCHEDULE_MENU 3
+#define GENERATE_REPORT 4
+#define SAVE_LOAD_DATA 5
+#define VIEW_ALL 6
+
+// Patient menu
 #define ADD_PATIENT_RECORDS 1
-#define VIEW_ALL_PATIENTS 2
-#define SEARCH_PATIENT 3
-#define DISCHARGE_PATIENT 4
-#define DOCTOR_MENU 5
-#define SAVE_ALL_PATIENT_RECORDS 6
-#define LOAD_PATIENT_RECORDS 7
-#define SCHEDULE_MENU 8
+#define DISCHARGE_PATIENT 2
+#define VIEW_ALL_PATIENTS 3
+#define SEARCH_PATIENT 4
+
+// Save/Load Constants
+#define SAVE_ALL_PATIENT_RECORDS 1
+#define LOAD_PATIENT_RECORDS 2
+#define SAVE_ALL_DOCTOR_RECORDS 3
+#define LOAD_ALL_DOCTOR_RECORDS 4
+#define SAVE_ALL_SCHEDULE_RECORDS 5
+#define LOAD_ALL_SCHEDULE_RECORDS 6
+#define SAVE_ALL 7
+#define LOAD_ALL 8
+
 
 /*********Public Functions Begin************/
 /**
@@ -31,6 +47,16 @@
  *    6. Exit
  */
 void menu(void);
+
+void saveMenu(void);
+
+void patientMenu(void);
+
+void readAll();
+
+void saveAll();
+
+void viewAll();
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
@@ -38,6 +64,11 @@ void menu(void);
  * Helper function to print the menu options to the screen.
  */
 void printMenu(void);
+
+/**
+ * Helper function to print the save / load options to the screen.
+ */
+void printSaveMenu(void);
 
 /**
  * Prompts the user to input a selection and returns the integer.
@@ -61,6 +92,18 @@ int getSelection(void);
  * @param sel an int
  */
 void routeSelection(int sel);
+
+/**
+ * Routes to the selected save / load function.
+ *
+ * @param sel an int
+ */
+void routeSaveSelection(int sel);
+
+void routePatientMenuSelection(const int sel);
+
+void printPatientMenu();
+
 /*********Private Functions End**************/
 
 #endif //MENU_H

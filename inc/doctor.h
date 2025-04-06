@@ -3,6 +3,7 @@
 
 #define NAME_MAX_CHAR 12
 #define SPECIALTY_MAX_CHAR 25
+#define DOCTOR_TITLE_CHARS 4
 
 #define MAX_DOCTORS 10
 
@@ -18,8 +19,18 @@
 #define ADD_NEW_DOCTOR 1
 #define FIRE_DOCTOR 2
 #define VIEW_ALL_DOCTOR_RECORDS 3
+
+#define DOCTOR_RECORD_FILE_PATH "../res/doctorRecords.txt"
+
+#define NUM_DOCTOR_FIELDS 4
+#define ID_INDEX 0
+#define FIRST_NAME_INDEX 1
+#define LAST_NAME_INDEX 2
+#define DIAGNOSIS_INDEX 3
+
 #include "tools.h"
 
+extern Node* doctorRecordsStart;
 
 typedef struct doctor doctor;
 
@@ -53,6 +64,13 @@ void fireDoctor(void);
  */
 void viewAllDoctorRecords(void);
 
+void readDoctorRecords();
+
+/**
+ * Returns the total number of doctors in the hospital.
+ * @return total doctors
+ */
+int getTotalDoctors();
 
 /*********Public Functions End**************/
 
@@ -70,7 +88,7 @@ void addDoctorToList(const doctor* newDoctor);
  * @param previous previous record
  * @param current current record
  */
-void findDoctorSortedPosition(int    id,
+void findDoctorSortedPosition(int id,
                               Node** previous,
                               Node** current);
 
@@ -169,6 +187,23 @@ void printDoctorMenu();
  * @param sel The number of the selected doctor item.
  */
 void routeDoctorMenu(int sel);
+
+/**
+ * Free all memory associated with doctor records.
+ */
+void freeDoctorMemory();
+
+void writeDoctorRecord(const doctor* d,
+                       const char* filePathStr);
+
+void saveAllDoctorRecord();
+
+void readDoctorFile(const char* filePathStr);
+
+void createNewDoctorEntry(const int id,
+                          const char firstName[NAME_MAX_CHAR],
+                          const char lastName[NAME_MAX_CHAR],
+                          const char specialty[SPECIALTY_MAX_CHAR]);
 
 /*********Private Functions End**************/
 

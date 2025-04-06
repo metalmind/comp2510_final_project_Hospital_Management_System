@@ -115,6 +115,29 @@ int getInput(const char* const prompt,
     return numItemsRead;
 }
 
+int getDateInput(char* const dateStr,
+                 int*        year,
+                 int*        month,
+                 int*        day)
+{
+    getStringInput("Enter a date (YYYY-MM-DD): ",
+                   dateStr,
+                   DATE_MAX_CHARS);
+
+    sscanf(dateStr,
+           "%d-%d-%d",
+           year,
+           month,
+           day);
+
+    if(validateDate(*year, *month, *day))
+    {
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 int validateData(const int         numItemsRead,
                  const int         input,
                  const int         lowerBound,
@@ -187,6 +210,77 @@ int validateName(const char* const name)
     }
 
     return TRUE;
+}
+
+int validateDate(int year,
+                 int month,
+                 int day)
+{
+    int numDays[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    int validYear = validateNum(year,
+                                1970,
+                                2038);
+
+    int validMonth = validateNum(month,
+                                 1,
+                                 12);
+
+    // check month & year are valid to avoid index out of bounds for day
+    if(!(validMonth && validYear))
+    {
+        return FALSE;
+    }
+
+    int leapYear = isLeapYear(year);
+    if(leapYear)
+    {
+        numDays[1] = 29; // set february max day to 29 in lap year
+    }
+
+    int validDay = validateNum(day,
+                               1,
+                               numDays[month - 1]);
+
+    if(!validDay)
+    {
+        printf("Invalid date!\n");
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+int isLeapYear(int year)
+{
+    if(year % 100 == 0)
+    {
+        if(year % 400 == 0)
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    if(year % 4 == 0)
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+void getCharInput(const char* const prompt,
+                  char* const       input)
+{
+    char sel;
+
+    printf("%s", prompt);
+    sel = getchar();
+    sel = tolower(sel);
+
+    *input = sel;
+
+    clearInputBuffer();
 }
 
 void getStringInput(const char* const prompt,
@@ -277,7 +371,7 @@ time_t strToTime(char* str)
     struct tm timeStruct;
 
     timeStruct.tm_year  = date[YEAR_INDEX] - TM_YEAR_OFFSET;
-    timeStruct.tm_mon   = date[MONTH_INDEX];
+    timeStruct.tm_mon   = date[MONTH_INDEX] - TM_MONTH_OFFSET;
     timeStruct.tm_mday  = date[DAY_INDEX];
     timeStruct.tm_hour  = DEFAULT_VALUE_ZERO;
     timeStruct.tm_min   = DEFAULT_VALUE_ZERO;
@@ -287,6 +381,59 @@ time_t strToTime(char* str)
     time = mktime(&timeStruct);
 
     return time;
+}
+
+time_t getCurrentDate()
+{
+    time_t today;
+
+    time_t currentTime = time(NULL);
+
+    struct tm* timeStruct = localtime(&currentTime);
+
+    // zero initialize time
+    timeStruct->tm_mon   = 3;
+    timeStruct->tm_hour  = DEFAULT_VALUE_ZERO;
+    timeStruct->tm_min   = DEFAULT_VALUE_ZERO;
+    timeStruct->tm_sec   = DEFAULT_VALUE_ZERO;
+    timeStruct->tm_isdst = DEFAULT_VALUE_ZERO;
+
+    today = mktime(timeStruct);
+
+    return today;
+}
+
+time_t getMonthStart(time_t date)
+{
+    time_t monthStart;
+    struct tm* timeStruct = localtime(&date);
+
+    timeStruct->tm_mday = 1;
+    timeStruct->tm_hour = 0;
+    timeStruct->tm_min = 0;
+    timeStruct->tm_sec = 0;
+
+    monthStart = mktime(timeStruct);
+
+    return monthStart;
+}
+
+time_t getMonthEnd(time_t date)
+{
+    time_t monthEnd;
+
+    struct tm* timeStruct = localtime(&date);
+
+    timeStruct->tm_mon += 1;
+    timeStruct->tm_mday = 1;
+    timeStruct->tm_sec = 0;
+    timeStruct->tm_min = 0;
+    timeStruct->tm_hour = 0;
+
+    // subtract one second to make it the previous day
+    monthEnd = mktime(timeStruct) - 1;
+
+    return monthEnd;
 }
 
 void sanitizeStr(char* str,

@@ -23,7 +23,7 @@
 #define ID_NOT_FOUND (-1)
 
 #define ROOM_NUMBER_MIN 1
-#define ROOM_NUMBER_MAX 100
+#define ROOM_NUMBER_MAX 50
 
 #define RETURN_TO_MAIN_MENU 0
 #define SEARCH_BY_PATIENT_ID 1
@@ -42,19 +42,26 @@
 #define DIAGNOSIS_INDEX 3
 #define ROOM_NUMBER_INDEX 4
 #define ADMIT_TIME_INDEX 5
-#define NUM_PATIENT_FIELDS 7
+#define DISCHARGE_TIME_INDEX 6
+#define NUM_PATIENT_FIELDS 8
 
 #define BUFFER_SIZE 400
+
+#define PATIENT_RECORD_FILE_PATH "../res/patientRecords.txt"
+#define DISCHARGED_PATIENT_FILE_PATH "../res/dischargedPatientRecords.txt"
+
+extern Node* patientRecordsStart;
+extern Node* dischargedPatientsStart;
 
 typedef struct patient patient;
 
 struct patient
 {
-    int    patientID;
-    char   name[FULL_NAME_MAX_CHAR];
-    int    age;
-    char   diagnosis[DIAGNOSIS_MAX_CHAR];
-    int    roomNumber;
+    int patientID;
+    char name[FULL_NAME_MAX_CHAR];
+    int age;
+    char diagnosis[DIAGNOSIS_MAX_CHAR];
+    int roomNumber;
     time_t admissionDate;
     time_t dischargeDate;
 };
@@ -88,7 +95,7 @@ void dischargePatient(void);
 /**
  * Read the patient record file and load it into memory.
  */
-void readPatientRecords();
+void readPatientFile(const char* filePathStr);
 
 /**
  * Returns the total number of patients in the hospital.
@@ -97,6 +104,10 @@ void readPatientRecords();
 int getTotalPatients();
 
 void saveAllPatientRecord();
+
+void viewAllDischargedPatientRecords();
+
+void saveAllDischargedPatientRecord();
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
@@ -106,6 +117,8 @@ void saveAllPatientRecord();
  * @param newPatient patient to add to list
  */
 void addPatientToList(const patient* newPatient);
+
+void addPatientToDischargedList(const patient* dischargedPatient);
 
 
 /**
@@ -120,7 +133,7 @@ void addPatientToDischargedList(const patient* dischargedPatient);
  * @param previous previous record
  * @param current current record
  */
-void findPatientSortedPosition(int    id,
+void findPatientSortedPosition(int id,
                                Node** previous,
                                Node** current);
 
@@ -130,6 +143,8 @@ void findPatientSortedPosition(int    id,
  * @return patient record
  */
 patient* getPatient(int id);
+
+patient* getDischargedPatient(int id);
 
 /**
  * Returns whether a patient with the specified ID already exists in the system.
@@ -182,7 +197,7 @@ int getNextAvailPatientID();
  * @param name char array to assign name
  */
 void getPatientName(const char* prompt,
-                    char*       name);
+                    char* name);
 
 /**
  * Prompts user for patient age, with checks to ensure patient age is valid
@@ -235,7 +250,7 @@ void handlePatientSearchResult(const patient* patientRecord);
  * @param numRecordsFound number of matching records found
  */
 void handleMultiplePatientSearchResults(const patient** patientsFound,
-                                        int             numRecordsFound);
+                                        int numRecordsFound);
 
 /**
  * Helper method to search the patientRecord array for the patient record corresponding
@@ -258,7 +273,7 @@ void printPatientRecord(patient* patient);
 /**
  * Prints the patient menu.
  */
-void printPatientMenu();
+void printPatientSubMenu();
 
 /**
  * Helper function to print the patient record header, including top and
@@ -279,12 +294,45 @@ void printPatientRecordDivider();
  * @param diagnosis Patient Diagnosis
  * @param roomNumber Room Number
  */
-void createNewPatientEntry(int        id,
+void createNewPatientEntry(int id,
                            const char name[25],
-                           int        age,
+                           int age,
                            const char diagnosis[25],
-                           int        roomNumber,
-                           time_t     admissionDate);
+                           int roomNumber,
+                           time_t admissionDate);
+
+void createNewDischargedPatientEntry(const int id,
+                           const char name[25],
+                           const int age,
+                           const char diagnosis[25],
+                           const int roomNumber,
+                           const time_t admissionDate,
+                           const time_t dischargeDate);
+
+/**
+ * Saves the given linkedlist at the given file.
+ *
+ * @param startOfLinkedList The first Node of the linked list to save.
+ * @param filePathStr The file path as a String.
+ */
+void savePatientRecordToFile(const Node* startOfLinkedList, const char* filePathStr);
+
+/**
+ * Free all memory associated with both active and dischargde records.
+ */
+void freePatientMemory();
+
+void printPatientSearchMenu();
+
+void readPatientRecords();
+
+void readDischargedPatientRecords();
+
+void printDischargedPatientRecordsHeader();
+
+void printDischargedPatientRecordDivider();
+
+void printDischargedPatientRecord(patient* patientRecord);
 /*********Private Functions End**************/
 
 #endif //PATIENT_H
