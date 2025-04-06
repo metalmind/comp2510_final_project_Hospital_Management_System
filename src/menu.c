@@ -33,7 +33,7 @@ void menu(void)
     while(sel != EXIT);
 }
 
-void saveMenu(void)
+void routeSaveMenu(void)
 {
     int sel;
 
@@ -133,7 +133,7 @@ void routeSelection(const int sel)
         generateReport();
         break;
     case SAVE_LOAD_DATA:
-        saveMenu();
+        routeSaveMenu();
     case VIEW_ALL:
         viewAll();
         break;

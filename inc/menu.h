@@ -47,16 +47,6 @@
  *    6. Exit
  */
 void menu(void);
-
-void saveMenu(void);
-
-void patientMenu(void);
-
-void readAll();
-
-void saveAll();
-
-void viewAll();
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
@@ -64,6 +54,11 @@ void viewAll();
  * Helper function to print the menu options to the screen.
  */
 void printMenu(void);
+
+/**
+ * Routes to the selected save menu item.
+ */
+void routeSaveMenu(void);
 
 /**
  * Helper function to print the save / load options to the screen.
@@ -81,14 +76,6 @@ int getSelection(void);
  * Routes to the selected menu item by calling the functon associated with the
  * selection. If the selection is not available, tells the user to try again.
  *
- * Selection:
- *    1. Add Patient Record
- *    2. View All Patients
- *    3. Search Patient by ID
- *    4. Discharge Patient
- *    5. Manage Doctor Schedule
- *    6. Exit
- *
  * @param sel an int
  */
 void routeSelection(int sel);
@@ -100,9 +87,36 @@ void routeSelection(int sel);
  */
 void routeSaveSelection(int sel);
 
+/**
+ * The engine for the patient menu.
+ */
+void patientMenu(void);
+
+/**
+ * Routes the selected Patient menu function.
+ * @param sel
+ */
 void routePatientMenuSelection(const int sel);
 
+/**
+ * Prints the patient menu to the screen.
+ */
 void printPatientMenu();
+
+/**
+ * Reads the save files for patients, discharged patients, doctor and schedule and saves them to the memory.
+ */
+void readAll();
+
+/**
+ * Save patients, discharged patients, doctor and schedule lists to the external files.
+ */
+void saveAll();
+
+/**
+ * Prints the patients, discharged patients, doctor and schedule lists
+ */
+void viewAll();
 
 /*********Private Functions End**************/
 
