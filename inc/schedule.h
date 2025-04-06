@@ -50,8 +50,14 @@ void clearShift();
  */
 void printDocWeekSchedule();
 
+/**
+ * Saves the entire schedule to an external file at SCHEDULE_RECORD_FILE_PATH.
+ */
 void saveAllScheduleRecord();
 
+/**
+ * Reads a schedule from the external file at SCHEDULE_RECORD_FILE_PATH and loads it into memory.
+ */
 void readScheduleRecords();
 /*********Public Functions End**************/
 
@@ -144,9 +150,18 @@ void getSchedule(int scheduleCopy[DAYS_IN_WEEK][NUM_SHIFTS]);
  */
 void routeScheduleMenu(const int sel);
 
+/**
+ * Writes a specific day to the file at the given path as a single line entry.
+ * @param shift
+ * @param filePathStr
+ */
 void writeScheduleRecord(const int shift[],
-                       const char* filePathStr);
+                         const char* filePathStr);
 
+/**
+ * Reads the schedule from the external file.
+ * @param filePathStr
+ */
 void readScheduleFile(const char* filePathStr);
 
 
