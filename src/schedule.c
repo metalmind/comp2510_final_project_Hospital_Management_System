@@ -391,7 +391,6 @@ void writeScheduleRecord(const int shift[],
         strcat(sStr, "\n");
         puts("Getting file ready...");
         error = fprintf(fPtr, "%s", sStr);
-        puts(sStr);
         if(error < 1)
         {
             puts("Error writing to file.");

@@ -15,6 +15,7 @@
 #define SCHEDULE_MENU 3
 #define GENERATE_REPORT 4
 #define SAVE_LOAD_DATA 5
+#define VIEW_ALL 6
 
 // Patient menu
 #define ADD_PATIENT_RECORDS 1
@@ -31,6 +32,7 @@
 #define LOAD_ALL_SCHEDULE_RECORDS 6
 #define SAVE_ALL 7
 #define LOAD_ALL 8
+
 
 /*********Public Functions Begin************/
 /**
@@ -49,6 +51,12 @@ void menu(void);
 void saveMenu(void);
 
 void patientMenu(void);
+
+void readAll();
+
+void saveAll();
+
+void viewAll();
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/

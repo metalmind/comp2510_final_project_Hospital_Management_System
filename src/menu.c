@@ -16,14 +16,8 @@
 /*********Public Functions Begin************/
 void menu(void)
 {
-    readPatientRecords();
-    readDischargedPatientRecords();
-    readDoctorRecords();
-    readScheduleRecords();
-    viewAllPatientRecords();
-    viewAllDischargedPatientRecords();
-    viewAllDoctorRecords();
-    printDocWeekSchedule();
+    readAll();
+    viewAll();
 
     int sel;
 
@@ -83,6 +77,7 @@ void printMenu(void)
     printf("%d. Schedule\n", SCHEDULE_MENU);
     printf("%d. Reports\n", GENERATE_REPORT);
     printf("%d. Save / Load\n", SAVE_LOAD_DATA);
+    printf("%d. View All\n", VIEW_ALL);
 }
 
 void printPatientMenu()
@@ -139,7 +134,11 @@ void routeSelection(const int sel)
         break;
     case SAVE_LOAD_DATA:
         saveMenu();
+    case VIEW_ALL:
+        viewAll();
+        break;
     case EXIT:
+        saveAll();
         freePatientMemory();
         freeDoctorMemory();
         printf("Exiting...\n");
@@ -199,19 +198,37 @@ void routeSaveSelection(const int sel)
         readScheduleRecords();
         break;
     case SAVE_ALL:
-        saveAllPatientRecord();
-        saveAllDischargedPatientRecord();
-        saveAllDoctorRecord();
-        saveAllScheduleRecord();
+        saveAll();
         break;
     case LOAD_ALL:
-        readPatientRecords();
-        readDischargedPatientRecords();
-        readDoctorRecords();
-        readScheduleRecords();
+        readAll();
     default:
         puts("Invalid choice! Try again.");
     }
+}
+
+void readAll()
+{
+    readPatientRecords();
+    readDischargedPatientRecords();
+    readDoctorRecords();
+    readScheduleRecords();
+}
+
+void viewAll()
+{
+    viewAllPatientRecords();
+    viewAllDischargedPatientRecords();
+    viewAllDoctorRecords();
+    printDocWeekSchedule();
+}
+
+void saveAll()
+{
+    saveAllPatientRecord();
+    saveAllDischargedPatientRecord();
+    saveAllDoctorRecord();
+    saveAllScheduleRecord();
 }
 
 /*********Private Functions End**************/

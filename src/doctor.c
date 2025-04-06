@@ -467,9 +467,7 @@ void writeDoctorRecord(const doctor* d,
         strcat(dStr, " ");
         strcat(dStr, dSpecialtyStr);
         strcat(dStr, "\n");
-        puts("Getting file ready...");
         error = fprintf(fPtr, "%s", dStr);
-        // puts(pStr);
         if(error < 1)
         {
             puts("Error writing to file.");
