@@ -239,42 +239,20 @@ void addPatientToList(const patient* const newPatient)
     printf("Patient added successfully!\n");
 }
 
-void addPatientToDischargedList(const patient* const newPatient)
+void addPatientToDischargedList(const patient* const dischargedPatient)
 {
-    int id;
     Node* newNode;
-
-    id = newPatient->patientID;
     newNode = (Node*)malloc(sizeof(Node));
 
     if(newNode == NULL)
     {
-        printf("Could not add patient - not enough memory!\n");
+        printf("Could not log discharged patient - not enough memory!\n");
         return;
     }
 
-    newNode->record = newPatient; // assign patient pointer to node
-    newNode->next = NULL;
-
-    Node* previous;
-    Node* current;
-
-    findPatientSortedPosition(id,
-                              &previous,
-                              &current);
-
-    // insert new node at beginning of list
-    if(previous == NULL)
-    {
-        newNode->next = dischargedPatientsStart;
-        dischargedPatientsStart = newNode;
-    }
-    // insert new node between previous and current
-    else
-    {
-        previous->next = newNode;
-        newNode->next = current;
-    }
+    newNode->record = dischargedPatient; // assign patient pointer to node
+    newNode->next = dischargedPatientsStart; // add to start of list
+    dischargedPatientsStart = newNode; // move pointer to start
 
     dischargedPatients++;
     printf("Patient discharged successfully!\n");

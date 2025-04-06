@@ -118,9 +118,6 @@ void saveAllDischargedPatientRecord();
  */
 void addPatientToList(const patient* newPatient);
 
-void addPatientToDischargedList(const patient* dischargedPatient);
-
-
 /**
  * Stores the patient record in the discharged patient list.
  * @param dischargedPatient patient to discharge
