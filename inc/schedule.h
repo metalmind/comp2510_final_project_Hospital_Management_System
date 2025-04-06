@@ -23,6 +23,8 @@
 
 #define MENU_NUMBERING_OFFSET 1
 
+#define SCHEDULE_RECORD_FILE_PATH "../res/scheduleRecords.txt"
+
 enum daysInWeek { SUN, MON, TUE, WED, THU, FRI, SAT };
 
 enum shift { MORNING, AFTERNOON, EVENING };
@@ -47,6 +49,10 @@ void clearShift();
  * Print the schedule of the doctors for the daysInWeek.
  */
 void printDocWeekSchedule();
+
+void saveAllScheduleRecord();
+
+void readScheduleRecords();
 /*********Public Functions End**************/
 
 /*********Private Functions Begin************/
@@ -137,6 +143,13 @@ void getSchedule(int scheduleCopy[DAYS_IN_WEEK][NUM_SHIFTS]);
  * @param sel The input from the user.
  */
 void routeScheduleMenu(const int sel);
+
+void writeScheduleRecord(const int shift[],
+                       const char* filePathStr);
+
+void readScheduleFile(const char* filePathStr);
+
+
 /*********Private Functions End**************/
 
 #endif //SCHEDULE_H

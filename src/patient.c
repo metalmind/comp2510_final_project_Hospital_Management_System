@@ -718,7 +718,7 @@ void readPatientFile(const char* filePathStr)
 
     if((fPtr = fopen(filePathStr, "r")) == NULL)
     {
-        printf("File could not be opened %s", filePathStr);
+        printf("File could not be opened %s\n", filePathStr);
     }
     else
     {
@@ -809,7 +809,7 @@ void writePatientRecord(const patient* p, const char* filePathStr)
 
     if((fPtr = fopen(filePathStr, "a")) == NULL)
     {
-        puts("\nFile could not be opened.");
+        printf("File could not be opened %s\n", filePathStr);
     }
     else
     {

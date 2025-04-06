@@ -27,6 +27,10 @@
 #define LOAD_PATIENT_RECORDS 2
 #define SAVE_ALL_DOCTOR_RECORDS 3
 #define LOAD_ALL_DOCTOR_RECORDS 4
+#define SAVE_ALL_SCHEDULE_RECORDS 5
+#define LOAD_ALL_SCHEDULE_RECORDS 6
+#define SAVE_ALL 7
+#define LOAD_ALL 8
 
 /*********Public Functions Begin************/
 /**
@@ -91,6 +95,7 @@ void routeSaveSelection(int sel);
 void routePatientMenuSelection(const int sel);
 
 void printPatientMenu();
+
 /*********Private Functions End**************/
 
 #endif //MENU_H

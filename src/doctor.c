@@ -436,7 +436,7 @@ void writeDoctorRecord(const doctor* d,
 
     if((fPtr = fopen(filePathStr, "a")) == NULL)
     {
-        puts("\nFile could not be opened.");
+        printf("File could not be opened %s\n", filePathStr);
     }
     else
     {
@@ -457,7 +457,6 @@ void writeDoctorRecord(const doctor* d,
         sanitizeStr(dFirstNameStr, ' ', '#');
         sanitizeStr(dLastNameStr, ' ', '#');
         sanitizeStr(dSpecialtyStr, ' ', '#');
-
 
         puts("Creating string...");
         strcat(dStr, dIDStr);
@@ -499,7 +498,7 @@ void readDoctorFile(const char* filePathStr)
 
     if((fPtr = fopen(filePathStr, "r")) == NULL)
     {
-        printf("File could not be opened %s", filePathStr);
+        printf("File could not be opened %s\n", filePathStr);
     }
     else
     {

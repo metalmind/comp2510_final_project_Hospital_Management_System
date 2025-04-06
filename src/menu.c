@@ -19,9 +19,11 @@ void menu(void)
     readPatientRecords();
     readDischargedPatientRecords();
     readDoctorRecords();
+    readScheduleRecords();
     viewAllPatientRecords();
     viewAllDischargedPatientRecords();
     viewAllDoctorRecords();
+    printDocWeekSchedule();
 
     int sel;
 
@@ -100,6 +102,11 @@ void printSaveMenu(void)
     printf("%d. Save All Patient Records\n", SAVE_ALL_PATIENT_RECORDS);
     printf("%d. Load Patient Records\n", LOAD_PATIENT_RECORDS);
     printf("%d. Save Doctor Records\n", SAVE_ALL_DOCTOR_RECORDS);
+    printf("%d. Load Doctor Records\n", LOAD_ALL_DOCTOR_RECORDS);
+    printf("%d. Save Scheduler Records\n", SAVE_ALL_SCHEDULE_RECORDS);
+    printf("%d. Load Scheduler Records\n", LOAD_ALL_SCHEDULE_RECORDS);
+    printf("%d. Save All\n", SAVE_ALL);
+    printf("%d. Load All\n", LOAD_ALL);
 }
 
 int getSelection(void)
@@ -174,8 +181,6 @@ void routeSaveSelection(const int sel)
     case SAVE_ALL_PATIENT_RECORDS:
         saveAllPatientRecord();
         saveAllDischargedPatientRecord();
-        viewAllPatientRecords();
-        viewAllDischargedPatientRecords();
         break;
     case LOAD_PATIENT_RECORDS:
         readPatientRecords();
@@ -187,6 +192,23 @@ void routeSaveSelection(const int sel)
     case LOAD_ALL_DOCTOR_RECORDS:
         readDoctorRecords();
         break;
+    case SAVE_ALL_SCHEDULE_RECORDS:
+        saveAllScheduleRecord();
+        break;
+    case LOAD_ALL_SCHEDULE_RECORDS:
+        readScheduleRecords();
+        break;
+    case SAVE_ALL:
+        saveAllPatientRecord();
+        saveAllDischargedPatientRecord();
+        saveAllDoctorRecord();
+        saveAllScheduleRecord();
+        break;
+    case LOAD_ALL:
+        readPatientRecords();
+        readDischargedPatientRecords();
+        readDoctorRecords();
+        readScheduleRecords();
     default:
         puts("Invalid choice! Try again.");
     }
