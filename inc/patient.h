@@ -129,14 +129,7 @@ void addPatientToList(const patient* newPatient);
 
 /**
  * Moves a patient from the active patients to the discharged patient list.
- * @param dischargedPatient Patient to add discharged list
- */
-void addPatientToDischargedList(const patient* dischargedPatient);
-
-
-/**
- * Stores the patient record in the discharged patient list.
- * @param dischargedPatient patient to discharge
+ * @param dischargedPatient patient to add discharged list
  */
 void addPatientToDischargedList(const patient* dischargedPatient);
 

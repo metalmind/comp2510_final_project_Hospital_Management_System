@@ -244,7 +244,6 @@ int validateDate(int year,
 
     if(!validDay)
     {
-        printf("Invalid date!\n");
         return FALSE;
     }
 
