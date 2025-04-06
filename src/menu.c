@@ -98,8 +98,8 @@ void printSaveMenu(void)
     printf("%d. Load Patient Records\n", LOAD_PATIENT_RECORDS);
     printf("%d. Save Doctor Records\n", SAVE_ALL_DOCTOR_RECORDS);
     printf("%d. Load Doctor Records\n", LOAD_ALL_DOCTOR_RECORDS);
-    printf("%d. Save Scheduler Records\n", SAVE_ALL_SCHEDULE_RECORDS);
-    printf("%d. Load Scheduler Records\n", LOAD_ALL_SCHEDULE_RECORDS);
+    printf("%d. Save Schedule Records\n", SAVE_ALL_SCHEDULE_RECORDS);
+    printf("%d. Load Schedule Records\n", LOAD_ALL_SCHEDULE_RECORDS);
     printf("%d. Save All\n", SAVE_ALL);
     printf("%d. Load All\n", LOAD_ALL);
 }
