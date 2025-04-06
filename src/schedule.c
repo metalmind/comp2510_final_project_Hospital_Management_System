@@ -372,7 +372,7 @@ void writeScheduleRecord(const int shift[],
     {
         puts("\nPreparing file...");
         int error;
-        char sStr[6] = {0};
+        char sStr[DAYS_IN_WEEK] = {0};
         char morningStr[2] = {0};
         char afternoonStr[2] = {0};
         char eveningStr[2] = {0};
