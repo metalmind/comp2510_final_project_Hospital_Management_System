@@ -133,6 +133,8 @@ void routeSelection(const int sel)
     case SAVE_LOAD_DATA:
         saveMenu();
     case EXIT:
+        freePatientMemory();
+        freeDoctorMemory();
         printf("Exiting...\n");
         break;
     default:

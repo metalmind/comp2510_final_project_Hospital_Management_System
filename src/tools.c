@@ -392,7 +392,7 @@ time_t getCurrentDate()
     struct tm* timeStruct = localtime(&currentTime);
 
     // zero initialize time
-    timeStruct->tm_mon = 3;
+    timeStruct->tm_mon   = 3;
     timeStruct->tm_hour  = DEFAULT_VALUE_ZERO;
     timeStruct->tm_min   = DEFAULT_VALUE_ZERO;
     timeStruct->tm_sec   = DEFAULT_VALUE_ZERO;
@@ -401,6 +401,39 @@ time_t getCurrentDate()
     today = mktime(timeStruct);
 
     return today;
+}
+
+time_t getMonthStart(time_t date)
+{
+    time_t monthStart;
+    struct tm* timeStruct = localtime(&date);
+
+    timeStruct->tm_mday = 1;
+    timeStruct->tm_hour = 0;
+    timeStruct->tm_min = 0;
+    timeStruct->tm_sec = 0;
+
+    monthStart = mktime(timeStruct);
+
+    return monthStart;
+}
+
+time_t getMonthEnd(time_t date)
+{
+    time_t monthEnd;
+
+    struct tm* timeStruct = localtime(&date);
+
+    timeStruct->tm_mon += 1;
+    timeStruct->tm_mday = 1;
+    timeStruct->tm_sec = 0;
+    timeStruct->tm_min = 0;
+    timeStruct->tm_hour = 0;
+
+    // subtract one second to make it the previous day
+    monthEnd = mktime(timeStruct) - 1;
+
+    return monthEnd;
 }
 
 void sanitizeStr(char* str,

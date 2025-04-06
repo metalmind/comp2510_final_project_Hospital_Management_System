@@ -225,7 +225,7 @@ void clearInputBuffer(void);
 void printDashes(int numDashes);
 
 /**
- * Returns the date formatted as YYYY-MM-DD HH:MM:SS.
+ * Returns the date formatted as YYYY-MM-DD.
  * @param date date to format
  * @param formattedDate formatted date
  */
@@ -244,6 +244,20 @@ time_t strToTime(char* str);
  * @return midnight of the current date
  */
 time_t getCurrentDate();
+
+/**
+ * Helper function to get the start of the month.
+ * @param date date to normalize
+ * @return date of the start of month
+ */
+time_t getMonthStart(time_t date);
+
+/**
+ * Helper function to get the end of the month.
+ * @param date date to normalize
+ * @return date of the end of the month
+ */
+time_t getMonthEnd(time_t date);
 
 /**
  * Swaps characters out of the string.
