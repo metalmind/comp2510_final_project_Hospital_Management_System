@@ -64,6 +64,9 @@ void fireDoctor(void);
  */
 void viewAllDoctorRecords(void);
 
+/**
+ * Reads  all the doctor records from DOCTOR_RECORDS_PATH.
+ */
 void readDoctorRecords();
 
 /**
@@ -71,6 +74,11 @@ void readDoctorRecords();
  * @return total doctors
  */
 int getTotalDoctors();
+
+/**
+ * Saves all the doctor records to DOCTOR_RECORDS_PATH.
+ */
+void saveAllDoctorRecord();
 
 /*********Public Functions End**************/
 
@@ -193,13 +201,28 @@ void routeDoctorMenu(int sel);
  */
 void freeDoctorMemory();
 
+/**
+ * Writes a specifc doctor item to the given filepath.
+ * @param d The doctor
+ * @param filePathStr The location of the file to write to.
+ */
 void writeDoctorRecord(const doctor* d,
                        const char* filePathStr);
 
-void saveAllDoctorRecord();
 
+/**
+ * Reads the entire file from the file pat and adds the information to the doctor list.
+ * @param filePathStr The path to the file
+ */
 void readDoctorFile(const char* filePathStr);
 
+/**
+ * Creats a new doctor entry in the doctor list with the given information.
+ * @param id The id number
+ * @param firstName The doctor's first name
+ * @param lastName  The doctor's last name
+ * @param specialty The doctor's specialty
+ */
 void createNewDoctorEntry(const int id,
                           const char firstName[NAME_MAX_CHAR],
                           const char lastName[NAME_MAX_CHAR],
