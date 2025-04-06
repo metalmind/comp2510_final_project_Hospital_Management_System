@@ -467,7 +467,9 @@ void writeDoctorRecord(const doctor* d,
         strcat(dStr, " ");
         strcat(dStr, dSpecialtyStr);
         strcat(dStr, "\n");
+        puts("Getting file ready...");
         error = fprintf(fPtr, "%s", dStr);
+        // puts(pStr);
         if(error < 1)
         {
             puts("Error writing to file.");
@@ -506,7 +508,6 @@ void readDoctorFile(const char* filePathStr)
         char specialty[DIAGNOSIS_MAX_CHAR] = {0};
         char specialtyClean[DIAGNOSIS_MAX_CHAR] = {0};
 
-
         char doctorData[NUM_DOCTOR_FIELDS][DIAGNOSIS_MAX_CHAR];
         char buffer[BUFFER_SIZE];
 
@@ -523,7 +524,7 @@ void readDoctorFile(const char* filePathStr)
             }
 
             id = atoi(doctorData[ID_INDEX]);
-            if(isUniquePatientId(id))
+            if(isUniqueDoctorId(id))
             {
                 int length;
                 sanitizeStr(doctorData[FIRST_NAME_INDEX], '#', ' ');
