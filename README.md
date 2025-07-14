@@ -1,3 +1,6 @@
+This project was created for BCIT course COMP2510 taught by Ayesha Anzer
+
+
 # Phase 1
 
 ## 1.1 Patient Record Management
